@@ -1,4 +1,5 @@
 import MaterialAnimatedImages from '~icons/material-symbols/animated-images';
+import MaterialSymbolsAutoDetectVoice from '~icons/material-symbols/auto-detect-voice';
 import MaterialSymbolsBookmarkFlagOutlineRounded from '~icons/material-symbols/bookmark-flag-outline-rounded';
 import MaterialSymbolsBookmarkOutline from '~icons/material-symbols/bookmark-outline';
 import MaterialSymbolsCalendarClockRounded from '~icons/material-symbols/calendar-clock-rounded';
@@ -7,6 +8,9 @@ import MaterialSymbolsHomeRounded from '~icons/material-symbols/home-rounded';
 import MaterialSymbolsMenuBookRounded from '~icons/material-symbols/menu-book-rounded';
 import MaterialSymbolsPalette from '~icons/material-symbols/palette';
 import MaterialSymbolsStack from '~icons/material-symbols/stack';
+import MaterialSymbolsStarRounded from '~icons/material-symbols/star-rounded';
+import MaterialSymbolsVerified from '~icons/material-symbols/verified';
+import QwezedBurunyaa from '~icons/qwezed/burunyaa';
 
 import Completed from '@/components/icons/watch-status/completed';
 import Dropped from '@/components/icons/watch-status/dropped';
@@ -398,7 +402,7 @@ export const ERRORS: Record<string, Record<string, string>> = {
         denied: 'Ви не маєте дозволу для виконання цієї дії.',
     },
     anime: {
-        no_franchise: 'Це аніме не має пов\'язаного',
+        no_franchise: "Це аніме не має пов'язаного",
         unknown_producer: 'Невідомий продюсер',
         unknown_studio: 'Невідома студія',
         bad_year: 'Неправильний рік',
@@ -406,7 +410,8 @@ export const ERRORS: Record<string, Record<string, string>> = {
         not_found: 'Аніме не знайдено',
     },
     edit: {
-        not_pending: 'Можна змінювати лише ті правки, які очікують на перевірку',
+        not_pending:
+            'Можна змінювати лише ті правки, які очікують на перевірку',
         not_author: 'Тільки автор може змінювати правку',
         invalid_content_id: 'Неправильний ідентифікатор контенту',
         content_not_found: 'Контент не знайдено',
@@ -1062,5 +1067,33 @@ export const USER_ROLE = {
     moderator: {
         label: 'Модератор',
         color: '#40518F',
+    },
+};
+
+export const USER_BADGE: Record<API.UserBadges, Hikka.UserBadges> = {
+    verified: {
+        label: 'Верифікований',
+        color: 'text-[#a5d8ff]',
+        icon: MaterialSymbolsVerified,
+    },
+    fandub: {
+        label: 'Фандаб',
+        color: 'text-[#96f2d7]',
+        icon: MaterialSymbolsAutoDetectVoice,
+    },
+    activist: {
+        label: 'Активіст',
+        color: 'text-[#d8f5a2]',
+        icon: MaterialSymbolsStarRounded,
+    },
+    bug_slayer: {
+        label: '',
+        color: '',
+        icon: undefined,
+    },
+    burunyaa: {
+        label: 'Burunyaa',
+        color: '',
+        icon: QwezedBurunyaa,
     },
 };

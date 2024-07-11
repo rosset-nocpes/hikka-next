@@ -117,5 +117,13 @@ declare global {
             refetchOnWindowFocus?: boolean;
             initialData?: undefined;
         };
+
+        type UserBadges = {
+            label: string;
+            color: string;
+            icon?: (
+                props: SVGProps<SVGSVGElement>,
+            ) => ReactElement<any, string | JSXElementConstructor<any>>;
+        };
     }
 }

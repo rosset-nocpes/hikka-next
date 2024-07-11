@@ -9,6 +9,13 @@ declare global {
             | 'banned'
             | 'not_activated';
 
+        type UserBadges =
+            | 'verified'
+            | 'fandub'
+            | 'activist'
+            | 'bug_slayer'
+            | 'burunyaa';
+
         type WatchStatus =
             | 'completed'
             | 'watching'
@@ -132,6 +139,7 @@ declare global {
             avatar: string;
             cover?: string;
             role: UserRole;
+            badges: UserBadges[];
             active: boolean;
             is_followed?: boolean;
             updated: number;

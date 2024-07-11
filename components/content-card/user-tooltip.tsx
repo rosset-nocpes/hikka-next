@@ -4,8 +4,6 @@ import { FC, PropsWithChildren, memo } from 'react';
 import MaterialAnimatedImages from '~icons/material-symbols/animated-images';
 import MaterialSymbolsMenuBookRounded from '~icons/material-symbols/menu-book-rounded';
 import MaterialSymbolsPalette from '~icons/material-symbols/palette';
-import MaterialSymbolsSecurity from '~icons/material-symbols/security';
-import MaterialSymbolsShieldPerson from '~icons/material-symbols/shield-person';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -17,16 +15,15 @@ import {
 } from '@/components/ui/hover-card';
 
 import FollowButton from '@/features/users/follow-button.component';
+import { UserBadges } from '@/features/users/user-badges.component';
 
 import useFollowStats from '@/services/hooks/follow/use-follow-stats';
 import useReadStats from '@/services/hooks/read/use-read-stats';
 import useUser from '@/services/hooks/user/use-user';
 import useWatchStats from '@/services/hooks/watch/use-watch-stats';
 
-import P from '../typography/p';
 import { Label } from '../ui/label';
 import { Separator } from '../ui/separator';
-import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 
 interface TooltipDataProps {
     username: string;
@@ -101,28 +98,7 @@ const TooltipData: FC<TooltipDataProps> = ({ username }) => {
                             <h4 className="text-sm font-semibold">
                                 {username}
                             </h4>
-                            {(user?.role === 'admin' ||
-                                user?.role === 'moderator') && (
-                                <Tooltip delayDuration={0}>
-                                    <TooltipTrigger>
-                                        <div className="rounded-sm border border-accent/60 bg-accent/30 p-1 text-xs font-bold text-accent-foreground">
-                                            {user.role === 'admin' && (
-                                                <MaterialSymbolsSecurity className="text-[#d0bfff]" />
-                                            )}
-                                            {user.role === 'moderator' && (
-                                                <MaterialSymbolsShieldPerson className="text-[#ffc9c9]" />
-                                            )}
-                                        </div>
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                        <P className="text-sm">
-                                            {user.role === 'admin'
-                                                ? 'Адміністратор'
-                                                : 'Модератор'}
-                                        </P>
-                                    </TooltipContent>
-                                </Tooltip>
-                            )}
+                            <UserBadges user={user} />
                         </div>
                     </div>
                     <FollowButton

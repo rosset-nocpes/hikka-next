@@ -1,4 +1,5 @@
 import bundleAnalyzer from '@next/bundle-analyzer';
+import { promises as fs } from 'node:fs';
 import Icons from 'unplugin-icons/webpack';
 
 /** @type {import('next').NextConfig} */
@@ -24,6 +25,12 @@ const nextConfig = {
             Icons({
                 compiler: 'jsx',
                 jsx: 'react',
+                customCollections: {
+                    qwezed: {
+                        burunyaa: () =>
+                            fs.readFile('./public/burunyaa.svg', 'utf-8'),
+                    },
+                },
             }),
         );
 
