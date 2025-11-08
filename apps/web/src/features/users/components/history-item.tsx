@@ -87,7 +87,7 @@ const HistoryItem: FC<Props> = (props) => {
                     </HorizontalCardDescription>
                 )}
                 <HorizontalCardDescription className="opacity-60">
-                    {formatDistance(data.created * 1000, Date.now(), {
+                    {formatDistance(data.updated * 1000, Date.now(), {
                         addSuffix: true,
                     })}
                 </HorizontalCardDescription>
