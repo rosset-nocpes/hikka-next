@@ -811,6 +811,20 @@ td:last-child {
     @apply blur-xs transition-all duration-500 hover:blur-none;
 }
 
+/* Pair with `line-clamp-*` on markdown: the clamp only applies to a single
+   inline formatting context, so block children must be flattened or the
+   -webkit-box lays them out itself and the clamp is ignored. */
+@utility prose-inline {
+    & :is(p, blockquote, ul, ol, li, h3, h4, h5, .spoiler) {
+        display: inline;
+    }
+
+    & > * + *::before,
+    & li + li::before {
+        content: " ";
+    }
+}
+
 /*
  * Content area typography — single source of truth for:
  *   - MDViewer (react-markdown): renders semantic HTML (p, h3, ul, etc.)

@@ -90,7 +90,7 @@ const TooltipData: FC<TooltipDataProps> = ({ username }) => {
                 {user?.description && (
                     <MDViewer
                         preview
-                        className="line-clamp-1 text-muted-foreground text-xs"
+                        className="prose-inline line-clamp-1 text-muted-foreground text-xs"
                     >
                         {user.description}
                     </MDViewer>

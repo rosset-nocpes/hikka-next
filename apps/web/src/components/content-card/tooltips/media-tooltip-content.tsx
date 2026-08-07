@@ -78,7 +78,7 @@ const MediaTooltipContent: FC<Props> = ({
                     hikkaScoreCount={native_scored_by}
                 />
                 {synopsis && (
-                    <MDViewer className="mb-2 line-clamp-4 text-muted-foreground text-sm">
+                    <MDViewer className="prose-inline mb-2 line-clamp-4 text-muted-foreground text-sm">
                         {synopsis}
                     </MDViewer>
                 )}

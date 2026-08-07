@@ -92,10 +92,10 @@ const NotificationItem: FC<Props> = ({ data, onNavigate }) => {
                     {data.description}
                 </HorizontalCardDescription>
                 {data.preview && (
-                    <blockquote className="mt-0.5 line-clamp-1 border-muted-foreground/20 border-l-2 pl-2">
+                    <blockquote className="mt-0.5 border-muted-foreground/20 border-l-2 pl-2">
                         <MDViewer
                             preview
-                            className="text-muted-foreground text-xs!"
+                            className="prose-inline line-clamp-1 text-muted-foreground text-xs!"
                         >
                             {data.preview}
                         </MDViewer>

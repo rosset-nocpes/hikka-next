@@ -60,7 +60,7 @@ const HorizontalContentCard = forwardRef<HTMLDivElement, Props>(
                             <Link to={href}>{title}</Link>
                         </Title>
                         {description && (
-                            <MDViewer className="line-clamp-2 text-muted-foreground text-xs lg:line-clamp-3">
+                            <MDViewer className="prose-inline line-clamp-2 text-muted-foreground text-xs lg:line-clamp-3">
                                 {description}
                             </MDViewer>
                         )}
