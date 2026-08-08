@@ -197,12 +197,26 @@ function isSubTypeChecked(array: string[] | null, value: string): boolean {
     return array === null || array.includes(value);
 }
 
-// Counts only the granular sub-type filter groups — top-level type (quick-filter
-// chips) and scope (tabs) are visible in the header, so they don't add to the badge.
 function activeSubFilterCount(value: FeedSubTypeFilters): number {
-    return SECTIONS.flatMap((s) => s.groups).filter(
-        (g) => value[g.key] !== null,
-    ).length;
+    return SECTIONS.reduce((count, section) => {
+        if (!isSectionEnabled(value.feed_content_types, section.sectionType)) {
+            return count + 1;
+        }
+
+        return (
+            count +
+            section.groups.reduce((groupCount, group) => {
+                const selected = value[group.key];
+                if (selected === null) return groupCount;
+
+                return (
+                    groupCount +
+                    group.options.filter((o) => !selected.includes(o.value))
+                        .length
+                );
+            }, 0)
+        );
+    }, 0);
 }
 
 type SwitchRowProps = {
