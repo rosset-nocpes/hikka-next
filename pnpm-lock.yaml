@@ -108,6 +108,9 @@ importers:
       '@platejs/markdown':
         specifier: ^53.0.4
         version: 53.2.2(platejs@53.2.1(@types/react@19.2.7)(immer@11.1.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.1)))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@6.0.3)
+      '@platejs/mention':
+        specifier: ^53.0.0
+        version: 53.0.0(platejs@53.2.1(@types/react@19.2.7)(immer@11.1.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.1)))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       '@radix-ui/react-dropdown-menu':
         specifier: ^2.1.18
         version: 2.1.18(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -1494,6 +1497,13 @@ packages:
 
   '@platejs/markdown@53.2.2':
     resolution: {integrity: sha512-neDl7lHQN9iHMr8Hsx65HxgKnpT6HpiffaDTWtA1NPC9JeFlXLGQYOUIXIYRX94rr0g6rnfeKKjU7qx9fufTrA==}
+    peerDependencies:
+      platejs: '>=53.0.0'
+      react: 19.2.1
+      react-dom: 19.2.1
+
+  '@platejs/mention@53.0.0':
+    resolution: {integrity: sha512-x7kr9SgFlO0yoJdRcv4mIeiM47cnDEIUJBMYFAQEI42JdwcVKUBiPP4bCZwkQKpGndxmlXT9iTz8+w/UBqDJOA==}
     peerDependencies:
       platejs: '>=53.0.0'
       react: 19.2.1
@@ -7168,6 +7178,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  '@platejs/mention@53.0.0(platejs@53.2.1(@types/react@19.2.7)(immer@11.1.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.1)))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)':
+    dependencies:
+      '@platejs/combobox': 53.0.0(platejs@53.2.1(@types/react@19.2.7)(immer@11.1.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.1)))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+      platejs: 53.2.1(@types/react@19.2.7)(immer@11.1.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(scheduler@0.27.0)(use-sync-external-store@1.6.0(react@19.2.1))
+      react: 19.2.1
+      react-compiler-runtime: 1.0.0(react@19.2.1)
+      react-dom: 19.2.1(react@19.2.1)
 
   '@platejs/slate@53.0.7':
     dependencies:

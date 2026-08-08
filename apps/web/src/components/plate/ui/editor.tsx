@@ -18,7 +18,7 @@ const editorContainerVariants = cva(
                 default: cn(
                     'flex flex-col justify-between gap-1 text-sm',
                     'rounded-lg border border-input bg-transparent shadow-xs transition-[color,box-shadow] dark:bg-input/30',
-                    'has-[[data-slate-editor]:focus]:border-ring has-[[data-slate-editor]:focus]:ring-[3px] has-[[data-slate-editor]:focus]:ring-ring/50',
+                    'has-[[data-slate-editor]:focus-within]:border-ring has-[[data-slate-editor]:focus-within]:ring-[3px] has-[[data-slate-editor]:focus-within]:ring-ring/50',
                     'has-aria-disabled:opacity-50',
                 ),
                 drawer: cn('flex flex-1 flex-col overflow-hidden'),

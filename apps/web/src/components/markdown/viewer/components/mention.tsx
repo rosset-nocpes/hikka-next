@@ -2,25 +2,34 @@ import type { FC } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { userProfileOptions } from '@hikka/api';
+import { userProfileOptions, userReferenceOptions } from '@hikka/api';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Link as TanstackLink } from '@/utils/navigation';
 
 type Props = {
-    node?: { properties?: { username?: string } };
+    node?: { properties?: { username?: string; reference?: string } };
 };
 
 const MENTION_CLASSNAME =
     'inline-flex items-baseline gap-1 text-primary-foreground hover:underline';
 
 const Mention: FC<Props> = ({ node }) => {
-    const username = node?.properties?.username ?? '';
+    const storedUsername = node?.properties?.username ?? '';
+    const reference = node?.properties?.reference;
 
-    const { data: user } = useQuery({
-        ...userProfileOptions({ path: { username } }),
-        enabled: !!username,
+    const { data: referencedUser } = useQuery({
+        ...userReferenceOptions({ path: { reference: reference ?? '' } }),
+        enabled: !!reference,
     });
+
+    const { data: profile } = useQuery({
+        ...userProfileOptions({ path: { username: storedUsername } }),
+        enabled: !reference && !!storedUsername,
+    });
+
+    const user = referencedUser ?? profile;
+    const username = user?.username || storedUsername;
 
     if (!username) return null;
 

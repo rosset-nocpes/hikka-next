@@ -13,7 +13,8 @@ import { EmojiKit } from './plugins/emoji-kit';
 import { ExitBreakKit } from './plugins/exit-break-kit';
 import { LinkKit } from './plugins/link-kit';
 import { ListKit } from './plugins/list-classic-kit';
-import { MarkdownKit } from './plugins/markdown-kit';
+import { createMarkdownKit } from './plugins/markdown-kit';
+import { MentionKit } from './plugins/mention-kit';
 import { SpoilerKit } from './plugins/spoiler-kit';
 import { TextSubstitutionsKit } from './plugins/text-substitutions-kit';
 import { useEditorApi } from './use-editor-api';
@@ -29,6 +30,7 @@ export const MarkdownEditorKit = [
 
     // Editing
     ...EmojiKit,
+    ...MentionKit,
     TrailingBlockPlugin.configure({ options: { type: ParagraphPlugin.key } }),
     ...ExitBreakKit,
     ...TextSubstitutionsKit,
@@ -37,7 +39,7 @@ export const MarkdownEditorKit = [
     ...ListKit,
 
     // Parsers
-    ...MarkdownKit,
+    ...createMarkdownKit({ mentions: true }),
 ];
 
 export const useMarkdownEditor = () => useEditorRef();

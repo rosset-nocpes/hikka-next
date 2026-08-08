@@ -253,33 +253,42 @@ const InlineComboboxInput = React.forwardRef<
 
 InlineComboboxInput.displayName = 'InlineComboboxInput';
 
-const InlineComboboxContent: typeof ComboboxPopover = ({
+const InlineComboboxContent = ({
     className,
+    children,
     ...props
-}) => {
+}: React.ComponentProps<typeof ComboboxPopover>) => {
     // Portal prevents CSS from leaking into popover
     return (
         <Portal>
             <ComboboxPopover
                 className={cn(
-                    'z-100 max-h-[288px] w-[300px] overflow-y-auto rounded-md border surface',
+                    'z-100 w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-lg bg-popover text-popover-foreground shadow-md ring-1 ring-border',
                     className,
                 )}
                 {...props}
-            />
+            >
+                {/* Scrolling sits inside the rounded box: a scrollbar on the popover itself squares off its right corners. */}
+                <div
+                    role="presentation"
+                    className="max-h-72 overflow-y-auto rounded-[inherit] p-1"
+                >
+                    {children}
+                </div>
+            </ComboboxPopover>
         </Portal>
     );
 };
 
 const comboboxItemVariants = cva(
-    'relative mx-1 flex h-[28px] items-center rounded-sm px-2 text-sm text-foreground outline-hidden select-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+    'relative flex select-none items-center gap-2 rounded-md p-2 text-foreground text-sm outline-hidden [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
     {
         defaultVariants: {
             interactive: true,
         },
         variants: {
             interactive: {
-                false: '',
+                false: 'text-muted-foreground',
                 true: 'cursor-pointer transition-colors hover:bg-muted hover:text-accent-foreground data-[active-item=true]:bg-muted data-[active-item=true]:text-accent-foreground',
             },
         },
@@ -372,7 +381,7 @@ function InlineComboboxGroup({
         <ComboboxGroup
             {...props}
             className={cn(
-                'hidden not-last:border-b py-1.5 [&:has([role=option])]:block',
+                'hidden not-last:mb-1 not-last:border-b not-last:pb-1 [&:has([role=option])]:block',
                 className,
             )}
         />
@@ -387,7 +396,7 @@ function InlineComboboxGroupLabel({
         <ComboboxGroupLabel
             {...props}
             className={cn(
-                'mt-1.5 mb-2 px-3 font-medium text-muted-foreground text-xs',
+                'mb-1 px-2 pt-1 font-medium text-muted-foreground text-xs',
                 className,
             )}
         />
