@@ -4,10 +4,14 @@ import { getMentionOnSelectItem } from '@platejs/mention';
 import { useQuery } from '@tanstack/react-query';
 import { IS_APPLE, type TElement } from 'platejs';
 import type { PlateElementProps } from 'platejs/react';
-import { PlateElement, useFocused, useSelected } from 'platejs/react';
+import { PlateElement } from 'platejs/react';
 
 import { searchUsersOptions } from '@hikka/api';
 
+import {
+    MENTION_CLASSNAME,
+    useMentionUser,
+} from '@/components/markdown/viewer/components/mention';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import useDebounce from '@/services/hooks/use-debounce';
 import { cn } from '@/utils/cn';
@@ -29,33 +33,38 @@ export type TMentionElement = TElement & {
 const MIN_SEARCH_LENGTH = 2;
 
 export function MentionElement(props: PlateElementProps<TMentionElement>) {
-    const selected = useSelected();
-    const focused = useFocused();
-    const label = `@${props.element.value}`;
+    const { key, value } = props.element;
+    const user = useMentionUser(value, key);
+
+    const content = (
+        <React.Fragment>
+            <Avatar className="size-5 self-center">
+                <AvatarImage src={user?.avatar} />
+                <AvatarFallback>{value[0]}</AvatarFallback>
+            </Avatar>
+            @{value}
+        </React.Fragment>
+    );
 
     return (
         <PlateElement
             {...props}
             as="span"
-            className={cn(
-                // ring, not border: a border would grow every line that holds a mention
-                'inline-block whitespace-nowrap rounded-sm bg-primary px-1 align-baseline font-medium text-primary-foreground ring-1 ring-primary-border ring-inset',
-                selected && focused && 'ring-2 ring-ring',
-            )}
+            className={cn(MENTION_CLASSNAME, 'whitespace-nowrap')}
             attributes={{
                 ...props.attributes,
                 contentEditable: false,
-                'data-slate-value': props.element.value,
+                'data-slate-value': value,
             }}
         >
             {IS_APPLE ? (
                 <React.Fragment>
                     {props.children}
-                    {label}
+                    {content}
                 </React.Fragment>
             ) : (
                 <React.Fragment>
-                    {label}
+                    {content}
                     {props.children}
                 </React.Fragment>
             )}

@@ -11,24 +11,28 @@ type Props = {
     node?: { properties?: { username?: string; reference?: string } };
 };
 
-const MENTION_CLASSNAME =
+export const MENTION_CLASSNAME =
     'inline-flex items-baseline gap-1 text-primary-foreground hover:underline';
 
-const Mention: FC<Props> = ({ node }) => {
-    const storedUsername = node?.properties?.username ?? '';
-    const reference = node?.properties?.reference;
-
+export const useMentionUser = (username: string, reference?: string) => {
     const { data: referencedUser } = useQuery({
         ...userReferenceOptions({ path: { reference: reference ?? '' } }),
         enabled: !!reference,
     });
 
     const { data: profile } = useQuery({
-        ...userProfileOptions({ path: { username: storedUsername } }),
-        enabled: !reference && !!storedUsername,
+        ...userProfileOptions({ path: { username } }),
+        enabled: !reference && !!username,
     });
 
-    const user = referencedUser ?? profile;
+    return referencedUser ?? profile;
+};
+
+const Mention: FC<Props> = ({ node }) => {
+    const storedUsername = node?.properties?.username ?? '';
+    const reference = node?.properties?.reference;
+
+    const user = useMentionUser(storedUsername, reference);
     const username = user?.username || storedUsername;
 
     if (!username) return null;
