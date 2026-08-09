@@ -37,14 +37,20 @@ type FilterFn = (
 ) => boolean;
 
 interface InlineComboboxContextValue {
+    cancelPendingBlur: () => void;
     filter: FilterFn | false;
+    getInsertPoint: () => Point | undefined;
     inputProps: UseComboboxInputResult['props'];
     inputRef: React.RefObject<HTMLInputElement | null>;
+    onBlur: () => void;
     removeInput: UseComboboxInputResult['removeInput'];
     showTrigger: boolean;
     trigger: string;
     setHasEmpty: (hasEmpty: boolean) => void;
 }
+
+/** Long enough for a tap's click to land after the touch keyboard blurs. */
+const BLUR_CANCEL_DELAY = 250;
 
 const InlineComboboxContext = React.createContext<InlineComboboxContextValue>(
     null as unknown as InlineComboboxContextValue,
@@ -104,10 +110,12 @@ const InlineCombobox = ({
     );
 
     /**
-     * Track the point just before the input element so we know where to
-     * insertText if the combobox closes due to a selection change.
+     * Track the point just before the input element so we know where to put the
+     * text back, or where to anchor a pick once the input node is gone.
      */
-    const insertPoint = React.useRef<Point | null>(null);
+    const insertPointRef = React.useRef<ReturnType<
+        typeof editor.api.pointRef
+    > | null>(null);
 
     React.useEffect(() => {
         const path = editor.api.findPath(element);
@@ -119,22 +127,30 @@ const InlineCombobox = ({
         if (!point) return;
 
         const pointRef = editor.api.pointRef(point);
-        insertPoint.current = pointRef.current;
+        insertPointRef.current = pointRef;
 
         return () => {
             pointRef.unref();
+            insertPointRef.current = null;
         };
     }, [editor, element]);
 
+    const getInsertPoint = React.useCallback(
+        () => insertPointRef.current?.current ?? undefined,
+        [],
+    );
+
+    const restoreTriggerText = React.useCallback(() => {
+        editor.tf.insertText(trigger + value, { at: getInsertPoint() });
+    }, [editor, getInsertPoint, trigger, value]);
+
     const { props: inputProps, removeInput } = useComboboxInput({
-        cancelInputOnBlur: true,
+        cancelInputOnBlur: false,
         cursorState,
         ref: inputRef,
         onCancelInput: (cause) => {
             if (cause !== 'backspace') {
-                editor.tf.insertText(trigger + value, {
-                    at: insertPoint?.current ?? undefined,
-                });
+                restoreTriggerText();
             }
             if (cause === 'arrowLeft' || cause === 'arrowRight') {
                 editor.tf.move({
@@ -145,13 +161,43 @@ const InlineCombobox = ({
         },
     });
 
+    const blurTimeout = React.useRef<ReturnType<typeof setTimeout> | null>(
+        null,
+    );
+
+    const cancelPendingBlur = React.useCallback(() => {
+        if (blurTimeout.current) {
+            clearTimeout(blurTimeout.current);
+            blurTimeout.current = null;
+        }
+    }, []);
+
+    /**
+     * Touch taps blur the input before the click reaches an item, so cancelling
+     * on blur would unmount the popover first and lose the pick. The cancel
+     * waits instead, and touching the popover calls it off.
+     */
+    const onBlur = React.useCallback(() => {
+        cancelPendingBlur();
+
+        blurTimeout.current = setTimeout(() => {
+            removeInput(false);
+            restoreTriggerText();
+        }, BLUR_CANCEL_DELAY);
+    }, [cancelPendingBlur, removeInput, restoreTriggerText]);
+
+    React.useEffect(() => cancelPendingBlur, [cancelPendingBlur]);
+
     const [hasEmpty, setHasEmpty] = React.useState(false);
 
     const contextValue: InlineComboboxContextValue = React.useMemo(
         () => ({
+            cancelPendingBlur,
             filter,
+            getInsertPoint,
             inputProps,
             inputRef,
+            onBlur,
             removeInput,
             setHasEmpty,
             showTrigger,
@@ -165,6 +211,9 @@ const InlineCombobox = ({
             inputProps,
             removeInput,
             setHasEmpty,
+            cancelPendingBlur,
+            getInsertPoint,
+            onBlur,
         ],
     );
 
@@ -208,6 +257,7 @@ const InlineComboboxInput = React.forwardRef<
     const {
         inputProps,
         inputRef: contextRef,
+        onBlur,
         showTrigger,
         trigger,
     } = React.useContext(InlineComboboxContext);
@@ -245,6 +295,7 @@ const InlineComboboxInput = React.forwardRef<
                     value={value}
                     autoSelect
                     {...inputProps}
+                    onBlur={onBlur}
                     {...props}
                 />
             </span>
@@ -262,10 +313,12 @@ const InlineComboboxContent = ({
     // Portal prevents CSS from leaking into popover. Inside a modal it must
     // land in the modal's own tree, or react-remove-scroll blocks scrolling.
     const portalContainer = usePortalContainer();
+    const { cancelPendingBlur } = React.useContext(InlineComboboxContext);
 
     return (
         <Portal portalElement={portalContainer ?? undefined}>
             <ComboboxPopover
+                onPointerDownCapture={cancelPendingBlur}
                 className={cn(
                     'no-scrollbar z-100 max-h-72 w-72 max-w-[calc(100vw-2rem)] scroll-py-1 overflow-y-auto overflow-x-hidden rounded-(--base-radius) border bg-popover p-1 text-popover-foreground shadow-md outline-hidden',
                     className,
@@ -313,7 +366,9 @@ const InlineComboboxItem = ({
     Required<Pick<ComboboxItemProps, 'value'>>) => {
     const { value } = props;
 
-    const { filter, removeInput } = React.useContext(InlineComboboxContext);
+    const editor = useEditorRef();
+    const { cancelPendingBlur, filter, getInsertPoint, inputRef, removeInput } =
+        React.useContext(InlineComboboxContext);
 
     const store = useComboboxContext()!;
 
@@ -337,8 +392,26 @@ const InlineComboboxItem = ({
             // Without this the row's `value` replaces the typed query.
             setValueOnClick={!keepOpen}
             onClick={(event) => {
-                if (!keepOpen) removeInput(focusEditor);
+                cancelPendingBlur();
+
+                if (keepOpen) {
+                    onClick?.(event);
+                    inputRef.current?.focus();
+
+                    return;
+                }
+
+                removeInput(false);
+
+                // A tap leaves the editor unfocused, so the pick is anchored to
+                // the tracked point instead of whatever the selection became.
+                const point = getInsertPoint();
+
+                if (point) editor.tf.select(point);
+
                 onClick?.(event);
+
+                if (focusEditor) editor.tf.focus();
             }}
             {...props}
         />
