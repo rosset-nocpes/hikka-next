@@ -3,8 +3,11 @@ import type * as React from 'react';
 import { EyeOffIcon } from 'lucide-react';
 import { useEditorRef, useEditorSelector } from 'platejs/react';
 
-import { ELEMENT_SPOILER } from '../editor/plugins/spoiler-kit';
-import { isInsideBlock, toggleContainerBlock } from '../editor/transforms';
+import {
+    ELEMENT_SPOILER,
+    ELEMENT_SPOILER_INLINE,
+} from '../editor/plugins/spoiler-kit';
+import { isInsideBlock, toggleSpoiler } from '../editor/transforms';
 import { ToolbarButton } from './toolbar';
 
 export function SpoilerToolbarButton(
@@ -12,7 +15,9 @@ export function SpoilerToolbarButton(
 ) {
     const editor = useEditorRef();
     const isActive = useEditorSelector(
-        (editor) => isInsideBlock(editor, ELEMENT_SPOILER),
+        (editor) =>
+            isInsideBlock(editor, ELEMENT_SPOILER) ||
+            isInsideBlock(editor, ELEMENT_SPOILER_INLINE),
         [],
     );
 
@@ -21,7 +26,10 @@ export function SpoilerToolbarButton(
             {...props}
             pressed={isActive}
             onClick={() => {
-                toggleContainerBlock(editor, ELEMENT_SPOILER);
+                toggleSpoiler(editor, {
+                    block: ELEMENT_SPOILER,
+                    inline: ELEMENT_SPOILER_INLINE,
+                });
                 editor.tf.focus();
             }}
             onMouseDown={(e) => e.preventDefault()}

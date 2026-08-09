@@ -142,6 +142,53 @@ export const toggleContainerBlock = (editor: PlateEditor, type: string) => {
     insertBlock(editor, type);
 };
 
+const isWithinSingleBlock = (editor: PlateEditor) =>
+    editor.api.blocks({ mode: 'lowest' }).length === 1;
+
+export const toggleInlineNode = (editor: PlateEditor, type: string) => {
+    if (isInsideBlock(editor, type)) {
+        editor.tf.unwrapNodes({
+            at: editor.selection ?? undefined,
+            match: { type },
+            split: true,
+        });
+        return;
+    }
+
+    if (!editor.api.isExpanded()) return;
+
+    editor.tf.wrapNodes<TElement>(
+        { type, children: [] },
+        { at: editor.selection ?? undefined, split: true },
+    );
+};
+
+/**
+ * The spoiler button and its shortcut pick a form from the selection: text
+ * selected inside one block becomes an inline spoiler, anything else the
+ * block container.
+ */
+export const toggleSpoiler = (
+    editor: PlateEditor,
+    { block, inline }: { block: string; inline: string },
+) => {
+    restoreSelection(editor);
+    if (!editor.selection) return;
+
+    const hasInline = !!editor.plugins[inline];
+
+    if (
+        hasInline &&
+        (isInsideBlock(editor, inline) ||
+            (editor.api.isExpanded() && isWithinSingleBlock(editor)))
+    ) {
+        toggleInlineNode(editor, inline);
+        return;
+    }
+
+    toggleContainerBlock(editor, block);
+};
+
 const setBlockMap: Record<string, (editor: PlateEditor, type: string) => void> =
     {
         [KEYS.olClassic]: (editor) =>

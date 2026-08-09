@@ -109,6 +109,7 @@ export function FixedArticleToolbarButtons() {
                     </ToolbarGroup>
 
                     <ToolbarGroup>
+                        <SpoilerToolbarButton />
                         <LinkToolbarButton />
                         <ContentSearchToolbarButton />
                         <UserSearchToolbarButton />

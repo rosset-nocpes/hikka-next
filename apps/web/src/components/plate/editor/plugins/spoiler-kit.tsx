@@ -2,6 +2,7 @@ import {
     type Descendant,
     ElementApi,
     KEYS,
+    NodeApi,
     type Path,
     PathApi,
     type SlateEditor,
@@ -9,11 +10,13 @@ import {
 } from 'platejs';
 import { createPlatePlugin } from 'platejs/react';
 
+import { SpoilerInlineElement } from '@/components/plate/ui/spoiler-inline-node';
 import { SpoilerElement } from '@/components/plate/ui/spoiler-node';
 
-import { toggleContainerBlock } from '../transforms';
+import { toggleSpoiler } from '../transforms';
 
 export const ELEMENT_SPOILER = 'spoiler';
+export const ELEMENT_SPOILER_INLINE = 'spoiler_inline';
 
 const toBlockChildren = (
     editor: SlateEditor,
@@ -112,9 +115,12 @@ export const SpoilerPlugin = createPlatePlugin({
         },
     },
 })
-    .extendTransforms(({ editor, type }) => ({
+    .extendTransforms(({ editor }) => ({
         toggle: () => {
-            toggleContainerBlock(editor, type);
+            toggleSpoiler(editor, {
+                block: ELEMENT_SPOILER,
+                inline: ELEMENT_SPOILER_INLINE,
+            });
         },
     }))
     .overrideEditor(({ editor, tf: { normalizeNode }, type }) => ({
@@ -142,4 +148,36 @@ export const SpoilerPlugin = createPlatePlugin({
         },
     }));
 
-export const SpoilerKit = [SpoilerPlugin];
+export const SpoilerInlinePlugin = createPlatePlugin({
+    key: ELEMENT_SPOILER_INLINE,
+    node: {
+        isElement: true,
+        isInline: true,
+        component: SpoilerInlineElement,
+    },
+}).overrideEditor(({ editor, tf: { normalizeNode }, type }) => ({
+    transforms: {
+        normalizeNode([node, path]) {
+            if (ElementApi.isElement(node) && node.type === type) {
+                const nested = node.children.findIndex(
+                    (child) =>
+                        ElementApi.isElement(child) && child.type === type,
+                );
+
+                if (nested !== -1) {
+                    editor.tf.unwrapNodes({ at: [...path, nested] });
+                    return;
+                }
+
+                if (NodeApi.string(node).length === 0) {
+                    editor.tf.removeNodes({ at: path });
+                    return;
+                }
+            }
+
+            normalizeNode([node, path]);
+        },
+    },
+}));
+
+export const SpoilerKit = [SpoilerPlugin, SpoilerInlinePlugin];

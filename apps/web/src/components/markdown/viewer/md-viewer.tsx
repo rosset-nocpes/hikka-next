@@ -1,6 +1,5 @@
 import Markdown, { type Components, type Options } from 'react-markdown';
 import remarkDirective from 'remark-directive';
-import remarkDirectiveRehype from 'remark-directive-rehype';
 
 import { cn } from '@/utils/cn';
 
@@ -8,9 +7,11 @@ import Link from '../link';
 import Spoiler from '../spoiler';
 import Mention from './components/mention';
 import NoSpoiler from './components/no-spoiler';
+import SpoilerInline from './components/spoiler-inline';
 import SpoilerPreview from './components/spoiler-preview';
 import remarkDisableTokenizer from './plugins/remark-disable-tokenizer';
 import remarkMentions from './plugins/remark-mentions';
+import remarkSpoiler from './plugins/remark-spoiler';
 
 type Props = Options & {
     preview?: boolean;
@@ -25,11 +26,13 @@ type Props = Options & {
 
 type CustomComponents = Components & {
     spoiler: React.ComponentType<any>;
+    'spoiler-inline': React.ComponentType<any>;
     mention: React.ComponentType<any>;
 };
 
 const previewComponents: Partial<CustomComponents> = {
     spoiler: NoSpoiler,
+    'spoiler-inline': NoSpoiler,
     mention: ({ node }: any) => (
         <span className="text-primary-foreground">
             @{node?.properties?.username ?? ''}
@@ -54,6 +57,7 @@ const components = (
 ): CustomComponents =>
     ({
         spoiler: Spoiler,
+        'spoiler-inline': SpoilerInline,
         mention: Mention,
         a: Link,
         h1: headingComponent,
@@ -84,7 +88,7 @@ const MDViewer = ({
                 remarkPlugins={[
                     remarkDisableTokenizer,
                     remarkDirective,
-                    remarkDirectiveRehype,
+                    remarkSpoiler,
                     [
                         remarkMentions,
                         {

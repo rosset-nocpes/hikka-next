@@ -8,47 +8,107 @@ import {
     remarkMention,
     type SerializeMdOptions,
 } from '@platejs/markdown';
-import type { ContainerDirective } from 'mdast-util-directive';
+import type {
+    ContainerDirective,
+    LeafDirective,
+    TextDirective,
+} from 'mdast-util-directive';
 import { KEYS, type TElement } from 'platejs';
 import remarkDirective from 'remark-directive';
 
 import { isMentionLabel, isUserUrl, userMentionUrl } from '@/utils/mentions';
 
-import { ELEMENT_SPOILER } from './spoiler-kit';
+import { ELEMENT_SPOILER, ELEMENT_SPOILER_INLINE } from './spoiler-kit';
 
-// Per container-directive type (:::name blocks)
-interface DirectiveConfig {
+type DirectiveNode = ContainerDirective | TextDirective | LeafDirective;
+
+// Per directive type: `:::name` blocks and `:name[text]` inlines
+type DirectiveConfig = {
+    name: string;
+    kind: 'container' | 'text';
     deserialize: (
-        mdastNode: ContainerDirective,
+        mdastNode: DirectiveNode,
         deco: Parameters<typeof convertChildrenDeserialize>[1],
         options: DeserializeMdOptions,
     ) => TElement;
     serialize: (
         plateNode: TElement,
         options: SerializeMdOptions,
-    ) => ContainerDirective;
-}
+    ) => DirectiveNode;
+};
 
 const directiveConfigs: Record<string, DirectiveConfig> = {
     [ELEMENT_SPOILER]: {
+        name: 'spoiler',
+        kind: 'container',
         deserialize: (mdastNode, deco, options) => ({
             type: ELEMENT_SPOILER,
             children: convertChildrenDeserialize(
-                mdastNode.children,
+                mdastNode.children as ContainerDirective['children'],
                 deco,
                 options,
             ),
         }),
         serialize: (plateNode, options) => ({
             type: 'containerDirective',
-            name: ELEMENT_SPOILER,
+            name: 'spoiler',
             children: convertNodesSerialize(
                 plateNode.children,
                 options,
             ) as ContainerDirective['children'],
         }),
     },
+    [ELEMENT_SPOILER_INLINE]: {
+        name: 'spoiler',
+        kind: 'text',
+        deserialize: (mdastNode, deco, options) => ({
+            type: ELEMENT_SPOILER_INLINE,
+            children: convertChildrenDeserialize(
+                mdastNode.children as TextDirective['children'],
+                deco,
+                options,
+            ),
+        }),
+        serialize: (plateNode, options) => ({
+            type: 'textDirective',
+            name: 'spoiler',
+            children: convertNodesSerialize(
+                plateNode.children,
+                options,
+            ) as TextDirective['children'],
+        }),
+    },
     // Add more directive types here as needed (e.g. callout)
+};
+
+const configFor = (name: string, kind: DirectiveConfig['kind']) =>
+    Object.values(directiveConfigs).find(
+        (config) => config.name === name && config.kind === kind,
+    );
+
+const deserializeTextDirective = (
+    mdastNode: TextDirective | LeafDirective,
+    deco: Parameters<typeof convertChildrenDeserialize>[1],
+    options: DeserializeMdOptions,
+) => {
+    const config = configFor(mdastNode.name, 'text');
+
+    if (!config) return undefined;
+
+    // `:spoiler` with no bracket is text the user typed, not a directive
+    if (mdastNode.children.length === 0)
+        return [{ text: `:${mdastNode.name}` }];
+
+    const children = convertChildrenDeserialize(
+        mdastNode.children as TextDirective['children'],
+        deco,
+        options,
+    );
+
+    // Editors without the inline plugin (articles) keep the text, not the node
+    if (!options.editor?.plugins[ELEMENT_SPOILER_INLINE]) return children;
+
+    return config.deserialize(mdastNode, deco, options);
 };
 
 const isBlankParagraph = ({ children }: TElement) =>
@@ -162,19 +222,21 @@ export const createMarkdownKit = ({
             rules: {
                 p: paragraphRule,
                 ...(mentions && mentionRules),
-                // Markdown -> Plate: one entry point for all container directives
+                // Markdown -> Plate: one entry point per directive shape
                 containerDirective: {
                     deserialize: (mdastNode, deco, options) =>
-                        directiveConfigs[mdastNode.name]?.deserialize(
+                        configFor(mdastNode.name, 'container')?.deserialize(
                             mdastNode,
                             deco,
                             options,
                         ),
                 },
+                textDirective: { deserialize: deserializeTextDirective },
+                leafDirective: { deserialize: deserializeTextDirective },
                 // Plate -> Markdown: one rule per registered directive type
                 ...Object.fromEntries(
-                    Object.entries(directiveConfigs).map(([name, config]) => [
-                        name,
+                    Object.entries(directiveConfigs).map(([type, config]) => [
+                        type,
                         { serialize: config.serialize },
                     ]),
                 ),
