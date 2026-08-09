@@ -1,5 +1,3 @@
-import type * as React from 'react';
-
 import { format } from 'date-fns/format';
 
 import type { UserResponse } from '@hikka/api';
@@ -12,17 +10,15 @@ import { Link } from '@/utils/navigation';
 
 type Props = {
     user: UserResponse;
-    onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
     type?: 'link' | 'button';
 };
 
-const UserCard = ({ user, onClick, type }: Props) => {
+const UserCard = ({ user, type }: Props) => {
     const Comp = type === 'button' ? 'button' : Link;
 
     return (
         <Comp
             to={`/u/${user.username}`}
-            onClick={onClick}
             className="flex w-full items-center gap-4 text-left"
         >
             <div className="w-12">

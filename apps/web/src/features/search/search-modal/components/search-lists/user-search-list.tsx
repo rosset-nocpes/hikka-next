@@ -50,11 +50,7 @@ const UserSearchList = ({ onDismiss, type, value }: Props) => {
                             value={user.reference}
                             onSelect={() => handleSelect(user)}
                         >
-                            <UserCard
-                                onClick={() => onDismiss(user)}
-                                user={user}
-                                type={type}
-                            />
+                            <UserCard user={user} type={type} />
                         </SearchItem>
                     ))}
                 </SearchGroup>

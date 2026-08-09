@@ -143,14 +143,13 @@ const EntitySearchList = ({
                             onSelect={() => handleSelect(item)}
                         >
                             <SearchCard
-                                onClick={() => onDismiss(item)}
                                 content={item}
                                 contentType={contentType}
                                 type={type}
                             />
                         </SearchItem>
                     ))}
-                    {config.hasCatalog && (
+                    {config.hasCatalog && type !== 'button' && (
                         <CommandItem
                             value={`view-all-${contentType}`}
                             onSelect={handleNavigate}

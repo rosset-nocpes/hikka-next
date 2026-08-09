@@ -32,6 +32,10 @@ type SearchResultGroupProps = {
     renderCard: (item: any) => ReactNode;
     onSelect: (item: any) => void;
     onNavigate: () => void;
+    /** Pickers stay in the modal, so they page in place instead of leaving. */
+    isPicker?: boolean;
+    hasMore?: boolean;
+    onLoadMore?: () => void;
 };
 
 const SearchResultGroup = ({
@@ -41,8 +45,14 @@ const SearchResultGroup = ({
     renderCard,
     onSelect,
     onNavigate,
+    isPicker,
+    hasMore,
+    onLoadMore,
 }: SearchResultGroupProps) => {
     if (!list || list.length === 0) return null;
+
+    const footerClassName =
+        'justify-center rounded-none border-y text-muted-foreground';
 
     return (
         <SearchGroup heading={heading}>
@@ -55,14 +65,27 @@ const SearchResultGroup = ({
                     {renderCard(item)}
                 </SearchItem>
             ))}
-            <CommandItem
-                value={`view-all-${contentType}`}
-                onSelect={onNavigate}
-                className="justify-center rounded-none border-y text-muted-foreground"
-            >
-                <Ellipsis />
-                Показати всі результати
-            </CommandItem>
+            {isPicker ? (
+                hasMore && (
+                    <CommandItem
+                        value={`load-more-${contentType}`}
+                        onSelect={onLoadMore}
+                        className={footerClassName}
+                    >
+                        <Ellipsis />
+                        Показати ще
+                    </CommandItem>
+                )
+            ) : (
+                <CommandItem
+                    value={`view-all-${contentType}`}
+                    onSelect={onNavigate}
+                    className={footerClassName}
+                >
+                    <Ellipsis />
+                    Показати всі результати
+                </CommandItem>
+            )}
         </SearchGroup>
     );
 };
@@ -153,6 +176,8 @@ const AllSearchList = ({
 
     const placeholderData = !hasAnyData ? undefined : allEmpty ? [] : [1];
 
+    const isPicker = type === 'button';
+
     const handleSelect = useCallback(
         (item: SearchContent, contentType: ContentTypeEnum) => {
             onDismiss(item);
@@ -203,9 +228,11 @@ const AllSearchList = ({
                 contentType={ContentTypeEnum.ANIME}
                 onSelect={(item) => handleSelect(item, ContentTypeEnum.ANIME)}
                 onNavigate={() => handleNavigate(ContentTypeEnum.ANIME)}
+                isPicker={isPicker}
+                hasMore={anime.hasNextPage}
+                onLoadMore={anime.fetchNextPage}
                 renderCard={(item) => (
                     <SearchCard
-                        onClick={() => onDismiss(item)}
                         content={item}
                         contentType="anime"
                         type={type}
@@ -219,9 +246,11 @@ const AllSearchList = ({
                 contentType={ContentTypeEnum.MANGA}
                 onSelect={(item) => handleSelect(item, ContentTypeEnum.MANGA)}
                 onNavigate={() => handleNavigate(ContentTypeEnum.MANGA)}
+                isPicker={isPicker}
+                hasMore={manga.hasNextPage}
+                onLoadMore={manga.fetchNextPage}
                 renderCard={(item) => (
                     <SearchCard
-                        onClick={() => onDismiss(item)}
                         content={item}
                         contentType="manga"
                         type={type}
@@ -235,9 +264,11 @@ const AllSearchList = ({
                 contentType={ContentTypeEnum.NOVEL}
                 onSelect={(item) => handleSelect(item, ContentTypeEnum.NOVEL)}
                 onNavigate={() => handleNavigate(ContentTypeEnum.NOVEL)}
+                isPicker={isPicker}
+                hasMore={novel.hasNextPage}
+                onLoadMore={novel.fetchNextPage}
                 renderCard={(item) => (
                     <SearchCard
-                        onClick={() => onDismiss(item)}
                         content={item}
                         contentType="novel"
                         type={type}
@@ -253,9 +284,11 @@ const AllSearchList = ({
                     handleSelect(item, ContentTypeEnum.CHARACTER)
                 }
                 onNavigate={() => handleNavigate(ContentTypeEnum.CHARACTER)}
+                isPicker={isPicker}
+                hasMore={characters.hasNextPage}
+                onLoadMore={characters.fetchNextPage}
                 renderCard={(item) => (
                     <SearchCard
-                        onClick={() => onDismiss(item)}
                         content={item}
                         contentType="character"
                         type={type}
@@ -269,9 +302,11 @@ const AllSearchList = ({
                 contentType={ContentTypeEnum.PERSON}
                 onSelect={(item) => handleSelect(item, ContentTypeEnum.PERSON)}
                 onNavigate={() => handleNavigate(ContentTypeEnum.PERSON)}
+                isPicker={isPicker}
+                hasMore={people.hasNextPage}
+                onLoadMore={people.fetchNextPage}
                 renderCard={(item) => (
                     <SearchCard
-                        onClick={() => onDismiss(item)}
                         content={item}
                         contentType="person"
                         type={type}

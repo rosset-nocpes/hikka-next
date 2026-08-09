@@ -1,5 +1,3 @@
-import type { MouseEventHandler } from 'react';
-
 import type {
     AnimeResponse,
     AnimeResponseWithWatch,
@@ -64,11 +62,10 @@ const CARD_CONFIG: Record<SearchCardType, CardConfig> = {
 type Props = {
     content: SearchContent;
     contentType: SearchCardType;
-    onClick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
     type?: 'link' | 'button';
 };
 
-const SearchCard = ({ content, contentType, onClick, type }: Props) => {
+const SearchCard = ({ content, contentType, type }: Props) => {
     const config = CARD_CONFIG[contentType];
     const Comp = type === 'button' ? 'button' : Link;
     const title = useTitle(content);
@@ -92,7 +89,6 @@ const SearchCard = ({ content, contentType, onClick, type }: Props) => {
     return (
         <Comp
             to={`${config.href}/${content.slug}`}
-            onClick={onClick}
             className="flex w-full items-center gap-4 text-left"
         >
             <div className="w-12">
