@@ -11,6 +11,7 @@ import { toPlatePlugin } from 'platejs/react';
 
 import { ContentSearchInputElement } from '@/components/plate/ui/content-search-node';
 
+export const CONTENT_SEARCH_KEY = 'content_search';
 export const CONTENT_SEARCH_INPUT_KEY = 'content_search_input';
 
 const BaseContentSearchInputPlugin = createSlatePlugin({
@@ -23,7 +24,7 @@ const BaseContentSearchInputPlugin = createSlatePlugin({
 const BaseContentSearchPlugin = createTSlatePlugin<
     PluginConfig<'content_search', TriggerComboboxPluginOptions>
 >({
-    key: 'content_search',
+    key: CONTENT_SEARCH_KEY,
     options: {
         trigger: '#',
         triggerPreviousCharPattern: /^$|^[\s"']$/,

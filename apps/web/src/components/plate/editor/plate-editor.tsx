@@ -29,6 +29,7 @@ import { cn } from '@/utils/cn';
 import { ArticleKit } from './article-kit';
 import { usePlateMarkdownSetup } from './markdown-editor-kit';
 import { ImageGroupPlugin } from './plugins/image-group-kit';
+import { withoutTriggerPlugins } from './plugins/trigger-plugins';
 import { StaticViewer } from './static-viewer';
 import { uploadAttachmentImage } from './upload-image';
 import { useEditorApi } from './use-editor-api';
@@ -277,7 +278,7 @@ export function ArticlePlateEditor({
     editorId,
 }: ArticlePlateEditorProps) {
     const editor = usePlateEditor({
-        plugins: ArticleKit,
+        plugins: withoutTriggerPlugins(ArticleKit),
         value,
         nodeId: false,
         shouldNormalizeEditor: true,

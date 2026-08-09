@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import {
+    AtSignIcon,
     ListIcon,
     ListOrderedIcon,
     MoreHorizontalIcon,
@@ -20,14 +21,17 @@ import {
 import { insertBlock } from '../editor/transforms';
 import {
     CONTENT_SEARCH_LABEL,
+    USER_SEARCH_LABEL,
     useContentSearchModal,
-} from './content-search-toolbar-button';
+    useUserSearchModal,
+} from './search-toolbar-buttons';
 import { ToolbarButton } from './toolbar';
 
 export function OverflowToolbarButton() {
     const editor = useEditorRef();
     const [open, setOpen] = React.useState(false);
     const { modal, openSearch } = useContentSearchModal();
+    const userSearch = useUserSearchModal();
 
     const insert = (type: string) => {
         insertBlock(editor, type);
@@ -59,10 +63,15 @@ export function OverflowToolbarButton() {
                         <SearchIcon />
                         {CONTENT_SEARCH_LABEL}
                     </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={userSearch.openSearch}>
+                        <AtSignIcon />
+                        {USER_SEARCH_LABEL}
+                    </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
 
             {modal}
+            {userSearch.modal}
         </React.Fragment>
     );
 }

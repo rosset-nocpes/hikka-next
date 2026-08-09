@@ -17,6 +17,7 @@ import { ListKit } from './plugins/list-classic-kit';
 import { createMarkdownKit } from './plugins/markdown-kit';
 import { SpoilerKit } from './plugins/spoiler-kit';
 import { TextSubstitutionsKit } from './plugins/text-substitutions-kit';
+import { withoutTriggerPlugins } from './plugins/trigger-plugins';
 import { UserSearchKit } from './plugins/user-search-kit';
 import { useEditorApi } from './use-editor-api';
 
@@ -54,7 +55,7 @@ interface UsePlateMarkdownSetupOptions {
 
 export function usePlateMarkdownSetup(options: UsePlateMarkdownSetupOptions) {
     const editor = usePlateEditor({
-        plugins: MarkdownEditorKit,
+        plugins: withoutTriggerPlugins(MarkdownEditorKit),
         value: (editor) =>
             editor
                 .getApi(MarkdownPlugin)

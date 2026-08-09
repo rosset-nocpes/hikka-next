@@ -7,7 +7,6 @@ import { useEditorReadOnly } from 'platejs/react';
 import { useScrollGradientMask } from '@/services/hooks/use-scroll-position';
 import { cn } from '@/utils/cn';
 
-import { ContentSearchToolbarButton } from './content-search-toolbar-button';
 import { EmojiToolbarButton } from './emoji-toolbar-button';
 import { RedoToolbarButton, UndoToolbarButton } from './history-toolbar-button';
 import { ImageGroupToolbarButton } from './image-group-toolbar-button';
@@ -15,6 +14,10 @@ import { InsertToolbarButton } from './insert-toolbar-button';
 import { LinkToolbarButton } from './link-toolbar-button';
 import { MarkToolbarButton } from './mark-toolbar-button';
 import { OverflowToolbarButton } from './overflow-toolbar-button';
+import {
+    ContentSearchToolbarButton,
+    UserSearchToolbarButton,
+} from './search-toolbar-buttons';
 import { SpoilerToolbarButton } from './spoiler-toolbar-button';
 import { ToolbarGroup } from './toolbar';
 import { VideoToolbarButton } from './video-toolbar-button';
@@ -108,6 +111,7 @@ export function FixedArticleToolbarButtons() {
                     <ToolbarGroup>
                         <LinkToolbarButton />
                         <ContentSearchToolbarButton />
+                        <UserSearchToolbarButton />
                         <EmojiToolbarButton />
                     </ToolbarGroup>
                     <ToolbarGroup>

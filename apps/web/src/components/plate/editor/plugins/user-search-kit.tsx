@@ -11,6 +11,7 @@ import { toPlatePlugin } from 'platejs/react';
 
 import { UserSearchInputElement } from '@/components/plate/ui/user-search-node';
 
+export const USER_SEARCH_KEY = 'user_search';
 export const USER_SEARCH_INPUT_KEY = 'user_search_input';
 
 const BaseUserSearchInputPlugin = createSlatePlugin({
@@ -23,7 +24,7 @@ const BaseUserSearchInputPlugin = createSlatePlugin({
 const BaseUserSearchPlugin = createTSlatePlugin<
     PluginConfig<'user_search', TriggerComboboxPluginOptions>
 >({
-    key: 'user_search',
+    key: USER_SEARCH_KEY,
     options: {
         trigger: '@',
         triggerPreviousCharPattern: /^$|^[\s"']$/,
