@@ -3,6 +3,7 @@ import { ParagraphPlugin } from 'platejs/react';
 
 import { BasicBlocksKit } from './plugins/basic-blocks-kit';
 import { BasicMarksKit } from './plugins/basic-marks-kit';
+import { ContentSearchKit } from './plugins/content-search-kit';
 import { EmojiKit } from './plugins/emoji-kit';
 import { ExitBreakKit } from './plugins/exit-break-kit';
 import { FixedArticleToolbarKit } from './plugins/fixed-toolbar-kit';
@@ -29,6 +30,7 @@ export const ArticleKit = [
 
     // Editing
     ...EmojiKit,
+    ...ContentSearchKit,
     TrailingBlockPlugin.configure({ options: { type: ParagraphPlugin.key } }),
     ...ExitBreakKit,
     ...TextSubstitutionsKit,

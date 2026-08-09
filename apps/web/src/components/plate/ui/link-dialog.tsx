@@ -15,12 +15,12 @@ import {
 } from '@/components/ui/responsive-modal';
 import { z } from '@/utils/i18n/zod';
 
-const formSchema = z.object({
+export const linkFormSchema = z.object({
     url: z.string().url(),
     text: z.string().optional(),
 });
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof linkFormSchema>;
 
 interface LinkDialogState {
     open: boolean;
@@ -129,7 +129,7 @@ const LinkDialogForm: FC<LinkDialogFormProps> = ({
 }) => {
     const form = useTextForm({
         defaultValues,
-        validators: { onSubmit: formSchema },
+        validators: { onSubmit: linkFormSchema },
         onSubmit: async ({ value }) => {
             onSubmit(value);
         },

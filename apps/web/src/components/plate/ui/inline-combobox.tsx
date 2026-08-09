@@ -23,6 +23,7 @@ import { cva } from 'class-variance-authority';
 import type { Point, TElement } from 'platejs';
 import { useComposedRef, useEditorRef } from 'platejs/react';
 
+import { usePortalContainer } from '@/components/ui/portal-container-context';
 import { cn } from '@/utils/cn';
 
 type FilterFn = (
@@ -258,30 +259,27 @@ const InlineComboboxContent = ({
     children,
     ...props
 }: React.ComponentProps<typeof ComboboxPopover>) => {
-    // Portal prevents CSS from leaking into popover
+    // Portal prevents CSS from leaking into popover. Inside a modal it must
+    // land in the modal's own tree, or react-remove-scroll blocks scrolling.
+    const portalContainer = usePortalContainer();
+
     return (
-        <Portal>
+        <Portal portalElement={portalContainer ?? undefined}>
             <ComboboxPopover
                 className={cn(
-                    'z-100 w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-lg bg-popover text-popover-foreground shadow-md ring-1 ring-border',
+                    'no-scrollbar z-100 max-h-72 w-72 max-w-[calc(100vw-2rem)] scroll-py-1 overflow-y-auto overflow-x-hidden rounded-(--base-radius) border bg-popover p-1 text-popover-foreground shadow-md outline-hidden',
                     className,
                 )}
                 {...props}
             >
-                {/* Scrolling sits inside the rounded box: a scrollbar on the popover itself squares off its right corners. */}
-                <div
-                    role="presentation"
-                    className="max-h-72 overflow-y-auto rounded-[inherit] p-1"
-                >
-                    {children}
-                </div>
+                {children}
             </ComboboxPopover>
         </Portal>
     );
 };
 
 const comboboxItemVariants = cva(
-    'relative flex select-none items-center gap-2 rounded-md p-2 text-foreground text-sm outline-hidden [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+    'relative flex select-none items-center gap-2 rounded-(--base-radius) p-2 text-foreground text-sm outline-hidden [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
     {
         defaultVariants: {
             interactive: true,
@@ -299,6 +297,7 @@ const InlineComboboxItem = ({
     className,
     focusEditor = true,
     group,
+    keepOpen = false,
     keywords,
     label,
     onClick,
@@ -306,6 +305,8 @@ const InlineComboboxItem = ({
 }: {
     focusEditor?: boolean;
     group?: string;
+    /** For rows that act on the list itself, like loading more results. */
+    keepOpen?: boolean;
     keywords?: string[];
     label?: string;
 } & ComboboxItemProps &
@@ -332,8 +333,11 @@ const InlineComboboxItem = ({
     return (
         <ComboboxItem
             className={cn(comboboxItemVariants(), className)}
+            hideOnClick={!keepOpen}
+            // Without this the row's `value` replaces the typed query.
+            setValueOnClick={!keepOpen}
             onClick={(event) => {
-                removeInput(focusEditor);
+                if (!keepOpen) removeInput(focusEditor);
                 onClick?.(event);
             }}
             {...props}
@@ -381,7 +385,7 @@ function InlineComboboxGroup({
         <ComboboxGroup
             {...props}
             className={cn(
-                'hidden not-last:mb-1 not-last:border-b not-last:pb-1 [&:has([role=option])]:block',
+                'hidden overflow-hidden [&:has([role=option])]:block',
                 className,
             )}
         />
@@ -396,9 +400,22 @@ function InlineComboboxGroupLabel({
         <ComboboxGroupLabel
             {...props}
             className={cn(
-                'mb-1 px-2 pt-1 font-medium text-muted-foreground text-xs',
+                'px-2 py-1.5 font-medium text-muted-foreground text-xs',
                 className,
             )}
+        />
+    );
+}
+
+function InlineComboboxSeparator({
+    className,
+    ...props
+}: React.ComponentProps<'div'>) {
+    return (
+        <div
+            role="presentation"
+            className={cn('-mx-1 my-1 h-px bg-border', className)}
+            {...props}
         />
     );
 }
@@ -412,4 +429,5 @@ export {
     InlineComboboxInput,
     InlineComboboxItem,
     InlineComboboxRow,
+    InlineComboboxSeparator,
 };

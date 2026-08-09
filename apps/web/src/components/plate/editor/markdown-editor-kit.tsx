@@ -9,6 +9,7 @@ import { usePreventUnsavedClose } from '@/services/hooks/use-prevent-unsaved-clo
 
 import { BasicBlocksKit } from './plugins/basic-blocks-kit';
 import { BasicMarksKit } from './plugins/basic-marks-kit';
+import { ContentSearchKit } from './plugins/content-search-kit';
 import { EmojiKit } from './plugins/emoji-kit';
 import { ExitBreakKit } from './plugins/exit-break-kit';
 import { LinkKit } from './plugins/link-kit';
@@ -31,6 +32,7 @@ export const MarkdownEditorKit = [
     // Editing
     ...EmojiKit,
     ...MentionKit,
+    ...ContentSearchKit,
     TrailingBlockPlugin.configure({ options: { type: ParagraphPlugin.key } }),
     ...ExitBreakKit,
     ...TextSubstitutionsKit,
