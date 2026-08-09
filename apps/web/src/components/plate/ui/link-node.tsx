@@ -35,7 +35,7 @@ function MentionAvatar({ target }: { target: string }) {
     const user = referenced ?? profile;
 
     return (
-        <Avatar className="size-5 self-center" contentEditable={false}>
+        <Avatar className="mr-1 size-5 self-center" contentEditable={false}>
             <AvatarImage src={user?.avatar} />
             <AvatarFallback>{user?.username?.[0]}</AvatarFallback>
         </Avatar>
@@ -51,7 +51,7 @@ export function LinkElement(props: PlateElementProps<TLinkElement>) {
             as="span"
             className={
                 target
-                    ? 'inline-flex items-baseline gap-1 text-primary-foreground hover:underline'
+                    ? 'inline-flex items-baseline text-primary-foreground hover:underline'
                     : 'text-primary-foreground decoration-primary-foreground underline-offset-2 hover:underline'
             }
             attributes={{
