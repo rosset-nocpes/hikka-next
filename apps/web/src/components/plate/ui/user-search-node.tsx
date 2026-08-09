@@ -1,20 +1,15 @@
 import * as React from 'react';
 
-import { getMentionOnSelectItem } from '@platejs/mention';
+import { createLinkNode } from '@platejs/link';
 import { useQuery } from '@tanstack/react-query';
-import { IS_APPLE, type TElement } from 'platejs';
 import type { PlateElementProps } from 'platejs/react';
 import { PlateElement } from 'platejs/react';
 
 import { searchUsersOptions } from '@hikka/api';
 
-import {
-    MENTION_CLASSNAME,
-    useMentionUser,
-} from '@/components/markdown/viewer/components/mention';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import useDebounce from '@/services/hooks/use-debounce';
-import { cn } from '@/utils/cn';
+import { userMentionUrl } from '@/utils/mentions';
 
 import {
     InlineCombobox,
@@ -25,56 +20,9 @@ import {
     InlineComboboxItem,
 } from './inline-combobox';
 
-export type TMentionElement = TElement & {
-    value: string;
-    key?: string;
-};
-
 const MIN_SEARCH_LENGTH = 2;
 
-export function MentionElement(props: PlateElementProps<TMentionElement>) {
-    const { key, value } = props.element;
-    const user = useMentionUser(value, key);
-
-    const content = (
-        <React.Fragment>
-            <Avatar className="size-5 self-center">
-                <AvatarImage src={user?.avatar} />
-                <AvatarFallback>{value[0]}</AvatarFallback>
-            </Avatar>
-            @{value}
-        </React.Fragment>
-    );
-
-    return (
-        <PlateElement
-            {...props}
-            as="span"
-            className={cn(MENTION_CLASSNAME, 'whitespace-nowrap')}
-            attributes={{
-                ...props.attributes,
-                contentEditable: false,
-                'data-slate-value': value,
-            }}
-        >
-            {IS_APPLE ? (
-                <React.Fragment>
-                    {props.children}
-                    {content}
-                </React.Fragment>
-            ) : (
-                <React.Fragment>
-                    {content}
-                    {props.children}
-                </React.Fragment>
-            )}
-        </PlateElement>
-    );
-}
-
-const onSelectItem = getMentionOnSelectItem();
-
-export function MentionInputElement(props: PlateElementProps) {
+export function UserSearchInputElement(props: PlateElementProps) {
     const { children, editor, element } = props;
     const [search, setSearch] = React.useState('');
     const [debouncedSearch] = useDebounce({ value: search, delay: 300 });
@@ -116,13 +64,11 @@ export function MentionInputElement(props: PlateElementProps) {
                                 key={user.reference}
                                 value={user.username ?? ''}
                                 onClick={() =>
-                                    onSelectItem(
-                                        editor,
-                                        {
-                                            key: user.reference,
-                                            text: user.username ?? '',
-                                        },
-                                        search,
+                                    editor.tf.insertNodes(
+                                        createLinkNode(editor, {
+                                            url: userMentionUrl(user.reference),
+                                            text: `@${user.username}`,
+                                        }),
                                     )
                                 }
                             >

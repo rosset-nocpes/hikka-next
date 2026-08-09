@@ -11,10 +11,10 @@ type Props = {
     node?: { properties?: { username?: string; reference?: string } };
 };
 
-export const MENTION_CLASSNAME =
+const MENTION_CLASSNAME =
     'inline-flex items-baseline gap-1 text-primary-foreground hover:underline';
 
-export const useMentionUser = (username: string, reference?: string) => {
+const useMentionUser = (username: string, reference?: string) => {
     const { data: referencedUser } = useQuery({
         ...userReferenceOptions({ path: { reference: reference ?? '' } }),
         enabled: !!reference,

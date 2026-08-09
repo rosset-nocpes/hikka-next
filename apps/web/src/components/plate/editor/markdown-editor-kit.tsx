@@ -15,9 +15,9 @@ import { ExitBreakKit } from './plugins/exit-break-kit';
 import { LinkKit } from './plugins/link-kit';
 import { ListKit } from './plugins/list-classic-kit';
 import { createMarkdownKit } from './plugins/markdown-kit';
-import { MentionKit } from './plugins/mention-kit';
 import { SpoilerKit } from './plugins/spoiler-kit';
 import { TextSubstitutionsKit } from './plugins/text-substitutions-kit';
+import { UserSearchKit } from './plugins/user-search-kit';
 import { useEditorApi } from './use-editor-api';
 
 export const MarkdownEditorKit = [
@@ -31,7 +31,7 @@ export const MarkdownEditorKit = [
 
     // Editing
     ...EmojiKit,
-    ...MentionKit,
+    ...UserSearchKit,
     ...ContentSearchKit,
     TrailingBlockPlugin.configure({ options: { type: ParagraphPlugin.key } }),
     ...ExitBreakKit,

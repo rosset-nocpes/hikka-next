@@ -14,6 +14,7 @@ import { ListKit } from './plugins/list-classic-kit';
 import { MarkdownKit } from './plugins/markdown-kit';
 import { SpoilerKit } from './plugins/spoiler-kit';
 import { TextSubstitutionsKit } from './plugins/text-substitutions-kit';
+import { UserSearchKit } from './plugins/user-search-kit';
 import { VideoKit } from './plugins/video-kit';
 
 export const ArticleKit = [
@@ -31,6 +32,7 @@ export const ArticleKit = [
     // Editing
     ...EmojiKit,
     ...ContentSearchKit,
+    ...UserSearchKit,
     TrailingBlockPlugin.configure({ options: { type: ParagraphPlugin.key } }),
     ...ExitBreakKit,
     ...TextSubstitutionsKit,

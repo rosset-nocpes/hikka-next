@@ -42,7 +42,11 @@ export default function remarkMentions(
 ) {
     return (tree: Root) => {
         markMentionLinks(tree);
-        findAndReplace(tree, [[mentionRegex, replaceMention]]);
+        // A mention link already carries `@name` as its label; replacing that
+        // text too would nest a second link inside it.
+        findAndReplace(tree, [[mentionRegex, replaceMention]], {
+            ignore: ['link', 'linkReference'],
+        });
     };
 
     function replaceMention(

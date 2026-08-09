@@ -7,6 +7,7 @@ import {
     ReadContentTypeEnum,
     userProfileOptions,
     userReadStatsOptions,
+    userReferenceOptions,
     userWatchStatsOptions,
 } from '@hikka/api';
 
@@ -14,6 +15,7 @@ import { FollowButton } from '@/components/action-buttons';
 import { RoleBadge } from '@/components/badges';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
+import { isUserReference } from '@/utils/mentions';
 
 import MaterialSymbolsAnimatedImages from '../../icons/material-symbols/MaterialSymbolsAnimatedImages';
 import MaterialSymbolsMenuBookRounded from '../../icons/material-symbols/MaterialSymbolsMenuBookRounded';
@@ -30,30 +32,49 @@ type Props = PropsWithChildren & {
     username?: string;
 };
 
-const TooltipData: FC<TooltipDataProps> = ({ username }) => {
-    const { data: user } = useQuery(userProfileOptions({ path: { username } }));
-    const { data: followStats } = useQuery(
-        followStatsOptions({ path: { username } }),
-    );
-    const { data: watchStats } = useQuery(
-        userWatchStatsOptions({ path: { username } }),
-    );
-    const { data: mangaStats } = useQuery(
-        userReadStatsOptions({
+const TooltipData: FC<TooltipDataProps> = ({ username: usernameOrRef }) => {
+    const isReference = isUserReference(usernameOrRef);
+
+    const { data: referencedUser } = useQuery({
+        ...userReferenceOptions({ path: { reference: usernameOrRef } }),
+        enabled: isReference,
+    });
+
+    const username = isReference
+        ? (referencedUser?.username ?? '')
+        : usernameOrRef;
+    const enabled = username.length > 0;
+
+    const { data: user } = useQuery({
+        ...userProfileOptions({ path: { username } }),
+        enabled,
+    });
+    const { data: followStats } = useQuery({
+        ...followStatsOptions({ path: { username } }),
+        enabled,
+    });
+    const { data: watchStats } = useQuery({
+        ...userWatchStatsOptions({ path: { username } }),
+        enabled,
+    });
+    const { data: mangaStats } = useQuery({
+        ...userReadStatsOptions({
             path: {
                 username,
                 content_type: ReadContentTypeEnum.MANGA,
             },
         }),
-    );
-    const { data: novelStats } = useQuery(
-        userReadStatsOptions({
+        enabled,
+    });
+    const { data: novelStats } = useQuery({
+        ...userReadStatsOptions({
             path: {
                 username,
                 content_type: ReadContentTypeEnum.NOVEL,
             },
         }),
-    );
+        enabled,
+    });
 
     if (!user && !followStats) {
         return <UserTooltipSkeleton />;
