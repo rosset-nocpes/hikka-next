@@ -10,7 +10,7 @@ import type { SearchTypeValue } from '../types';
 type Props = {
     open: boolean;
     onClick?: (anime: AnimeResponse) => void;
-    setOpen: Dispatch<SetStateAction<boolean>>;
+    setOpen: (open: boolean) => void;
     setSearchType?: Dispatch<SetStateAction<SearchTypeValue>>;
     content_type?: ContentTypeEnum;
     disableHotkey?: boolean;
@@ -46,7 +46,7 @@ const useSearchModal = ({
 
             if (!_inputting && e.key === '/') {
                 e.preventDefault();
-                setOpen((prev) => !prev);
+                setOpen(!open);
             }
         }
 
@@ -57,7 +57,7 @@ const useSearchModal = ({
         return function cleanup() {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [onClick, setOpen, disableHotkey]);
+    }, [onClick, setOpen, open, disableHotkey]);
 
     useEffect(() => {
         if (setSearchType && content_type) {

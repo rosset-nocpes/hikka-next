@@ -40,6 +40,9 @@ type Props = {
     content_type?: ContentTypeEnum;
     allowedTypes?: ContentTypeEnum[];
     disableHotkey?: boolean;
+    /** Controlled mode: the caller owns the state and renders its own trigger. */
+    open?: boolean;
+    onOpenChange?: (open: boolean) => void;
 };
 
 const SearchModal: FC<Props> = ({
@@ -49,12 +52,24 @@ const SearchModal: FC<Props> = ({
     children,
     allowedTypes,
     disableHotkey,
+    open: openProp,
+    onOpenChange,
 }) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [searchType, setSearchType] = useState<SearchTypeValue>(
         content_type || SEARCH_TYPE_ALL,
     );
-    const [open, setOpen] = useState<boolean>(false);
+    const [uncontrolledOpen, setUncontrolledOpen] = useState<boolean>(false);
+    const isControlled = openProp !== undefined;
+    const open = isControlled ? openProp : uncontrolledOpen;
+
+    const setOpen = useCallback(
+        (next: boolean) => {
+            if (!isControlled) setUncontrolledOpen(next);
+            onOpenChange?.(next);
+        },
+        [isControlled, onOpenChange],
+    );
     const [searchValue, setSearchValue] = useState<string | undefined>(
         undefined,
     );
@@ -79,15 +94,18 @@ const SearchModal: FC<Props> = ({
 
             onClick?.(content);
         },
-        [addHistoryEntry, onClick, searchValue],
+        [addHistoryEntry, onClick, searchValue, setOpen],
     );
 
-    const handleOpenChange = useCallback((isOpen: boolean) => {
-        if (!isOpen) {
-            setSearchValue('');
-        }
-        setOpen(isOpen);
-    }, []);
+    const handleOpenChange = useCallback(
+        (isOpen: boolean) => {
+            if (!isOpen) {
+                setSearchValue('');
+            }
+            setOpen(isOpen);
+        },
+        [setOpen],
+    );
 
     const handleHistorySelect = useCallback(
         (entry: SearchHistoryEntry) => {
@@ -113,7 +131,9 @@ const SearchModal: FC<Props> = ({
 
     return (
         <Fragment>
-            <SearchButton setOpen={setOpen}>{children}</SearchButton>
+            {!isControlled && (
+                <SearchButton setOpen={setOpen}>{children}</SearchButton>
+            )}
             <CommandDialog
                 className="max-h-[calc(var(--visual-viewport-height,100dvh)-6rem)] transition-[max-height] duration-100 md:top-24 md:max-h-[calc(var(--visual-viewport-height,100dvh)-6rem-1rem)] md:max-w-2xl md:translate-y-0"
                 open={open}
