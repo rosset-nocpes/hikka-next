@@ -1,10 +1,10 @@
 import type { Link, Parent, PhrasingContent, Root } from 'mdast';
 import { findAndReplace } from 'mdast-util-find-and-replace';
 
+import { isUserReference, userUrlTarget } from '@/utils/mentions';
+
 const userGroup = '[\\da-z][-\\da-z_]{0,38}';
 const mentionRegex = new RegExp(`(?:^|\\s)@(${userGroup})`, 'gi');
-
-const MENTION_URL_PREFIX = 'mention:';
 
 const isParent = (node: unknown): node is Parent =>
     Array.isArray((node as Parent).children);
@@ -17,20 +17,30 @@ const linkLabel = (node: Parent): string =>
         })
         .join('');
 
+const asMention = (node: Link) => {
+    const label = linkLabel(node);
+    const target = userUrlTarget(node.url);
+
+    if (!target || label[0] !== '@') return null;
+
+    return isUserReference(target)
+        ? { username: label.slice(1), reference: target }
+        : { username: target };
+};
+
 function markMentionLinks(node: Parent) {
     for (const child of node.children) {
-        if (child.type === 'link' && child.url.startsWith(MENTION_URL_PREFIX)) {
-            child.data = {
-                ...child.data,
-                hName: 'mention',
-                hProperties: {
-                    username: linkLabel(child).replace(/^@/, ''),
-                    reference: decodeURIComponent(
-                        child.url.slice(MENTION_URL_PREFIX.length),
-                    ),
-                },
-            };
-            continue;
+        if (child.type === 'link') {
+            const mention = asMention(child);
+
+            if (mention) {
+                child.data = {
+                    ...child.data,
+                    hName: 'mention',
+                    hProperties: mention,
+                };
+                continue;
+            }
         }
 
         if (isParent(child)) markMentionLinks(child);

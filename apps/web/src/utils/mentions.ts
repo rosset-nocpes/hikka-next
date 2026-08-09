@@ -14,6 +14,9 @@ export const isMentionLabel = (text: string) => MENTION_LABEL.test(text);
 
 // Serialized raw, so the charset is deliberately narrow: anything that could
 // need escaping must not take that path.
-const USER_URL = /^(https?:\/\/[^\s/()]+)?\/u\/[A-Za-z0-9_-]+$/;
+const USER_URL = /^(?:https?:\/\/[^\s/()]+)?\/u\/([A-Za-z0-9_-]+)$/;
+
+/** The username or reference a user link points at, or null if it is not one. */
+export const userUrlTarget = (url: string) => USER_URL.exec(url)?.[1] ?? null;
 
 export const isUserUrl = (url: string) => USER_URL.test(url);

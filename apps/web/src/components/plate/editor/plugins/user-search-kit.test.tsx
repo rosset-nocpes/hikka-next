@@ -82,16 +82,6 @@ describe('mention serialization', () => {
 });
 
 describe('mention deserialization', () => {
-    it('turns a legacy referenced mention into a user link', () => {
-        const links = linksOf(
-            deserialize(`дякую [@olexh](mention:${REFERENCE}) за пораду`),
-        );
-
-        expect(links).toHaveLength(1);
-        expect(links[0].url).toBe(`${SITE}/u/${REFERENCE}`);
-        expect(links[0].children[0].text).toBe('@olexh');
-    });
-
     it('turns a legacy bare mention into a link by username', () => {
         const links = linksOf(deserialize('дякую @olexh за пораду'));
 
@@ -115,11 +105,7 @@ describe('mention round trip', () => {
         expect(serialize(deserialize(markdown)).trim()).toBe(markdown);
     });
 
-    it('upgrades both legacy spellings to reference links', () => {
-        expect(
-            serialize(deserialize(`дякую [@olexh](mention:${REFERENCE})`)),
-        ).toContain(`[@olexh](${SITE}/u/${REFERENCE})`);
-
+    it('upgrades a legacy bare mention to a link', () => {
         expect(serialize(deserialize('дякую @olexh'))).toContain(
             `[@olexh](${SITE}/u/olexh)`,
         );
@@ -143,10 +129,7 @@ describe('article editor', () => {
     });
 
     it('mints links rather than mention nodes the backend schema rejects', () => {
-        const value = deserialize(
-            `дякую @olexh та [@second](mention:${REFERENCE})`,
-            ArticleKit,
-        );
+        const value = deserialize('дякую @olexh', ArticleKit);
 
         expect(
             value.flatMap((node: any) =>

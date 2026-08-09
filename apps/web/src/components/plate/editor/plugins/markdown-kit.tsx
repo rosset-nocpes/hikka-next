@@ -70,10 +70,7 @@ const paragraphRule = {
 
 const MENTION_MDAST_TYPE = 'userLink';
 
-// `remarkMention` emits `displayText` only for the legacy `[text](mention:id)`
-// form; a bare `@name` carries the name in `username` and gets no reference.
 type MdastMention = {
-    displayText?: string;
     username: string;
 };
 
@@ -85,19 +82,15 @@ type MdastUserLink = {
 
 const stripSigil = (value: string) => value.replace(/^@/, '');
 
-// Both legacy spellings land on the link the picker writes today. The bare form
-// has no reference, so it points at the username instead.
+// A bare `@name` in an old comment becomes the link the picker writes today;
+// with no reference to go on, it points at the username.
 const mentionRule = {
     deserialize: (mdastNode: MdastMention): TElement => {
-        const username = stripSigil(
-            mdastNode.displayText ?? mdastNode.username,
-        );
+        const username = stripSigil(mdastNode.username);
 
         return {
             type: KEYS.a,
-            url: userMentionUrl(
-                mdastNode.displayText ? mdastNode.username : username,
-            ),
+            url: userMentionUrl(username),
             children: [{ text: `@${username}` }],
         };
     },
