@@ -18,7 +18,7 @@ const SpoilerInline: FC<Props> = ({ children }) => {
             role="button"
             tabIndex={0}
             aria-label="Показати спойлер"
-            className="spoiler-inline cursor-pointer select-none rounded-sm bg-secondary/60 blur-[3px]"
+            className="spoiler-inline cursor-pointer select-none rounded-xs bg-secondary/60 px-1.5 blur-[3px]"
             onClick={(event) => {
                 event.stopPropagation();
                 setRevealed(true);
