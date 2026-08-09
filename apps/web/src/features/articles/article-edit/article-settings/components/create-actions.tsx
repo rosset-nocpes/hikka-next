@@ -13,11 +13,7 @@ import { useArticleContext } from '@/services/providers/article-provider';
 import { invalidateArticles } from '@/utils/api/invalidate-content-state';
 import { CONTENT_TYPE_LINKS } from '@/utils/constants/navigation';
 import { useRouter } from '@/utils/navigation';
-import {
-    hasPendingUploads,
-    removeEmptyTextNodes,
-    stripUploadPlaceholders,
-} from '@/utils/plate';
+import { getArticleDocument, hasPendingUploads } from '@/utils/plate';
 
 type Props = {};
 
@@ -57,8 +53,7 @@ const CreateActions: FC<Props> = () => {
                 return;
             }
 
-            document = stripUploadPlaceholders(document);
-            document = removeEmptyTextNodes(document);
+            document = getArticleDocument(document);
 
             mutateCreateArticle({
                 body: {

@@ -1,6 +1,5 @@
 import type { FC } from 'react';
 
-import { MarkdownPlugin } from '@platejs/markdown';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Minimize2, Send } from 'lucide-react';
 import { useEditorSelector } from 'platejs/react';
@@ -22,7 +21,7 @@ import Spinner from '@/components/ui/spinner';
 import { useCommentsContext } from '@/services/providers/comments-provider';
 import { invalidateComments } from '@/utils/api/invalidate-content-state';
 import { MAX_COMMENT_DEPTH } from '@/utils/constants/common';
-import { removeEmptyTextNodes } from '@/utils/plate';
+import { getCommentText, getCommentValue } from '@/utils/plate';
 
 import type { Verdict } from './utils/review';
 import { toReviewArgs } from './utils/review';
@@ -58,7 +57,7 @@ const CommentInputBottomBar: FC<Props> = ({
 
     // Mirrors the onSubmit guard so send stays disabled until there is content.
     const hasContent = useEditorSelector(
-        (editor) => removeEmptyTextNodes(editor.children).length > 0,
+        (editor) => getCommentValue(editor).length > 0,
         [],
     );
 
@@ -116,19 +115,15 @@ const CommentInputBottomBar: FC<Props> = ({
     };
 
     const onSubmit = () => {
-        const filteredValue = removeEmptyTextNodes(editor.children);
+        const text = getCommentText(editor);
 
-        if (filteredValue.length === 0) {
+        if (!text) {
             return;
         }
 
         if (isReview && !verdict) {
             return;
         }
-
-        const text = editor.getApi(MarkdownPlugin).markdown.serialize({
-            value: filteredValue,
-        });
 
         if (isEdit && comment) {
             mutateEditComment({
