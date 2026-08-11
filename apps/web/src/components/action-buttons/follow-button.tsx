@@ -89,13 +89,11 @@ const FollowButton: FC<Props> = ({
             <Button
                 variant="outline"
                 size={size}
-                asChild
                 className={cn(className)}
+                render={<Link to="/login" />}
             >
-                <Link to="/login">
-                    <MaterialSymbolsPersonAddOutlineRounded />
-                    {!iconOnly && 'Відстежувати'}
-                </Link>
+                <MaterialSymbolsPersonAddOutlineRounded />
+                {!iconOnly && 'Відстежувати'}
             </Button>
         );
     }

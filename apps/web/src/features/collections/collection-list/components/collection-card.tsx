@@ -178,13 +178,15 @@ const CollectionCard: FC<Props> = ({
 
             <div className="flex items-center justify-between">
                 <StatItemGroup>
-                    <StatItem asChild>
-                        <Link
-                            to={`/comments/collection/${collection.reference}`}
-                        >
-                            <MessageCircle />
-                            {collection.comments_count}
-                        </Link>
+                    <StatItem
+                        render={
+                            <Link
+                                to={`/comments/collection/${collection.reference}`}
+                            />
+                        }
+                    >
+                        <MessageCircle />
+                        {collection.comments_count}
                     </StatItem>
                     <StatItem className="pointer-events-none">
                         <ArrowBigUp className="size-5!" />

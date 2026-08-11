@@ -56,10 +56,16 @@ const History: FC<Props> = ({ className }) => {
                     >
                         <HeaderContainer>
                             <HeaderTitle variant="h4">Історія</HeaderTitle>
-                            <Button asChild size="icon-sm" variant="outline">
-                                <Link to={`/u/${params.username}/history`}>
-                                    <MaterialSymbolsGridViewRounded />
-                                </Link>
+                            <Button
+                                size="icon-sm"
+                                variant="outline"
+                                render={
+                                    <Link
+                                        to={`/u/${params.username}/history`}
+                                    />
+                                }
+                            >
+                                <MaterialSymbolsGridViewRounded />
                             </Button>
                         </HeaderContainer>
                         <HeaderNavButton />

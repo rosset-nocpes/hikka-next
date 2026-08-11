@@ -48,7 +48,6 @@ const EditCard = ({ edit, href, to, className, ...props }: Props) => {
                 </HorizontalCardContainer>
 
                 <Button
-                    asChild
                     size="md"
                     variant={
                         edit.status === EditStatusEnum.ACCEPTED
@@ -59,23 +58,22 @@ const EditCard = ({ edit, href, to, className, ...props }: Props) => {
                                 ? 'outline'
                                 : 'warning'
                     }
+                    render={<Link to={resolvedHref} />}
                 >
-                    <Link to={resolvedHref}>
-                        {edit.status === EditStatusEnum.ACCEPTED ? (
-                            <MaterialSymbolsCheckRounded />
-                        ) : edit.status === EditStatusEnum.DENIED ? (
-                            <MaterialSymbolsCloseRounded />
-                        ) : edit.status === EditStatusEnum.CLOSED ? (
-                            <Closed />
-                        ) : edit.status === EditStatusEnum.PENDING ? (
-                            <MaterialSymbolsHourglassEmptyRounded />
-                        ) : (
-                            <MaterialSymbolsVisibilityOutlineRounded />
-                        )}
-                        <span className="hidden md:block">
-                            {EDIT_STATUS[edit.status].title_ua}
-                        </span>
-                    </Link>
+                    {edit.status === EditStatusEnum.ACCEPTED ? (
+                        <MaterialSymbolsCheckRounded />
+                    ) : edit.status === EditStatusEnum.DENIED ? (
+                        <MaterialSymbolsCloseRounded />
+                    ) : edit.status === EditStatusEnum.CLOSED ? (
+                        <Closed />
+                    ) : edit.status === EditStatusEnum.PENDING ? (
+                        <MaterialSymbolsHourglassEmptyRounded />
+                    ) : (
+                        <MaterialSymbolsVisibilityOutlineRounded />
+                    )}
+                    <span className="hidden md:block">
+                        {EDIT_STATUS[edit.status].title_ua}
+                    </span>
                 </Button>
             </HorizontalCard>
             <div className="flex flex-wrap gap-2 border-l-2 pl-4">

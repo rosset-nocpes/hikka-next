@@ -55,9 +55,9 @@ const Navbar = () => {
                             <Button
                                 size="md"
                                 className="hidden lg:flex"
-                                asChild
+                                render={<Link to="/signup" />}
                             >
-                                <Link to="/signup">Реєстрація</Link>
+                                Реєстрація
                             </Button>
                         </>
                     )}

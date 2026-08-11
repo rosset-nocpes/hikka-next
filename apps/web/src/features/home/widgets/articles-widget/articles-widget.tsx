@@ -89,10 +89,16 @@ const ArticlesWidget: FC<WidgetProps> = () => {
                     <HeaderContainer>
                         <HeaderTitle variant="h4">Статті</HeaderTitle>
                         {user && (
-                            <Button asChild size="icon-sm" variant="outline">
-                                <Link to={`${CONTENT_TYPE_LINKS.article}/new`}>
-                                    <MaterialSymbolsAddRounded />
-                                </Link>
+                            <Button
+                                size="icon-sm"
+                                variant="outline"
+                                render={
+                                    <Link
+                                        to={`${CONTENT_TYPE_LINKS.article}/new`}
+                                    />
+                                }
+                            >
+                                <MaterialSymbolsAddRounded />
                             </Button>
                         )}
                     </HeaderContainer>

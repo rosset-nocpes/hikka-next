@@ -22,22 +22,20 @@ const FeedContentRef: FC<Props> = ({ contentType, slug, title }) => {
 
     return (
         <Chip
-            asChild
             className="min-w-0 max-w-full shrink bg-secondary/40 text-muted-foreground hover:bg-accent"
+            render={<Link to={`${CONTENT_TYPE_LINKS[contentType]}/${slug}`} />}
         >
-            <Link to={`${CONTENT_TYPE_LINKS[contentType]}/${slug}`}>
-                <FeedContentTypeIcon
-                    contentType={contentType}
-                    className="size-3.5 shrink-0"
-                />
-                <span className="min-w-0 max-w-[16rem] truncate text-foreground">
-                    {label}
-                </span>
-                <div className="size-1 shrink-0 rounded-full bg-muted-foreground" />
-                <span className="shrink-0">
-                    {CONTENT_TYPES[contentType].title_ua}
-                </span>
-            </Link>
+            <FeedContentTypeIcon
+                contentType={contentType}
+                className="size-3.5 shrink-0"
+            />
+            <span className="min-w-0 max-w-[16rem] truncate text-foreground">
+                {label}
+            </span>
+            <div className="size-1 shrink-0 rounded-full bg-muted-foreground" />
+            <span className="shrink-0">
+                {CONTENT_TYPES[contentType].title_ua}
+            </span>
         </Chip>
     );
 };

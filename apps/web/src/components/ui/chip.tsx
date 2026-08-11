@@ -1,8 +1,6 @@
-import type { ComponentProps } from 'react';
-
+import { Button as ButtonPrimitive } from '@base-ui/react/button';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-import { useAsChild } from '@/components/ui/use-as-child';
 import { cn } from '@/utils/cn';
 
 // Shared shell for small pill-style controls (feed badges, content refs, quick
@@ -24,29 +22,18 @@ const chipVariants = cva(
     },
 );
 
-type ChipProps = ComponentProps<'button'> &
-    VariantProps<typeof chipVariants> & {
-        asChild?: boolean;
-    };
+type ChipProps = ButtonPrimitive.Props & VariantProps<typeof chipVariants>;
 
-function Chip({
-    className,
-    interactive,
-    asChild = false,
-    type = 'button',
-    children,
-    ...props
-}: ChipProps) {
-    return useAsChild({
-        asChild,
-        children,
-        element: 'button',
-        props: {
-            type: asChild ? undefined : type,
-            className: cn(chipVariants({ interactive }), className),
-            ...props,
-        },
-    });
+function Chip({ className, interactive, type, render, ...props }: ChipProps) {
+    return (
+        <ButtonPrimitive
+            data-slot="chip"
+            type={render ? undefined : (type ?? 'button')}
+            render={render}
+            className={cn(chipVariants({ interactive }), className)}
+            {...props}
+        />
+    );
 }
 
 export { Chip, chipVariants };

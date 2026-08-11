@@ -47,11 +47,9 @@ const FeedItemFooter: FC<Props> = ({
                     </div>
                 )}
                 {commentsHref ? (
-                    <StatItem asChild>
-                        <Link to={commentsHref}>
-                            <MessageCircle />
-                            {commentsCount > 0 && commentsCount}
-                        </Link>
+                    <StatItem render={<Link to={commentsHref} />}>
+                        <MessageCircle />
+                        {commentsCount > 0 && commentsCount}
                     </StatItem>
                 ) : (
                     <StatItem>

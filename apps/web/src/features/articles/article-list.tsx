@@ -72,10 +72,16 @@ const ArticleList: FC<Props> = () => {
                             : 'Статті'}
                     </HeaderTitle>
                     {user && (
-                        <Button asChild size="icon-sm" variant="outline">
-                            <Link to={`${CONTENT_TYPE_LINKS.article}/new`}>
-                                <MaterialSymbolsAddRounded className="size-4" />
-                            </Link>
+                        <Button
+                            size="icon-sm"
+                            variant="outline"
+                            render={
+                                <Link
+                                    to={`${CONTENT_TYPE_LINKS.article}/new`}
+                                />
+                            }
+                        >
+                            <MaterialSymbolsAddRounded className="size-4" />
                         </Button>
                     )}
                 </HeaderContainer>

@@ -12,10 +12,13 @@ const LoginButton = (props: ButtonProps) => {
     });
 
     return (
-        <Button size="md" variant="ghost" asChild {...props}>
-            <Link to="/login" search={{ callbackUrl: currentUrl }}>
-                Увійти
-            </Link>
+        <Button
+            size="md"
+            variant="ghost"
+            {...props}
+            render={<Link to="/login" search={{ callbackUrl: currentUrl }} />}
+        >
+            Увійти
         </Button>
     );
 };

@@ -264,7 +264,6 @@ const CommentList: FC<Props> = ({
                                     variant="default"
                                     size="md"
                                     className="w-full lg:w-auto"
-                                    asChild
                                 />
                             }
                         />
@@ -319,14 +318,17 @@ const CommentList: FC<Props> = ({
                         />
                     )}
                     {list && list.length !== 0 && preview && (
-                        <Button variant="outline" asChild>
-                            <Link
-                                to={`/comments/${content_type}/${slug}`}
-                                search={allCommentsSearch}
-                            >
-                                <AntDesignArrowDownOutlined />
-                                Переглянути всі
-                            </Link>
+                        <Button
+                            variant="outline"
+                            render={
+                                <Link
+                                    to={`/comments/${content_type}/${slug}`}
+                                    search={allCommentsSearch}
+                                />
+                            }
+                        >
+                            <AntDesignArrowDownOutlined />
+                            Переглянути всі
                         </Button>
                     )}
                 </div>

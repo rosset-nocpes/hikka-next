@@ -171,15 +171,19 @@ const HeaderNavButton: FC = () => {
 
     if (href) {
         return (
-            <Button size="icon-sm" variant="outline" asChild>
-                <Link
-                    to={href}
-                    search={search}
-                    className="flex items-center gap-2 text-muted-foreground"
-                    {...linkProps}
-                >
-                    <MaterialSymbolsArrowRightAltRounded className="text-lg" />
-                </Link>
+            <Button
+                size="icon-sm"
+                variant="outline"
+                render={
+                    <Link
+                        to={href}
+                        search={search}
+                        className="flex items-center gap-2 text-muted-foreground"
+                        {...linkProps}
+                    />
+                }
+            >
+                <MaterialSymbolsArrowRightAltRounded className="text-lg" />
             </Button>
         );
     }

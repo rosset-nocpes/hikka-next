@@ -61,10 +61,12 @@ const CollectionsWidget: FC<WidgetProps> = () => {
                     <HeaderContainer>
                         <HeaderTitle variant="h4">Колекції</HeaderTitle>
                         {user && (
-                            <Button asChild size="icon-sm" variant="outline">
-                                <Link to="/collections/new">
-                                    <MaterialSymbolsAddRounded />
-                                </Link>
+                            <Button
+                                size="icon-sm"
+                                variant="outline"
+                                render={<Link to="/collections/new" />}
+                            >
+                                <MaterialSymbolsAddRounded />
                             </Button>
                         )}
                     </HeaderContainer>

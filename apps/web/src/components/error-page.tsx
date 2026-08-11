@@ -71,8 +71,8 @@ const ErrorPage: React.FC<ErrorComponentProps> = (props) => {
                     >
                         Спробувати ще раз
                     </Button>
-                    <Button className="flex-1" asChild>
-                        <Link to="/">На головну</Link>
+                    <Button className="flex-1" render={<Link to="/" />}>
+                        На головну
                     </Button>
                 </div>
             </div>

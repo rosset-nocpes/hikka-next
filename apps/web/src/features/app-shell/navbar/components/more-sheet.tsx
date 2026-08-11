@@ -45,10 +45,12 @@ const MoreSheet: FC<Props> = ({ children }) => {
                                 className="flex-1"
                                 onClick={close}
                             />
-                            <Button size="md" className="flex-1" asChild>
-                                <Link to="/signup" onClick={close}>
-                                    Реєстрація
-                                </Link>
+                            <Button
+                                size="md"
+                                className="flex-1"
+                                render={<Link to="/signup" onClick={close} />}
+                            >
+                                Реєстрація
                             </Button>
                         </div>
                     )}

@@ -37,9 +37,9 @@ const Footer: FC<Props> = ({ className }) => {
                                 key={link.href}
                                 variant="ghost"
                                 size="md"
-                                asChild
+                                render={<Link to={link.href} />}
                             >
-                                <Link to={link.href}>{link.title}</Link>
+                                {link.title}
                             </Button>
                         ))}
 
@@ -71,15 +71,15 @@ const Footer: FC<Props> = ({ className }) => {
                                     key={href}
                                     variant="ghost"
                                     size="icon-md"
-                                    asChild
+                                    render={
+                                        <Link
+                                            to={href}
+                                            target="_blank"
+                                            aria-label={title}
+                                        />
+                                    }
                                 >
-                                    <Link
-                                        to={href}
-                                        target="_blank"
-                                        aria-label={title}
-                                    >
-                                        <Icon className="size-4" />
-                                    </Link>
+                                    <Icon className="size-4" />
                                 </Button>
                             ))}
                         </div>

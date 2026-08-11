@@ -279,26 +279,21 @@ export function TodoContentCard(props: Props) {
                 <Button
                     size="md"
                     className="min-w-0 flex-1"
-                    asChild={!!user}
+                    render={
+                        user ? (
+                            <Link
+                                to="/edit/new"
+                                search={{
+                                    slug: item.slug,
+                                    content_type: contentType,
+                                }}
+                            />
+                        ) : undefined
+                    }
                     disabled={!user}
                 >
-                    {user ? (
-                        <Link
-                            to="/edit/new"
-                            search={{
-                                slug: item.slug,
-                                content_type: contentType,
-                            }}
-                        >
-                            <MaterialSymbolsEditRounded />
-                            <span className="truncate">Створити правку</span>
-                        </Link>
-                    ) : (
-                        <>
-                            <MaterialSymbolsEditRounded />
-                            <span className="truncate">Створити правку</span>
-                        </>
-                    )}
+                    <MaterialSymbolsEditRounded />
+                    <span className="truncate">Створити правку</span>
                 </Button>
                 <QuickEditButton slug={item.slug} content_type={contentType} />
             </div>

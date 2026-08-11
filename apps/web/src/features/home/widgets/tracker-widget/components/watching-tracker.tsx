@@ -169,8 +169,12 @@ const WatchingTracker = () => {
                 }
                 description="Додайте аніме у список Дивлюсь"
                 action={
-                    <Button variant="secondary" size="md" asChild>
-                        <Link to="/anime">Знайти аніме</Link>
+                    <Button
+                        variant="secondary"
+                        size="md"
+                        render={<Link to="/anime" />}
+                    >
+                        Знайти аніме
                     </Button>
                 }
             />

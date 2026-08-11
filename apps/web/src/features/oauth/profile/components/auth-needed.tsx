@@ -28,10 +28,14 @@ const AuthNeeded: FC<Props> = () => {
                     </p>
                 </div>
             </div>
-            <Button size="md" variant="outline" asChild>
-                <Link to="/login" search={{ callbackUrl: currentUrl }}>
-                    Увійти
-                </Link>
+            <Button
+                size="md"
+                variant="outline"
+                render={
+                    <Link to="/login" search={{ callbackUrl: currentUrl }} />
+                }
+            >
+                Увійти
             </Button>
         </Card>
     );

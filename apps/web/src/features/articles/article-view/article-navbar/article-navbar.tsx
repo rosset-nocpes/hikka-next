@@ -45,19 +45,23 @@ const ArticleNavbar: FC<Props> = () => {
                 {!isSystem && (
                     <Fragment>
                         <ArticleVote article={article!} />
-                        <Button asChild size="md" variant="ghost">
-                            <Link to={`/comments/article/${params.slug}`}>
-                                <MessageCircle className="size-4" />
-                                <span>
-                                    {article?.comments_count}{' '}
-                                    <span className="hidden sm:inline">
-                                        {getDeclensionWord(
-                                            article?.comments_count ?? 0,
-                                            COMMENT_DECLENSIONS,
-                                        )}
-                                    </span>
+                        <Button
+                            size="md"
+                            variant="ghost"
+                            render={
+                                <Link to={`/comments/article/${params.slug}`} />
+                            }
+                        >
+                            <MessageCircle className="size-4" />
+                            <span>
+                                {article?.comments_count}{' '}
+                                <span className="hidden sm:inline">
+                                    {getDeclensionWord(
+                                        article?.comments_count ?? 0,
+                                        COMMENT_DECLENSIONS,
+                                    )}
                                 </span>
-                            </Link>
+                            </span>
                         </Button>
                         <div className="hidden h-full w-px bg-border md:block" />
                     </Fragment>

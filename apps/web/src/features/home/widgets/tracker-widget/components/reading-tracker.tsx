@@ -201,13 +201,15 @@ const ReadingTracker = ({ contentType }: ReadingTrackerProps) => {
                 }
                 description={config.emptyDescription}
                 action={
-                    <Button variant="secondary" size="md" asChild>
-                        <Link to={config.route}>
-                            Знайти{' '}
-                            {contentType === ContentTypeEnum.MANGA
-                                ? 'мангу'
-                                : 'ранобе'}
-                        </Link>
+                    <Button
+                        variant="secondary"
+                        size="md"
+                        render={<Link to={config.route} />}
+                    >
+                        Знайти{' '}
+                        {contentType === ContentTypeEnum.MANGA
+                            ? 'мангу'
+                            : 'ранобе'}
                     </Button>
                 }
             />

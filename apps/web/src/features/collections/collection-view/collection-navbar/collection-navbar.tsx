@@ -47,19 +47,23 @@ const CollectionNavbar: FC<Props> = () => {
                     />
                 )}
 
-                <Button asChild size="md" variant="ghost">
-                    <Link to={`/comments/collection/${params.reference}`}>
-                        <MessageCircle />
-                        <span>
-                            {collection?.comments_count}{' '}
-                            <span className="hidden sm:inline">
-                                {getDeclensionWord(
-                                    collection?.comments_count ?? 0,
-                                    COMMENT_DECLENSIONS,
-                                )}
-                            </span>
+                <Button
+                    size="md"
+                    variant="ghost"
+                    render={
+                        <Link to={`/comments/collection/${params.reference}`} />
+                    }
+                >
+                    <MessageCircle />
+                    <span>
+                        {collection?.comments_count}{' '}
+                        <span className="hidden sm:inline">
+                            {getDeclensionWord(
+                                collection?.comments_count ?? 0,
+                                COMMENT_DECLENSIONS,
+                            )}
                         </span>
-                    </Link>
+                    </span>
                 </Button>
 
                 {collection?.labels_order.length !== 0 && (

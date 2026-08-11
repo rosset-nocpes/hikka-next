@@ -24,12 +24,10 @@ const FiltersNotFound = ({ search }: Props) => {
                     variant="destructive"
                     size="md"
                     className="w-full lg:w-auto"
-                    asChild
+                    render={<Link to={pathname} search={search} />}
                 >
-                    <Link to={pathname} search={search}>
-                        <AntDesignClearOutlined />
-                        Очистити
-                    </Link>
+                    <AntDesignClearOutlined />
+                    Очистити
                 </Button>
             }
         />

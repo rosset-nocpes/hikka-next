@@ -73,13 +73,11 @@ const UserCollections: FC<Props> = ({ className }) => {
                             <HeaderTitle variant="h4">Колекції</HeaderTitle>
                             {loggedUser?.username === params.username && (
                                 <Button
-                                    asChild
                                     size="icon-sm"
                                     variant="outline"
+                                    render={<Link to="/collections/new" />}
                                 >
-                                    <Link to="/collections/new">
-                                        <MaterialSymbolsAddRounded />
-                                    </Link>
+                                    <MaterialSymbolsAddRounded />
                                 </Button>
                             )}
                         </HeaderContainer>
@@ -99,12 +97,10 @@ const UserCollections: FC<Props> = ({ className }) => {
                                     <Button
                                         variant="secondary"
                                         size="md"
-                                        asChild
+                                        render={<Link to="/collections/new" />}
                                     >
-                                        <Link to="/collections/new">
-                                            <MaterialSymbolsAddRounded />
-                                            Створити колекцію
-                                        </Link>
+                                        <MaterialSymbolsAddRounded />
+                                        Створити колекцію
                                     </Button>
                                 }
                             />

@@ -83,13 +83,17 @@ const EditActions: FC<Props> = () => {
         <FooterBar className="flex-row">
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <Button asChild variant="secondary" size="icon-md">
-                        <Link
-                            target="_blank"
-                            to={`${CONTENT_TYPE_LINKS.article}/${slug}`}
-                        >
-                            <MaterialSymbolsVisibilityOutlineRounded className="size-4" />
-                        </Link>
+                    <Button
+                        variant="secondary"
+                        size="icon-md"
+                        render={
+                            <Link
+                                target="_blank"
+                                to={`${CONTENT_TYPE_LINKS.article}/${slug}`}
+                            />
+                        }
+                    >
+                        <MaterialSymbolsVisibilityOutlineRounded className="size-4" />
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent>Переглянути</TooltipContent>

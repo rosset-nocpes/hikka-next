@@ -49,16 +49,16 @@ const UserArticles: FC<Props> = () => {
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Button
-                                    asChild
                                     size="icon-sm"
                                     variant="outline"
+                                    render={
+                                        <Link
+                                            to={CONTENT_TYPE_LINKS.article}
+                                            search={{ draft: true }}
+                                        />
+                                    }
                                 >
-                                    <Link
-                                        to={CONTENT_TYPE_LINKS.article}
-                                        search={{ draft: true }}
-                                    >
-                                        <MaterialSymbolsDraftRounded className="size-4" />
-                                    </Link>
+                                    <MaterialSymbolsDraftRounded className="size-4" />
                                 </Button>
                             </TooltipTrigger>
                             <TooltipContent>Чернетки</TooltipContent>

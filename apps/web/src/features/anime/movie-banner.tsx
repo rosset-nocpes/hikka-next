@@ -55,12 +55,10 @@ const MovieBanner: FC<Props> = () => {
             <Button
                 className="border-primary-foreground bg-primary/60"
                 onClick={handleTrackEvent}
-                asChild
+                render={<Link to="#comments" />}
             >
-                <Link to="#comments">
-                    <MessageCirclePlus />
-                    Написати коментар
-                </Link>
+                <MessageCirclePlus />
+                Написати коментар
             </Button>
         </Card>
     );

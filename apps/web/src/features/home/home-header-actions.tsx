@@ -9,11 +9,15 @@ const HomeHeaderActions = () =>
             size="icon-md"
             className="text-muted-foreground [&_svg]:size-5"
             aria-label={social.title_ua}
-            asChild
+            render={
+                <a
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                />
+            }
         >
-            <a href={social.url} target="_blank" rel="noopener noreferrer">
-                {social.icon && <social.icon />}
-            </a>
+            {social.icon && <social.icon />}
         </Button>
     ));
 

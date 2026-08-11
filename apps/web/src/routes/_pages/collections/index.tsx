@@ -69,10 +69,12 @@ function CollectionsPage() {
                         <HeaderTitle ref={titleAnchor} variant="h2">
                             Колекції
                         </HeaderTitle>
-                        <Button asChild size="icon-sm" variant="outline">
-                            <Link to="/collections/new">
-                                <MaterialSymbolsAddRounded />
-                            </Link>
+                        <Button
+                            size="icon-sm"
+                            variant="outline"
+                            render={<Link to="/collections/new" />}
+                        >
+                            <MaterialSymbolsAddRounded />
                         </Button>
                     </HeaderContainer>
                 </Header>

@@ -1,8 +1,8 @@
 import * as React from 'react';
 
+import { Button as ButtonPrimitive } from '@base-ui/react/button';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-import { useAsChild } from '@/components/ui/use-as-child';
 import { cn } from '@/utils/cn';
 
 const statItemVariants = cva('inline-flex items-center text-muted-foreground', {
@@ -18,25 +18,20 @@ const statItemVariants = cva('inline-flex items-center text-muted-foreground', {
     },
 });
 
-export type StatItemProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-    VariantProps<typeof statItemVariants> & {
-        asChild?: boolean;
-    };
+export type StatItemProps = ButtonPrimitive.Props &
+    VariantProps<typeof statItemVariants>;
 
-const StatItem = React.forwardRef<HTMLButtonElement, StatItemProps>(
-    ({ className, size, asChild = false, children, ...props }, ref) =>
-        useAsChild({
-            asChild,
-            children,
-            element: 'button',
-            ref,
-            props: {
-                className: cn(statItemVariants({ size, className })),
-                ...props,
-            },
-        }),
-);
-StatItem.displayName = 'StatItem';
+function StatItem({ className, size, type, render, ...props }: StatItemProps) {
+    return (
+        <ButtonPrimitive
+            data-slot="stat-item"
+            type={render ? undefined : (type ?? 'button')}
+            render={render}
+            className={cn(statItemVariants({ size, className }))}
+            {...props}
+        />
+    );
+}
 
 const statItemGroupVariants = cva('flex items-center', {
     variants: {

@@ -112,26 +112,30 @@ const ContentActionBar: FC<Props> = ({ className, content_type }) => {
                     />
                 )}
 
-                <Button asChild size="md" variant="ghost">
-                    <Link to={`/comments/${content_type}/${params.slug}`}>
-                        <MessageCircle />
-                        {dataType !== ContentTypeEnum.CHARACTER &&
-                            dataType !== ContentTypeEnum.PERSON && (
-                                <span>
-                                    {commentsCount}{' '}
-                                    <span className="hidden sm:inline">
-                                        {getDeclensionWord(
-                                            commentsCount ?? 0,
-                                            COMMENT_DECLENSIONS,
-                                        )}
-                                    </span>
+                <Button
+                    size="md"
+                    variant="ghost"
+                    render={
+                        <Link to={`/comments/${content_type}/${params.slug}`} />
+                    }
+                >
+                    <MessageCircle />
+                    {dataType !== ContentTypeEnum.CHARACTER &&
+                        dataType !== ContentTypeEnum.PERSON && (
+                            <span>
+                                {commentsCount}{' '}
+                                <span className="hidden sm:inline">
+                                    {getDeclensionWord(
+                                        commentsCount ?? 0,
+                                        COMMENT_DECLENSIONS,
+                                    )}
                                 </span>
-                            )}
-                        {(dataType === ContentTypeEnum.CHARACTER ||
-                            dataType === ContentTypeEnum.PERSON) && (
-                            <span className="hidden sm:inline">Коментарі</span>
+                            </span>
                         )}
-                    </Link>
+                    {(dataType === ContentTypeEnum.CHARACTER ||
+                        dataType === ContentTypeEnum.PERSON) && (
+                        <span className="hidden sm:inline">Коментарі</span>
+                    )}
                 </Button>
 
                 {loggedUser && (

@@ -41,10 +41,12 @@ const EditActions: FC<Props> = ({ editId }) => {
             {showCloseAndEdit && (
                 <div className="flex items-center gap-2">
                     {isAuthor && <CloseAction />}
-                    <Button variant="secondary" size="md" asChild>
-                        <Link to={`/edit/${params.editId}/update`}>
-                            Редагувати
-                        </Link>
+                    <Button
+                        variant="secondary"
+                        size="md"
+                        render={<Link to={`/edit/${params.editId}/update`} />}
+                    >
+                        Редагувати
                     </Button>
                 </div>
             )}

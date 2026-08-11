@@ -76,15 +76,15 @@ const UserComment: FC<Props> = ({ comment }) => {
                         )}
                         {comment.parent && (
                             <Chip
-                                asChild
                                 className="shrink-0 bg-secondary/40 text-muted-foreground hover:bg-accent"
+                                render={
+                                    <Link
+                                        to={`/comments/${comment.content_type}/${preview.slug}/${comment.parent}`}
+                                    />
+                                }
                             >
-                                <Link
-                                    to={`/comments/${comment.content_type}/${preview.slug}/${comment.parent}`}
-                                >
-                                    <CornerDownRight className="size-3.5" />
-                                    Відповідь
-                                </Link>
+                                <CornerDownRight className="size-3.5" />
+                                Відповідь
                             </Chip>
                         )}
                         <FeedContentRef

@@ -77,11 +77,13 @@ const ArticleItem: FC<Props> = ({ article, className }) => {
                             {article.views}
                         </StatItem>
                     )}
-                    <StatItem asChild>
-                        <Link to={`/comments/article/${article.slug}`}>
-                            <MessageCircle />
-                            {article.comments_count}
-                        </Link>
+                    <StatItem
+                        render={
+                            <Link to={`/comments/article/${article.slug}`} />
+                        }
+                    >
+                        <MessageCircle />
+                        {article.comments_count}
                     </StatItem>
                     <StatItem className="pointer-events-none">
                         <ArrowBigUp className="size-5!" />

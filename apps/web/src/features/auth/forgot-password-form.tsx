@@ -83,9 +83,9 @@ const ForgotPasswordForm = () => {
                 variant="secondary"
                 disabled={mutationRequestPasswordReset.isPending}
                 className="w-full"
-                asChild
+                render={<Link to="/login" />}
             >
-                <Link to="/login">Повернутись до входу</Link>
+                Повернутись до входу
             </Button>
         </form>
     );

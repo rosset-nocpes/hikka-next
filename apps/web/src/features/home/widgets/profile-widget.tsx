@@ -70,10 +70,12 @@ const ProfileWidget: FC<WidgetProps> = () => {
                         </div>
                     </div>
                     <div className="flex gap-2">
-                        <Button variant="outline" size="icon-md" asChild>
-                            <Link to="/settings">
-                                <Settings />
-                            </Link>
+                        <Button
+                            variant="outline"
+                            size="icon-md"
+                            render={<Link to="/settings" />}
+                        >
+                            <Settings />
                         </Button>
                     </div>
                 </div>

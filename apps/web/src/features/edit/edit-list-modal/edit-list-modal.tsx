@@ -75,12 +75,12 @@ const EditListModal = ({ content_type, slug }: Props) => {
                     variant="secondary"
                     className="flex-1"
                     size="md"
-                    asChild
+                    render={
+                        <Link to="/edit/new" search={{ slug, content_type }} />
+                    }
                 >
-                    <Link to="/edit/new" search={{ slug, content_type }}>
-                        <MaterialSymbolsEditRounded />
-                        Створити правку
-                    </Link>
+                    <MaterialSymbolsEditRounded />
+                    Створити правку
                 </Button>
                 <QuickEditButton slug={slug} content_type={content_type} />
             </ResponsiveModalFooter>

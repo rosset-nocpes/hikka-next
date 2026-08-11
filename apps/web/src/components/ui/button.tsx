@@ -1,8 +1,6 @@
-import * as React from 'react';
-
+import { Button as ButtonPrimitive } from '@base-ui/react/button';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-import { useAsChild } from '@/components/ui/use-as-child';
 import { cn } from '@/utils/cn';
 
 const buttonVariants = cva(
@@ -46,36 +44,27 @@ const buttonVariants = cva(
     },
 );
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-    VariantProps<typeof buttonVariants> & {
-        asChild?: boolean;
-    };
+export type ButtonProps = ButtonPrimitive.Props &
+    VariantProps<typeof buttonVariants>;
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    (
-        {
-            className,
-            variant,
-            size,
-            asChild = false,
-            type = 'button',
-            children,
-            ...props
-        },
-        ref,
-    ) =>
-        useAsChild({
-            asChild,
-            children,
-            element: 'button',
-            ref,
-            props: {
-                type: asChild ? undefined : type,
-                className: cn(buttonVariants({ variant, size, className })),
-                ...props,
-            },
-        }),
-);
-Button.displayName = 'Button';
+function Button({
+    className,
+    variant,
+    size,
+    type,
+    render,
+    ...props
+}: ButtonProps) {
+    return (
+        <ButtonPrimitive
+            data-slot="button"
+            // `render` swaps in a non-button element (usually a link), which must not carry `type`.
+            type={render ? undefined : (type ?? 'button')}
+            render={render}
+            className={cn(buttonVariants({ variant, size, className }))}
+            {...props}
+        />
+    );
+}
 
 export { Button, buttonVariants };

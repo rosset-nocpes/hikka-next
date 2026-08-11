@@ -290,13 +290,17 @@ const CollectionSettings: FC<Props> = ({ mode = 'create' }) => {
                 {mode === 'edit' && (
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button asChild size="icon-md" variant="secondary">
-                                <Link
-                                    target="_blank"
-                                    to={`${CONTENT_TYPE_LINKS.collection}/${params.reference}`}
-                                >
-                                    <MaterialSymbolsVisibilityOutlineRounded className="size-4" />
-                                </Link>
+                            <Button
+                                size="icon-md"
+                                variant="secondary"
+                                render={
+                                    <Link
+                                        target="_blank"
+                                        to={`${CONTENT_TYPE_LINKS.collection}/${params.reference}`}
+                                    />
+                                }
+                            >
+                                <MaterialSymbolsVisibilityOutlineRounded className="size-4" />
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>Переглянути</TooltipContent>
