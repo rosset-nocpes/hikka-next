@@ -102,7 +102,7 @@ const ContextMenuOverlay: FC<Props> = ({
                     </ContextMenuItem>
                     {canQuickEdit && (
                         <ContextMenuItem
-                            onSelect={() => {
+                            onClick={() => {
                                 // Defer so the menu finishes closing (releasing the
                                 // `pointer-events: none` it sets on <body>) before the
                                 // dialog opens and takes focus.

@@ -144,13 +144,13 @@ const CommentMenu: FC<Props> = ({
                         </DropdownMenuItem>
                     )}
                     {canConvert && !isReview && (
-                        <DropdownMenuItem onSelect={() => setConvertOpen(true)}>
+                        <DropdownMenuItem onClick={() => setConvertOpen(true)}>
                             <Star />
                             Зробити відгуком
                         </DropdownMenuItem>
                     )}
                     {canDemote && (
-                        <DropdownMenuItem onSelect={() => setDemoteOpen(true)}>
+                        <DropdownMenuItem onClick={() => setDemoteOpen(true)}>
                             <MessageSquare />
                             Зробити коментарем
                         </DropdownMenuItem>
@@ -159,7 +159,7 @@ const CommentMenu: FC<Props> = ({
                         <AlertDialog>
                             <AlertDialogTrigger asChild>
                                 <DropdownMenuItem
-                                    onSelect={(e) => e.preventDefault()}
+                                    onClick={(e) => e.preventDefault()}
                                     className="text-destructive-foreground"
                                 >
                                     <MaterialSymbolsDeleteForeverRounded />

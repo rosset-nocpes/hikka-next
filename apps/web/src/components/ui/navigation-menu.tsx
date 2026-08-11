@@ -113,7 +113,9 @@ function NavigationMenuViewport({
             >
                 <NavigationMenuPrimitive.Popup
                     data-slot="navigation-menu-popup"
-                    className="data-closed:zoom-out-95 data-open:zoom-in-90 relative h-(--popup-height) w-full origin-(--transform-origin) overflow-hidden rounded-md border bg-popover text-popover-foreground shadow data-closed:animate-out data-open:animate-in md:w-auto"
+                    // Base UI drives the size through these vars; transitioning them is what
+                    // makes moving between triggers resize instead of jump.
+                    className="data-closed:fade-out-0 data-open:fade-in-0 relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-md border bg-popover text-popover-foreground shadow transition-[width,height] duration-200 data-closed:animate-out data-open:animate-in"
                 >
                     <NavigationMenuPrimitive.Viewport
                         data-slot="navigation-menu-viewport"

@@ -75,7 +75,7 @@ const CollectionActionsMenu: FC<Props> = ({ className }) => {
                     <AlertDialog>
                         <AlertDialogTrigger asChild>
                             <DropdownMenuItem
-                                onSelect={(e) => e.preventDefault()}
+                                onClick={(e) => e.preventDefault()}
                                 className="text-destructive-foreground"
                             >
                                 <MaterialSymbolsDeleteForeverRounded />

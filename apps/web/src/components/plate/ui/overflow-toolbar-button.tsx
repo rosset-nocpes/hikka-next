@@ -53,23 +53,23 @@ export function OverflowToolbarButton() {
                     <MoreHorizontalIcon />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-48">
-                    <DropdownMenuItem onSelect={() => insert(KEYS.blockquote)}>
+                    <DropdownMenuItem onClick={() => insert(KEYS.blockquote)}>
                         <QuoteIcon />
                         Цитата
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => insert(KEYS.ulClassic)}>
+                    <DropdownMenuItem onClick={() => insert(KEYS.ulClassic)}>
                         <ListIcon />
                         Маркований список
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => insert(KEYS.olClassic)}>
+                    <DropdownMenuItem onClick={() => insert(KEYS.olClassic)}>
                         <ListOrderedIcon />
                         Нумерований список
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={openSearch}>
+                    <DropdownMenuItem onClick={openSearch}>
                         <SearchIcon />
                         {CONTENT_SEARCH_LABEL}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={userSearch.openSearch}>
+                    <DropdownMenuItem onClick={userSearch.openSearch}>
                         <AtSignIcon />
                         {USER_SEARCH_LABEL}
                     </DropdownMenuItem>

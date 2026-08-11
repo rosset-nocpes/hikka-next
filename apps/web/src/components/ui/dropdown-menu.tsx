@@ -36,7 +36,7 @@ function DropdownMenuContent({
                 alignOffset={alignOffset}
                 side={side}
                 sideOffset={sideOffset}
-                className="isolate z-50 max-h-(--available-height) w-(--anchor-width)"
+                className="isolate z-50"
             >
                 <MenuPrimitive.Popup
                     data-slot="dropdown-menu-content"

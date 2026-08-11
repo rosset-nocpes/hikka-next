@@ -199,7 +199,7 @@ export function InsertToolbarButton(
                                 <DropdownMenuItem
                                     key={value}
                                     disabled={disabled}
-                                    onSelect={() => {
+                                    onClick={() => {
                                         onSelect(editor, value);
                                         editor.tf.focus();
                                     }}

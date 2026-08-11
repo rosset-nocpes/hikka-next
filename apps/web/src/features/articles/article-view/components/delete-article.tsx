@@ -49,7 +49,7 @@ const DeleteArticle: FC<Props> = ({ article }) => {
         <AlertDialog>
             <AlertDialogTrigger asChild>
                 <DropdownMenuItem
-                    onSelect={(e) => e.preventDefault()}
+                    onClick={(e) => e.preventDefault()}
                     className="text-destructive-foreground"
                 >
                     <MaterialSymbolsDeleteForeverRounded />

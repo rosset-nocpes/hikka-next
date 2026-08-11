@@ -41,7 +41,7 @@ const ContentActionsMenu: FC<Props> = ({ url, slug, contentType }) => {
                         </DropdownMenuItem>
                         {canQuickEdit && (
                             <DropdownMenuItem
-                                onSelect={() => {
+                                onClick={() => {
                                     // Defer so the menu finishes closing and releases the
                                     // `pointer-events: none` it sets on <body>.
                                     setTimeout(() => setQuickEditOpen(true), 0);
