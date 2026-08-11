@@ -14,8 +14,9 @@ import { useFieldContext } from './form-context';
 
 export type SwitchFieldProps = Omit<
     ComponentProps<typeof Switch>,
-    'checked' | 'onCheckedChange'
+    'checked' | 'onCheckedChange' | 'className'
 > & {
+    className?: string;
     label?: string;
     description?: string;
 };

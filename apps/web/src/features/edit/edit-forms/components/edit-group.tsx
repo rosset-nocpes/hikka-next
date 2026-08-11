@@ -68,27 +68,22 @@ const EditGroup: FC<Props> = ({
                 open={mode === 'view' || mode === 'update' ? true : undefined}
                 defaultOpen={defaultOpen}
             >
-                <CollapsibleTrigger asChild>
-                    <button
-                        type="button"
-                        className="flex w-full items-center gap-4 text-left"
-                    >
-                        <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
-                            <Icon className="size-5" />
-                        </div>
-                        <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                            <h5>{title}</h5>
-                            {meta?.description && (
-                                <span className="text-muted-foreground text-sm">
-                                    {meta.description}
-                                </span>
-                            )}
-                        </div>
-                        <LucideChevronsUpDown className="size-4 shrink-0 text-muted-foreground" />
-                    </button>
+                <CollapsibleTrigger className="flex w-full items-center gap-4 text-left">
+                    <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+                        <Icon className="size-5" />
+                    </div>
+                    <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                        <h5>{title}</h5>
+                        {meta?.description && (
+                            <span className="text-muted-foreground text-sm">
+                                {meta.description}
+                            </span>
+                        )}
+                    </div>
+                    <LucideChevronsUpDown className="size-4 shrink-0 text-muted-foreground" />
                 </CollapsibleTrigger>
 
-                <CollapsibleContent className="mt-4 flex w-full flex-col gap-6 overflow-clip data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+                <CollapsibleContent className="mt-4 flex w-full flex-col gap-6 overflow-clip data-closed:animate-collapsible-up data-open:animate-collapsible-down">
                     {warning}
 
                     {(mode === 'edit' || mode === 'update') &&

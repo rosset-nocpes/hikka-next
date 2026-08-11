@@ -30,34 +30,36 @@ export const CollapsibleFilter: FC<CollapsibleFilterProps> = ({
         <Collapsible
             defaultOpen={active}
             className={cn(
-                'group border border-border surface py-2 duration-200 data-[state=open]:mb-4 data-[state=open]:rounded-lg data-[state=open]:py-4',
-                'data-[state=open]:[&+div]:data-[state=closed]:rounded-t-lg',
-                'data-[state=closed]:border-b-0 data-[state=closed]:has-[+div[data-state=open]]:mb-4 data-[state=closed]:has-[+div[data-state=open]]:rounded-b-lg data-[state=closed]:has-[+div[data-state=open]]:border-b',
+                'group border border-border surface py-2 duration-200 data-open:mb-4 data-open:rounded-lg data-open:py-4',
+                'data-open:[&+div]:data-closed:rounded-t-lg',
+                'data-closed:border-b-0 data-closed:has-[+div[data-open]]:mb-4 data-closed:has-[+div[data-open]]:rounded-b-lg data-closed:has-[+div[data-open]]:border-b',
                 'first:rounded-t-lg last:rounded-b-lg last:border-b!',
             )}
             {...props}
         >
-            <CollapsibleTrigger asChild>
-                <div className="flex cursor-pointer items-center justify-between gap-2 px-4">
-                    <div className="flex items-center gap-2">
-                        {icon && icon}
-                        <Label className="cursor-pointer select-none">
-                            {title}
-                        </Label>
-                        {active && (
-                            <div className="size-2 rounded-full bg-success-foreground" />
-                        )}
-                    </div>
-                    <Button id="title-collapse" variant="ghost" size="icon-sm">
-                        <MaterialSymbolsKeyboardArrowUpRounded className="size-4 group-data-[state=closed]:hidden" />
-                        <MaterialSymbolsKeyboardArrowDownRounded className="size-4 group-data-[state=open]:hidden" />
-                    </Button>
+            <CollapsibleTrigger
+                render={
+                    <div className="flex cursor-pointer items-center justify-between gap-2 px-4" />
+                }
+            >
+                <div className="flex items-center gap-2">
+                    {icon && icon}
+                    <Label className="cursor-pointer select-none">
+                        {title}
+                    </Label>
+                    {active && (
+                        <div className="size-2 rounded-full bg-success-foreground" />
+                    )}
                 </div>
+                <Button id="title-collapse" variant="ghost" size="icon-sm">
+                    <MaterialSymbolsKeyboardArrowUpRounded className="size-4 group-data-closed:hidden" />
+                    <MaterialSymbolsKeyboardArrowDownRounded className="size-4 group-data-open:hidden" />
+                </Button>
             </CollapsibleTrigger>
 
             <CollapsibleContent
                 className={cn(
-                    'w-full overflow-hidden px-4 data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down',
+                    'w-full overflow-hidden px-4 data-closed:animate-collapsible-up data-open:animate-collapsible-down',
                     className,
                 )}
             >

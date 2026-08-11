@@ -131,7 +131,7 @@ const UserlistNavbar: FC<Props> = ({ content_type }) => {
         });
     };
 
-    const handleChangeView = (value: string) => {
+    const handleChangeView = ([value]: string[]) => {
         if (!value) return;
         setView(value as Hikka.View);
     };
@@ -213,8 +213,7 @@ const UserlistNavbar: FC<Props> = ({ content_type }) => {
                         className="hidden h-6 md:block"
                     />
                     <ToggleGroup
-                        value={view}
-                        type="single"
+                        value={[view]}
                         onValueChange={handleChangeView}
                     >
                         <Tooltip>

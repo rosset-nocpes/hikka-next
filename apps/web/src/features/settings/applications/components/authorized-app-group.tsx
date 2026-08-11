@@ -234,32 +234,30 @@ const AuthorizedAppGroup: FC<Props> = ({
     return (
         <Card className="flex-col gap-4">
             <Collapsible defaultOpen={false}>
-                <CollapsibleTrigger asChild>
-                    <div className="flex cursor-pointer items-center justify-between gap-4">
-                        <AppGroupHeaderInfo
+                <CollapsibleTrigger
+                    render={
+                        <div className="flex cursor-pointer items-center justify-between gap-4" />
+                    }
+                >
+                    <AppGroupHeaderInfo
+                        appName={appName}
+                        appDescription={appDescription}
+                        verified={verified}
+                        tokenCount={tokens.length}
+                    />
+                    <div className="flex shrink-0 items-center gap-2">
+                        <RevokeAllDialog
                             appName={appName}
-                            appDescription={appDescription}
-                            verified={verified}
-                            tokenCount={tokens.length}
+                            isRevokingAll={isRevokingAll}
+                            onRevokeAll={() => revokeAll()}
                         />
-                        <div className="flex shrink-0 items-center gap-2">
-                            <RevokeAllDialog
-                                appName={appName}
-                                isRevokingAll={isRevokingAll}
-                                onRevokeAll={() => revokeAll()}
-                            />
-                            <Button
-                                variant="ghost"
-                                size="md"
-                                className="w-9 p-0"
-                            >
-                                <LucideChevronsUpDown className="size-4" />
-                                <span className="sr-only">Toggle</span>
-                            </Button>
-                        </div>
+                        <Button variant="ghost" size="md" className="w-9 p-0">
+                            <LucideChevronsUpDown className="size-4" />
+                            <span className="sr-only">Toggle</span>
+                        </Button>
                     </div>
                 </CollapsibleTrigger>
-                <CollapsibleContent className="mt-4 w-full overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+                <CollapsibleContent className="mt-4 w-full overflow-hidden data-closed:animate-collapsible-up data-open:animate-collapsible-down">
                     <div className="flex flex-col">
                         {tokens.map((token) => (
                             <AuthorizedAppItem

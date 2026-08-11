@@ -4,7 +4,8 @@ import type { Locale } from 'date-fns';
 
 import { RoleBadge } from '@/components/badges';
 import RelativeTime from '@/components/relative-time';
-import { Label } from '@/components/ui/label';
+import { Label, labelVariants } from '@/components/ui/label';
+import { cn } from '@/utils/cn';
 import { Link } from '@/utils/navigation';
 
 type Props = {
@@ -18,9 +19,12 @@ const AuthorMetaRow: FC<Props> = ({ username, created, role, locale }) => {
     return (
         <div className="flex min-w-0 items-center gap-2">
             {username ? (
-                <Label asChild className="truncate">
-                    <Link to={`/u/${username}`}>{username}</Link>
-                </Label>
+                <Link
+                    to={`/u/${username}`}
+                    className={cn(labelVariants(), 'truncate')}
+                >
+                    {username}
+                </Link>
             ) : (
                 <Label className="truncate text-muted-foreground">
                     Видалений користувач

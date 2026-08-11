@@ -26,6 +26,7 @@ function StatItem({ className, size, type, render, ...props }: StatItemProps) {
         <ButtonPrimitive
             data-slot="stat-item"
             type={render ? undefined : (type ?? 'button')}
+            nativeButton={!render}
             render={render}
             className={cn(statItemVariants({ size, className }))}
             {...props}

@@ -29,6 +29,7 @@ function Chip({ className, interactive, type, render, ...props }: ChipProps) {
         <ButtonPrimitive
             data-slot="chip"
             type={render ? undefined : (type ?? 'button')}
+            nativeButton={!render}
             render={render}
             className={cn(chipVariants({ interactive }), className)}
             {...props}

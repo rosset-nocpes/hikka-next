@@ -58,8 +58,10 @@ function Button({
     return (
         <ButtonPrimitive
             data-slot="button"
-            // `render` swaps in a non-button element (usually a link), which must not carry `type`.
+            // `render` swaps in a non-button element (usually a link), which carries neither
+            // `type` nor native button semantics.
             type={render ? undefined : (type ?? 'button')}
+            nativeButton={!render}
             render={render}
             className={cn(buttonVariants({ variant, size, className }))}
             {...props}

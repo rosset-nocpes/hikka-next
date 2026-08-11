@@ -53,7 +53,7 @@ const ErrorPage: React.FC<ErrorComponentProps> = (props) => {
                     <Collapsible defaultOpen className="w-full">
                         <CollapsibleTrigger className="group flex w-full items-center justify-center gap-1 text-muted-foreground text-sm transition-colors hover:text-foreground">
                             Технічні деталі
-                            <MaterialSymbolsKeyboardArrowDownRounded className="size-5 transition-transform group-data-[state=open]:rotate-180" />
+                            <MaterialSymbolsKeyboardArrowDownRounded className="size-5 transition-transform group-data-open:rotate-180" />
                         </CollapsibleTrigger>
                         <CollapsibleContent>
                             <pre className="mt-3 max-h-48 select-text overflow-auto whitespace-pre-wrap break-words rounded-lg border border-border surface-inset p-4 text-left font-mono text-muted-foreground text-xs">

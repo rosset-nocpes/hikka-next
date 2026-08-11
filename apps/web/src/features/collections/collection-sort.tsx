@@ -14,7 +14,9 @@ const CollectionSort = () => {
             : [sortRaw]
         : ['system_ranking'];
 
-    const handleChangeSort = (value: string) => {
+    const handleChangeSort = ([value]: string[]) => {
+        if (!value) return;
+
         router.navigate({
             to: '.',
             search: (prev: Record<string, unknown>) => ({
@@ -27,11 +29,7 @@ const CollectionSort = () => {
     };
 
     return (
-        <ToggleGroup
-            type="single"
-            value={sort[0]}
-            onValueChange={handleChangeSort}
-        >
+        <ToggleGroup value={[sort[0]]} onValueChange={handleChangeSort}>
             <ToggleGroupItem value="system_ranking">Популярні</ToggleGroupItem>
             <ToggleGroupItem value="created">Нові</ToggleGroupItem>
         </ToggleGroup>

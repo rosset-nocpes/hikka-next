@@ -96,9 +96,9 @@ const CatalogNavbar: FC<Props> = ({
         useFiltersSidebar();
     const { view, setView } = useCatalogView('catalog');
 
-    const handleChangeView = (value: Hikka.View) => {
+    const handleChangeView = ([value]: string[]) => {
         if (!value) return;
-        setView(value);
+        setView(value as Hikka.View);
     };
 
     return (
@@ -125,8 +125,7 @@ const CatalogNavbar: FC<Props> = ({
                     <Separator orientation="vertical" className="h-6" />
 
                     <ToggleGroup
-                        value={view}
-                        type="single"
+                        value={[view]}
                         onValueChange={handleChangeView}
                     >
                         <Tooltip>

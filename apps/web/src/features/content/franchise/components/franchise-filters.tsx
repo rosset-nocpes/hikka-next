@@ -29,7 +29,7 @@ const FranchiseFilters: FC = () => {
     const setView = useUiPreferences((state) => state.setView);
     const setFilter = useUiPreferences((state) => state.setFilter);
 
-    const handleChangeView = (value: string) => {
+    const handleChangeView = ([value]: string[]) => {
         if (!value) return;
         setView('franchise', value as Hikka.View);
     };
@@ -41,11 +41,7 @@ const FranchiseFilters: FC = () => {
 
     return (
         <div className="flex gap-2">
-            <ToggleGroup
-                value={view}
-                type="single"
-                onValueChange={handleChangeView}
-            >
+            <ToggleGroup value={[view]} onValueChange={handleChangeView}>
                 <ToggleGroupItem value="list" aria-label="Таблиця">
                     <MaterialSymbolsEventList />
                 </ToggleGroupItem>

@@ -11,7 +11,7 @@ import { cn } from '@/utils/cn';
 
 import PosterCard from '../content-card/poster-card';
 import MDViewer from '../markdown/viewer/md-viewer';
-import { Label } from './label';
+import { Label, labelVariants } from './label';
 import Link from './link';
 
 type HorizontalCardTitleProps = ComponentPropsWithoutRef<'div'> & {
@@ -32,21 +32,18 @@ const HorizontalCardTitle: FC<HorizontalCardTitleProps> = ({
 }) => {
     return (
         <div className="flex min-w-0 items-center justify-between gap-2">
-            <Label
-                asChild
+            <Link
+                title={children as string}
+                href={to ?? href}
+                target={target}
                 className={cn(
+                    labelVariants(),
                     'line-clamp-1 inline-block min-w-0 flex-1 truncate',
                     className,
                 )}
             >
-                <Link
-                    title={children as string}
-                    href={to ?? href}
-                    target={target}
-                >
-                    {children}
-                </Link>
-            </Label>
+                {children}
+            </Link>
             {titleMeta}
         </div>
     );
