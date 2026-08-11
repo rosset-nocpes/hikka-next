@@ -37,7 +37,7 @@ const triggerClassName = cn(
     'bg-transparent! text-foreground/70!',
     'hover:bg-accent! hover:text-foreground!',
     'focus:bg-transparent!',
-    'data-[state=open]:bg-accent! data-[state=open]:text-foreground!',
+    'data-popup-open:bg-accent! data-popup-open:text-foreground!',
 );
 
 function dropdownItemClassName(active: boolean) {
@@ -81,12 +81,12 @@ function NavMenu() {
                         <NavigationMenuTrigger className={triggerClassName}>
                             Спільнота
                         </NavigationMenuTrigger>
-                        <NavigationMenuContent className="p-1! data-[motion^=from-]:animate-none! data-[motion^=to-]:animate-none!">
-                            <div className="flex w-52 flex-col gap-1">
+                        <NavigationMenuContent className="p-1!">
+                            <ul className="flex w-52 list-none flex-col gap-1">
                                 {APP_NAV_USER_CONTENT.filter(
                                     (item) => item.visible,
                                 ).map((item) => (
-                                    <NavigationMenuItem key={item.slug}>
+                                    <li key={item.slug}>
                                         <Link
                                             to={item.url}
                                             search={item.search}
@@ -98,9 +98,9 @@ function NavMenu() {
                                             {item.icon && <item.icon />}
                                             {item.title_ua}
                                         </Link>
-                                    </NavigationMenuItem>
+                                    </li>
                                 ))}
-                            </div>
+                            </ul>
                         </NavigationMenuContent>
                     </NavigationMenuItem>
                 )}
@@ -115,7 +115,7 @@ function NavMenu() {
                         <NavigationMenuTrigger className={triggerClassName}>
                             Ще
                         </NavigationMenuTrigger>
-                        <NavigationMenuContent className="p-1! data-[motion^=from-]:animate-none! data-[motion^=to-]:animate-none!">
+                        <NavigationMenuContent className="p-1!">
                             <div className="flex w-52 flex-col gap-1">
                                 {APP_NAV_MORE.map((group, index) => (
                                     <div key={group.title_ua}>
@@ -125,7 +125,7 @@ function NavMenu() {
                                         <span className="px-2 py-1.5 font-medium text-muted-foreground/70 text-xs">
                                             {group.title_ua}
                                         </span>
-                                        <ul className="grid gap-1">
+                                        <ul className="grid list-none gap-1">
                                             {group.items
                                                 .filter((item) => item.visible)
                                                 .map((item) => (
