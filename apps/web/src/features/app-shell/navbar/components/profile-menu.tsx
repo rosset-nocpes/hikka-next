@@ -26,47 +26,54 @@ const ProfileMenu = () => {
 
     return (
         <DropdownMenu open={open} onOpenChange={setOpen}>
-            <DropdownMenuTrigger asChild>
-                <Button
-                    variant="ghost"
-                    size="md"
-                    className="relative size-10 rounded-md"
-                >
-                    <Avatar className="rounded-md">
-                        <AvatarImage
-                            src={user.avatar}
-                            className="rounded-md"
-                            alt="avatar"
-                        />
-                        <AvatarFallback className="rounded-md">
-                            {user.username[0]}
-                        </AvatarFallback>
-                    </Avatar>
-                </Button>
+            <DropdownMenuTrigger
+                render={
+                    <Button
+                        variant="ghost"
+                        size="md"
+                        className="relative size-10 rounded-md"
+                    />
+                }
+            >
+                <Avatar className="rounded-md">
+                    <AvatarImage
+                        src={user.avatar}
+                        className="rounded-md"
+                        alt="avatar"
+                    />
+                    <AvatarFallback className="rounded-md">
+                        {user.username[0]}
+                    </AvatarFallback>
+                </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-60 p-2">
-                <DropdownMenuItem asChild className="mb-2 p-1">
-                    <ProfileIdentity
-                        user={user}
-                        onNavigate={() => setOpen(false)}
-                    />
-                </DropdownMenuItem>
+                <DropdownMenuItem
+                    className="mb-2 p-1"
+                    render={
+                        <ProfileIdentity
+                            user={user}
+                            onNavigate={() => setOpen(false)}
+                        />
+                    }
+                />
 
                 <DropdownMenuLabel className="flex h-8 items-center">
                     Профіль
                 </DropdownMenuLabel>
 
                 {items.map((item) => (
-                    <DropdownMenuItem key={item.slug} className="p-2" asChild>
-                        <Link to={item.url} search={item.search}>
-                            {item.icon && <item.icon className="size-4" />}
-                            {item.title_ua}
-                            {item.count !== undefined && (
-                                <span className="ml-auto text-muted-foreground text-xs tabular-nums">
-                                    {item.count}
-                                </span>
-                            )}
-                        </Link>
+                    <DropdownMenuItem
+                        key={item.slug}
+                        className="p-2"
+                        render={<Link to={item.url} search={item.search} />}
+                    >
+                        {item.icon && <item.icon className="size-4" />}
+                        {item.title_ua}
+                        {item.count !== undefined && (
+                            <span className="ml-auto text-muted-foreground text-xs tabular-nums">
+                                {item.count}
+                            </span>
+                        )}
                     </DropdownMenuItem>
                 ))}
 

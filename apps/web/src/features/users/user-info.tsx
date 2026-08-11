@@ -111,31 +111,29 @@ const UserInfo = () => {
                 </div>
                 {loggedUser?.username === user.username && (
                     <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button
-                                size="icon-sm"
-                                variant="secondary"
-                                className="absolute right-2 bottom-2 opacity-0 group-hover:opacity-100"
-                            >
-                                <MaterialSymbolsUploadRounded />
-                            </Button>
+                        <DropdownMenuTrigger
+                            render={
+                                <Button
+                                    size="icon-sm"
+                                    variant="secondary"
+                                    className="absolute right-2 bottom-2 opacity-0 group-hover:opacity-100"
+                                />
+                            }
+                        >
+                            <MaterialSymbolsUploadRounded />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="start">
-                            <DropdownMenuItem asChild>
-                                <div>
-                                    <MaterialSymbolsPerson2OutlineRounded className="mr-2" />
-                                    <label htmlFor="avatar-input">
-                                        Оновити аватар
-                                    </label>
-                                </div>
+                            <DropdownMenuItem render={<div />}>
+                                <MaterialSymbolsPerson2OutlineRounded className="mr-2" />
+                                <label htmlFor="avatar-input">
+                                    Оновити аватар
+                                </label>
                             </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
-                                <div>
-                                    <MaterialSymbolsImageOutlineRounded className="mr-2" />
-                                    <label htmlFor="cover-input">
-                                        Оновити обкладинку
-                                    </label>
-                                </div>
+                            <DropdownMenuItem render={<div />}>
+                                <MaterialSymbolsImageOutlineRounded className="mr-2" />
+                                <label htmlFor="cover-input">
+                                    Оновити обкладинку
+                                </label>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>

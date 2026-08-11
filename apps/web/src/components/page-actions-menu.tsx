@@ -28,18 +28,20 @@ const PageActionsMenu: FC<Props> = ({ url, className, children }) => {
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button
-                    variant="ghost"
-                    size="icon-md"
-                    className={cn(
-                        'text-muted-foreground [&_svg]:size-5',
-                        className,
-                    )}
-                    aria-label="Більше"
-                >
-                    <MaterialSymbolsMoreHoriz />
-                </Button>
+            <DropdownMenuTrigger
+                render={
+                    <Button
+                        variant="ghost"
+                        size="icon-md"
+                        className={cn(
+                            'text-muted-foreground [&_svg]:size-5',
+                            className,
+                        )}
+                        aria-label="Більше"
+                    />
+                }
+            >
+                <MaterialSymbolsMoreHoriz />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-52">
                 <DropdownMenuItem onClick={handleCopyLink}>

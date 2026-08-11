@@ -41,10 +41,16 @@ export function OverflowToolbarButton() {
     return (
         <React.Fragment>
             <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
-                <DropdownMenuTrigger asChild>
-                    <ToolbarButton pressed={open} tooltip="Більше" isDropdown>
-                        <MoreHorizontalIcon />
-                    </ToolbarButton>
+                <DropdownMenuTrigger
+                    render={
+                        <ToolbarButton
+                            pressed={open}
+                            tooltip="Більше"
+                            isDropdown
+                        />
+                    }
+                >
+                    <MoreHorizontalIcon />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-48">
                     <DropdownMenuItem onSelect={() => insert(KEYS.blockquote)}>

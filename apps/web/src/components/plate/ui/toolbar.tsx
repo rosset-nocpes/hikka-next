@@ -350,7 +350,7 @@ export function ToolbarMenuGroup({
     className,
     label,
     ...props
-}: React.ComponentProps<typeof DropdownMenuRadioGroup> & { label?: string }) {
+}: React.ComponentProps<typeof DropdownMenuGroup> & { label?: string }) {
     return (
         <>
             <DropdownMenuSeparator

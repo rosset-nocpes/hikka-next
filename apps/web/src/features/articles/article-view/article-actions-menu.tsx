@@ -35,11 +35,11 @@ const ArticleActionsMenu: FC<Props> = ({ className }) => {
         <PageActionsMenu url={articleUrl} className={className}>
             {canManage && (
                 <>
-                    <DropdownMenuItem asChild>
-                        <Link to={`${articleUrl}/update`}>
-                            <MaterialSymbolsEditRounded />
-                            Редагувати
-                        </Link>
+                    <DropdownMenuItem
+                        render={<Link to={`${articleUrl}/update`} />}
+                    >
+                        <MaterialSymbolsEditRounded />
+                        Редагувати
                     </DropdownMenuItem>
                     <DeleteArticle article={article} />
                 </>

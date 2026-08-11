@@ -61,19 +61,19 @@ const ContextMenuOverlay: FC<Props> = ({
                 <ContextMenuTrigger>{children}</ContextMenuTrigger>
                 <ContextMenuContent>
                     {href && (
-                        <ContextMenuItem asChild>
-                            <Link to={href} target="_blank">
-                                <MaterialSymbolsOpenInNewRounded className="mr-2" />
-                                Відкрити у новій вкладці
-                            </Link>
+                        <ContextMenuItem
+                            render={<Link to={href} target="_blank" />}
+                        >
+                            <MaterialSymbolsOpenInNewRounded className="mr-2" />
+                            Відкрити у новій вкладці
                         </ContextMenuItem>
                     )}
                     {image && typeof image === 'string' && (
-                        <ContextMenuItem asChild>
-                            <Link to={image} target="_blank">
-                                <MaterialSymbolsImageOutlineRounded className="mr-2" />
-                                Відкрити зображення
-                            </Link>
+                        <ContextMenuItem
+                            render={<Link to={image} target="_blank" />}
+                        >
+                            <MaterialSymbolsImageOutlineRounded className="mr-2" />
+                            Відкрити зображення
                         </ContextMenuItem>
                     )}
                     <ContextMenuSeparator />
@@ -89,11 +89,16 @@ const ContextMenuOverlay: FC<Props> = ({
                     </ContextMenuItem>
 
                     <ContextMenuSeparator />
-                    <ContextMenuItem asChild>
-                        <Link to="/edit/new" search={{ content_type, slug }}>
-                            <MaterialSymbolsEditRounded className="mr-2" />
-                            Створити правку
-                        </Link>
+                    <ContextMenuItem
+                        render={
+                            <Link
+                                to="/edit/new"
+                                search={{ content_type, slug }}
+                            />
+                        }
+                    >
+                        <MaterialSymbolsEditRounded className="mr-2" />
+                        Створити правку
                     </ContextMenuItem>
                     {canQuickEdit && (
                         <ContextMenuItem

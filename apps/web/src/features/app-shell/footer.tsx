@@ -44,20 +44,26 @@ const Footer: FC<Props> = ({ className }) => {
                         ))}
 
                         <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button size="md" variant="ghost">
-                                    <MaterialSymbolsFavoriteRounded />
-                                    Підтримати нас
-                                </Button>
+                            <DropdownMenuTrigger
+                                render={<Button size="md" variant="ghost" />}
+                            >
+                                <MaterialSymbolsFavoriteRounded />
+                                Підтримати нас
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
                                 {DONATION_LINKS.map(
                                     ({ href, title, icon: Icon }) => (
-                                        <DropdownMenuItem key={href} asChild>
-                                            <Link to={href} target="_blank">
-                                                <Icon className="mr-2 size-4" />
-                                                {title}
-                                            </Link>
+                                        <DropdownMenuItem
+                                            key={href}
+                                            render={
+                                                <Link
+                                                    to={href}
+                                                    target="_blank"
+                                                />
+                                            }
+                                        >
+                                            <Icon className="mr-2 size-4" />
+                                            {title}
                                         </DropdownMenuItem>
                                     ),
                                 )}

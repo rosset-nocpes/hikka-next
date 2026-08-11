@@ -177,10 +177,16 @@ export function InsertToolbarButton(
             modal={false}
             {...props}
         >
-            <DropdownMenuTrigger asChild>
-                <ToolbarButton pressed={open} tooltip="Вставити" isDropdown>
-                    <PlusIcon />
-                </ToolbarButton>
+            <DropdownMenuTrigger
+                render={
+                    <ToolbarButton
+                        pressed={open}
+                        tooltip="Вставити"
+                        isDropdown
+                    />
+                }
+            >
+                <PlusIcon />
             </DropdownMenuTrigger>
 
             <DropdownMenuContent className="w-52" align="start">

@@ -28,14 +28,16 @@ const ContentActionsMenu: FC<Props> = ({ url, slug, contentType }) => {
             <PageActionsMenu url={url}>
                 {loggedUser && (
                     <>
-                        <DropdownMenuItem asChild>
-                            <Link
-                                to="/edit/new"
-                                search={{ content_type: contentType, slug }}
-                            >
-                                <MaterialSymbolsEditRounded />
-                                Створити правку
-                            </Link>
+                        <DropdownMenuItem
+                            render={
+                                <Link
+                                    to="/edit/new"
+                                    search={{ content_type: contentType, slug }}
+                                />
+                            }
+                        >
+                            <MaterialSymbolsEditRounded />
+                            Створити правку
                         </DropdownMenuItem>
                         {canQuickEdit && (
                             <DropdownMenuItem

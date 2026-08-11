@@ -106,9 +106,9 @@ const NotificationsMenu: FC<Props> = ({ trigger }) => {
     if (isDesktop) {
         return (
             <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-                <DropdownMenuTrigger asChild>
-                    {triggerButton}
-                </DropdownMenuTrigger>
+                <DropdownMenuTrigger
+                    render={triggerButton as React.ReactElement}
+                />
                 <DropdownMenuContent
                     align="end"
                     className="flex max-h-128 w-80 flex-col p-0 sm:w-96"

@@ -66,11 +66,11 @@ const CollectionActionsMenu: FC<Props> = ({ className }) => {
         <PageActionsMenu url={collectionUrl} className={className}>
             {canManage && (
                 <>
-                    <DropdownMenuItem asChild>
-                        <Link to={`${collectionUrl}/update`}>
-                            <MaterialSymbolsEditRounded />
-                            Редагувати
-                        </Link>
+                    <DropdownMenuItem
+                        render={<Link to={`${collectionUrl}/update`} />}
+                    >
+                        <MaterialSymbolsEditRounded />
+                        Редагувати
                     </DropdownMenuItem>
                     <AlertDialog>
                         <AlertDialogTrigger asChild>

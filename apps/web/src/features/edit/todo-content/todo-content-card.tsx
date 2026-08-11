@@ -66,42 +66,48 @@ const CardActions = ({
     slug: string;
 }) => (
     <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-            <Button
-                variant="ghost"
-                size="icon-sm"
-                className="shrink-0 text-muted-foreground"
-                aria-label="Більше"
-            >
-                <MaterialSymbolsMoreHoriz />
-            </Button>
+        <DropdownMenuTrigger
+            render={
+                <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    className="shrink-0 text-muted-foreground"
+                    aria-label="Більше"
+                />
+            }
+        >
+            <MaterialSymbolsMoreHoriz />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-52">
-            <DropdownMenuItem asChild>
-                <Link
-                    to="/edit/content"
-                    search={{
-                        tab: 'character',
-                        content_type: contentType,
-                        content_slug: slug,
-                    }}
-                >
-                    <MaterialSymbolsFace3 />
-                    Персонажі
-                </Link>
+            <DropdownMenuItem
+                render={
+                    <Link
+                        to="/edit/content"
+                        search={{
+                            tab: 'character',
+                            content_type: contentType,
+                            content_slug: slug,
+                        }}
+                    />
+                }
+            >
+                <MaterialSymbolsFace3 />
+                Персонажі
             </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-                <Link
-                    to="/edit/content"
-                    search={{
-                        tab: 'person',
-                        content_type: contentType,
-                        content_slug: slug,
-                    }}
-                >
-                    <MaterialSymbolsPerson />
-                    Люди
-                </Link>
+            <DropdownMenuItem
+                render={
+                    <Link
+                        to="/edit/content"
+                        search={{
+                            tab: 'person',
+                            content_type: contentType,
+                            content_slug: slug,
+                        }}
+                    />
+                }
+            >
+                <MaterialSymbolsPerson />
+                Люди
             </DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>

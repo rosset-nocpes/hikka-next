@@ -74,15 +74,17 @@ const FeedItemMenu: FC<Props> = ({ author, shareUrl }) => {
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    className="shrink-0 text-muted-foreground"
-                    aria-label="Більше"
-                >
-                    <MaterialSymbolsMoreHoriz />
-                </Button>
+            <DropdownMenuTrigger
+                render={
+                    <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        className="shrink-0 text-muted-foreground"
+                        aria-label="Більше"
+                    />
+                }
+            >
+                <MaterialSymbolsMoreHoriz />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-52">
                 <DropdownMenuItem onClick={handleCopy}>
