@@ -92,19 +92,21 @@ const ColorPicker = ({ value, active, onPreview, onCommit }: Props) => {
                 }
             }}
         >
-            <PopoverTrigger asChild>
-                <Swatch
-                    aria-label="Обрати власний колір"
-                    title="Власний колір"
-                    active={active}
-                    style={
-                        active
-                            ? { backgroundColor: valueHex }
-                            : { background: RAINBOW }
-                    }
-                >
-                    {active ? <Check /> : <Palette />}
-                </Swatch>
+            <PopoverTrigger
+                render={
+                    <Swatch
+                        aria-label="Обрати власний колір"
+                        title="Власний колір"
+                        active={active}
+                        style={
+                            active
+                                ? { backgroundColor: valueHex }
+                                : { background: RAINBOW }
+                        }
+                    />
+                }
+            >
+                {active ? <Check /> : <Palette />}
             </PopoverTrigger>
             <PopoverContent
                 align="end"

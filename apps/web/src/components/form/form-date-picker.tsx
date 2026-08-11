@@ -62,25 +62,27 @@ export const DatePickerField: FC<Props> = ({
             </div>
 
             <Popover>
-                <PopoverTrigger asChild>
-                    <button
-                        type="button"
-                        id={field.name}
-                        className={cn(
-                            FIELD_BASE,
-                            'flex h-10 cursor-pointer items-center justify-start px-3 py-2 text-left font-normal',
-                            !field.state.value && 'text-muted-foreground',
-                        )}
-                    >
-                        {dateValue ? (
-                            format(dateValue, 'PPP', {
-                                locale: uk,
-                            })
-                        ) : (
-                            <span>Виберіть дату</span>
-                        )}
-                        <CalendarIcon className="ml-auto size-4 opacity-50" />
-                    </button>
+                <PopoverTrigger
+                    render={
+                        <button
+                            type="button"
+                            id={field.name}
+                            className={cn(
+                                FIELD_BASE,
+                                'flex h-10 cursor-pointer items-center justify-start px-3 py-2 text-left font-normal',
+                                !field.state.value && 'text-muted-foreground',
+                            )}
+                        />
+                    }
+                >
+                    {dateValue ? (
+                        format(dateValue, 'PPP', {
+                            locale: uk,
+                        })
+                    ) : (
+                        <span>Виберіть дату</span>
+                    )}
+                    <CalendarIcon className="ml-auto size-4 opacity-50" />
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                     <Calendar

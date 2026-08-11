@@ -70,7 +70,7 @@ const Year: FC<Props> = () => {
                 />
                 <Slider
                     className="flex-1"
-                    onValueCommit={(value) =>
+                    onValueCommitted={(value) =>
                         handleChangeParam(
                             'years',
                             (value as number[]).map(String),
@@ -81,7 +81,7 @@ const Year: FC<Props> = () => {
                     }
                     min={Number(DEFAULT_YEAR_START)}
                     max={Number(DEFAULT_YEAR_END)}
-                    minStepsBetweenThumbs={0}
+                    minStepsBetweenValues={0}
                     value={selectingYears.map((y) => Number(y))}
                 />
                 <YearFilterInput
@@ -119,7 +119,7 @@ export const FormYear: FC<Props & Partial<SliderFieldProps>> = () => {
                         <SliderField
                             min={Number(DEFAULT_YEAR_START)}
                             max={Number(DEFAULT_YEAR_END)}
-                            minStepsBetweenThumbs={0}
+                            minStepsBetweenValues={0}
                             className="flex-1"
                         />
                     )}

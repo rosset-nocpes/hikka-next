@@ -215,7 +215,7 @@ const StylesSettings = () => {
                                         String(value),
                                     );
                                 }}
-                                onValueCommit={([value]) =>
+                                onValueCommitted={([value]) =>
                                     commitIntensity(value)
                                 }
                             />
@@ -239,7 +239,9 @@ const StylesSettings = () => {
                                         String(value),
                                     );
                                 }}
-                                onValueCommit={([value]) => commitHeight(value)}
+                                onValueCommitted={([value]) =>
+                                    commitHeight(value)
+                                }
                             />
                         </div>
                         <div className="flex flex-col gap-2">

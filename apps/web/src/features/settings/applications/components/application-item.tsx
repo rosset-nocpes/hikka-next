@@ -25,7 +25,7 @@ const ApplicationItem: FC<Props> = ({ client }) => {
                 <div className="flex items-center gap-2">
                     <h5 className="line-clamp-1">{client.name}</h5>
                     {client.verified && (
-                        <Tooltip delayDuration={0}>
+                        <Tooltip delay={0}>
                             <TooltipTrigger>
                                 <div className="rounded-sm border border-border surface-inset p-1 font-bold text-xs">
                                     <MaterialSymbolsVerifiedRounded className="text-primary-foreground" />

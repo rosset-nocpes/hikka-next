@@ -37,7 +37,7 @@ export const RoleBadge: FC<Props> = ({ role, variant = 'boxed' }) => {
     const Icon = config.icon;
 
     return (
-        <Tooltip delayDuration={0}>
+        <Tooltip delay={0}>
             <TooltipTrigger
                 className={variant === 'inline' ? 'flex shrink-0' : 'shrink-0'}
             >

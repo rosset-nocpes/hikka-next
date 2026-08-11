@@ -1,37 +1,81 @@
 import * as React from 'react';
 
-import { Tooltip as TooltipPrimitive } from 'radix-ui';
+import { Tooltip as TooltipPrimitive } from '@base-ui/react/tooltip';
 
 import { cn } from '@/utils/cn';
 
-const TooltipProvider = TooltipPrimitive.Provider;
+function TooltipProvider({
+    delay = 0,
+    ...props
+}: TooltipPrimitive.Provider.Props) {
+    return (
+        <TooltipPrimitive.Provider
+            data-slot="tooltip-provider"
+            delay={delay}
+            {...props}
+        />
+    );
+}
 
-const Tooltip = TooltipPrimitive.Root;
+// Base UI keeps `delay` on the provider, so a per-tooltip delay needs its own provider.
+function Tooltip({
+    delay,
+    ...props
+}: TooltipPrimitive.Root.Props & { delay?: number }) {
+    const root = <TooltipPrimitive.Root data-slot="tooltip" {...props} />;
 
-const TooltipArrow = TooltipPrimitive.Arrow;
+    if (delay === undefined) return root;
+
+    return <TooltipProvider delay={delay}>{root}</TooltipProvider>;
+}
+
+function TooltipTrigger({ ...props }: TooltipPrimitive.Trigger.Props) {
+    return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
+}
 
 const TooltipPortal = TooltipPrimitive.Portal;
 
-const TooltipTrigger = TooltipPrimitive.Trigger;
+const TooltipArrow = TooltipPrimitive.Arrow;
 
-const TooltipContent = React.forwardRef<
-    React.ComponentRef<typeof TooltipPrimitive.Content>,
-    React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
->(({ className, sideOffset = 4, children, ...props }, ref) => (
-    <TooltipPrimitive.Content
-        ref={ref}
-        sideOffset={sideOffset}
-        className={cn(
-            'fade-in-0 zoom-in-95 data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-fit origin-(--radix-tooltip-content-transform-origin) animate-in text-balance rounded-md bg-tooltip px-3 py-1.5 text-tooltip-foreground text-xs shadow-md data-[state=closed]:animate-out',
-            className,
-        )}
-        {...props}
-    >
-        {children}
-        <TooltipPrimitive.Arrow className="z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px] bg-tooltip fill-tooltip" />
-    </TooltipPrimitive.Content>
-));
-TooltipContent.displayName = TooltipPrimitive.Content.displayName;
+function TooltipContent({
+    className,
+    side = 'top',
+    sideOffset = 4,
+    align = 'center',
+    alignOffset = 0,
+    children,
+    ...props
+}: TooltipPrimitive.Popup.Props &
+    Pick<
+        TooltipPrimitive.Positioner.Props,
+        'align' | 'alignOffset' | 'side' | 'sideOffset'
+    >) {
+    return (
+        <TooltipPrimitive.Portal>
+            <TooltipPrimitive.Positioner
+                align={align}
+                alignOffset={alignOffset}
+                side={side}
+                sideOffset={sideOffset}
+                className="isolate z-50"
+            >
+                <TooltipPrimitive.Popup
+                    data-slot="tooltip-content"
+                    className={cn(
+                        'fade-in-0 zoom-in-95 data-closed:fade-out-0 data-closed:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-fit origin-(--transform-origin) animate-in text-balance rounded-md bg-tooltip px-3 py-1.5 text-tooltip-foreground text-xs shadow-md data-closed:animate-out',
+                        className,
+                    )}
+                    {...props}
+                >
+                    {children}
+                    {/* Base UI positions the arrow along the edge inline; the offset only centres
+                        the rotated square on that edge, so half of it stays under the popup. */}
+                    <TooltipPrimitive.Arrow className="size-2.5 rotate-45 rounded-[2px] bg-tooltip fill-tooltip data-[side=bottom]:-top-[3px] data-[side=left]:-right-[3px] data-[side=right]:-left-[3px] data-[side=top]:-bottom-[3px]" />
+                </TooltipPrimitive.Popup>
+            </TooltipPrimitive.Positioner>
+        </TooltipPrimitive.Portal>
+    );
+}
 
 function withTooltip<
     T extends React.ComponentType<any> | keyof HTMLElementTagNameMap,
@@ -41,13 +85,10 @@ function withTooltip<
         {
             tooltip?: React.ReactNode;
             tooltipContentProps?: Omit<
-                React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>,
+                React.ComponentProps<typeof TooltipContent>,
                 'children'
             >;
-            tooltipProps?: Omit<
-                React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Root>,
-                'children'
-            >;
+            tooltipProps?: Omit<TooltipPrimitive.Root.Props, 'children'>;
         } & React.ComponentPropsWithoutRef<T>
     >(function ExtendComponent(
         { tooltip, tooltipContentProps, tooltipProps, ...props },
@@ -64,13 +105,10 @@ function withTooltip<
         if (tooltip && mounted) {
             return (
                 <Tooltip {...tooltipProps}>
-                    <TooltipTrigger asChild>{component}</TooltipTrigger>
-
-                    <TooltipPortal>
-                        <TooltipContent {...tooltipContentProps}>
-                            {tooltip}
-                        </TooltipContent>
-                    </TooltipPortal>
+                    <TooltipTrigger render={component} />
+                    <TooltipContent {...tooltipContentProps}>
+                        {tooltip}
+                    </TooltipContent>
                 </Tooltip>
             );
         }

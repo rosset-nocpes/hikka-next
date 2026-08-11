@@ -62,20 +62,16 @@ const FilterPresets: FC<Props> = ({ className, content_type }) => {
                         >
                             {preset.name}
                             {preset.description && (
-                                <Tooltip delayDuration={0}>
+                                <Tooltip delay={0}>
                                     <TooltipTrigger
-                                        asChild
                                         className="hidden md:block"
+                                        render={<div />}
                                     >
-                                        <div>
-                                            <MaterialSymbolsInfoRounded className="text-xs opacity-30 transition duration-100 hover:opacity-100" />
-                                        </div>
+                                        <MaterialSymbolsInfoRounded className="text-xs opacity-30 transition duration-100 hover:opacity-100" />
                                     </TooltipTrigger>
-                                    <TooltipPortal>
-                                        <TooltipContent>
-                                            <p>{preset.description}</p>
-                                        </TooltipContent>
-                                    </TooltipPortal>
+                                    <TooltipContent>
+                                        <p>{preset.description}</p>
+                                    </TooltipContent>
                                 </Tooltip>
                             )}
                         </Button>

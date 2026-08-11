@@ -1,6 +1,7 @@
 import {
     type FC,
     type PropsWithChildren,
+    type ReactElement,
     type ReactNode,
     useEffect,
     useState,
@@ -31,26 +32,23 @@ const HoverCardWrapper: FC<Props> = ({ children, content, size = 'md' }) => {
     }, [suppressed]);
 
     return (
-        <HoverCard
-            open={suppressed ? false : open}
-            onOpenChange={setOpen}
-            openDelay={500}
-            closeDelay={100}
-        >
-            <HoverCardTrigger asChild>{children}</HoverCardTrigger>
-            <HoverCardPortal>
-                <HoverCardContent
-                    side="right"
-                    className={cn(
-                        'hidden flex-col gap-4 md:flex',
-                        size === 'md' && 'w-80',
-                        size === 'auto' && 'min-w-min',
-                    )}
-                >
-                    <HoverCardArrow />
-                    {content}
-                </HoverCardContent>
-            </HoverCardPortal>
+        <HoverCard open={suppressed ? false : open} onOpenChange={setOpen}>
+            <HoverCardTrigger
+                delay={500}
+                closeDelay={100}
+                render={children as ReactElement}
+            />
+            <HoverCardContent
+                side="right"
+                className={cn(
+                    'hidden flex-col gap-4 md:flex',
+                    size === 'md' && 'w-80',
+                    size === 'auto' && 'min-w-min',
+                )}
+            >
+                <HoverCardArrow />
+                {content}
+            </HoverCardContent>
         </HoverCard>
     );
 };

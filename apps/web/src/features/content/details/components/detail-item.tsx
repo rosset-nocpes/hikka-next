@@ -34,11 +34,15 @@ const DetailItem: FC<Props> = ({ title, value, children, icon, className }) => {
             }
 
             return (
-                <HoverCard openDelay={200} closeDelay={100}>
-                    <HoverCardTrigger asChild>
-                        <span className="line-clamp-2 cursor-text font-medium text-sm leading-tight">
-                            {formattedValue}
-                        </span>
+                <HoverCard>
+                    <HoverCardTrigger
+                        delay={200}
+                        closeDelay={100}
+                        render={
+                            <span className="line-clamp-2 cursor-text font-medium text-sm leading-tight" />
+                        }
+                    >
+                        {formattedValue}
                     </HoverCardTrigger>
                     <HoverCardContent className="flex w-auto max-w-[300px] flex-col gap-2 p-3 text-left text-sm">
                         {value.map((item, index) => (

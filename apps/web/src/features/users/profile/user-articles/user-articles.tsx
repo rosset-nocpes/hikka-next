@@ -47,19 +47,21 @@ const UserArticles: FC<Props> = () => {
                     <HeaderTitle>Статті</HeaderTitle>
                     {user?.username === params.username && (
                         <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button
-                                    size="icon-sm"
-                                    variant="outline"
-                                    render={
-                                        <Link
-                                            to={CONTENT_TYPE_LINKS.article}
-                                            search={{ draft: true }}
-                                        />
-                                    }
-                                >
-                                    <MaterialSymbolsDraftRounded className="size-4" />
-                                </Button>
+                            <TooltipTrigger
+                                render={
+                                    <Button
+                                        size="icon-sm"
+                                        variant="outline"
+                                        render={
+                                            <Link
+                                                to={CONTENT_TYPE_LINKS.article}
+                                                search={{ draft: true }}
+                                            />
+                                        }
+                                    />
+                                }
+                            >
+                                <MaterialSymbolsDraftRounded className="size-4" />
                             </TooltipTrigger>
                             <TooltipContent>Чернетки</TooltipContent>
                         </Tooltip>

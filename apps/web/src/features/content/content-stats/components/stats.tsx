@@ -19,45 +19,44 @@ const Stats: FC<Props> = ({ stats }) => {
             <div className="flex flex-col justify-center gap-2">
                 {stats.map((stat, index) => {
                     return (
-                        <Tooltip
-                            key={stat.name ?? `stat-${index}`}
-                            delayDuration={0}
-                        >
-                            <TooltipTrigger asChild>
-                                <div className="flex items-center justify-between gap-2">
-                                    <div className="flex w-full flex-1 items-center gap-2">
-                                        {stat.icon && (
-                                            <div className="flex size-6 items-center justify-center rounded-md bg-secondary/20">
-                                                {stat.icon}
-                                            </div>
-                                        )}
-                                        <div className="relative h-2 w-full flex-1 overflow-hidden rounded-md">
-                                            <div
-                                                className={cn(
-                                                    'absolute bottom-0 left-0 size-full bg-secondary/60',
-                                                )}
-                                            />
-                                            <div
-                                                style={{
-                                                    width: `${stat.percentage}%`,
-                                                }}
-                                                className={cn(
-                                                    'absolute bottom-0 left-0 flex h-2 w-full items-end justify-center bg-primary-foreground',
-                                                    !!stat.name &&
-                                                        `bg-${stat.name}-foreground`,
-                                                )}
-                                            ></div>
+                        <Tooltip key={stat.name ?? `stat-${index}`} delay={0}>
+                            <TooltipTrigger
+                                render={
+                                    <div className="flex items-center justify-between gap-2" />
+                                }
+                            >
+                                <div className="flex w-full flex-1 items-center gap-2">
+                                    {stat.icon && (
+                                        <div className="flex size-6 items-center justify-center rounded-md bg-secondary/20">
+                                            {stat.icon}
                                         </div>
-                                    </div>
-                                    <small className="w-14 text-right text-muted-foreground">
-                                        <NumericFormat
-                                            thousandSeparator
-                                            displayType="text"
-                                            value={stat.value}
-                                            decimalScale={1}
+                                    )}
+                                    <div className="relative h-2 w-full flex-1 overflow-hidden rounded-md">
+                                        <div
+                                            className={cn(
+                                                'absolute bottom-0 left-0 size-full bg-secondary/60',
+                                            )}
                                         />
-                                    </small>
+                                        <div
+                                            style={{
+                                                width: `${stat.percentage}%`,
+                                            }}
+                                            className={cn(
+                                                'absolute bottom-0 left-0 flex h-2 w-full items-end justify-center bg-primary-foreground',
+                                                !!stat.name &&
+                                                    `bg-${stat.name}-foreground`,
+                                            )}
+                                        ></div>
+                                    </div>
                                 </div>
+                                <small className="w-14 text-right text-muted-foreground">
+                                    <NumericFormat
+                                        thousandSeparator
+                                        displayType="text"
+                                        value={stat.value}
+                                        decimalScale={1}
+                                    />
+                                </small>
                             </TooltipTrigger>
                             <TooltipContent align="center" side="left">
                                 {stat.percentage.toFixed(2)}%

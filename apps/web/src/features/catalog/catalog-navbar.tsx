@@ -129,26 +129,30 @@ const CatalogNavbar: FC<Props> = ({
                         onValueChange={handleChangeView}
                     >
                         <Tooltip>
-                            <TooltipTrigger asChild>
-                                <ToggleGroupItem
-                                    value="grid"
-                                    aria-label="Сітка"
-                                >
-                                    <MaterialSymbolsGridViewRounded />
-                                </ToggleGroupItem>
+                            <TooltipTrigger
+                                render={
+                                    <ToggleGroupItem
+                                        value="grid"
+                                        aria-label="Сітка"
+                                    />
+                                }
+                            >
+                                <MaterialSymbolsGridViewRounded />
                             </TooltipTrigger>
                             <TooltipContent>
                                 <p>Сітка</p>
                             </TooltipContent>
                         </Tooltip>
                         <Tooltip>
-                            <TooltipTrigger asChild>
-                                <ToggleGroupItem
-                                    value="list"
-                                    aria-label="Список"
-                                >
-                                    <MaterialSymbolsEventList />
-                                </ToggleGroupItem>
+                            <TooltipTrigger
+                                render={
+                                    <ToggleGroupItem
+                                        value="list"
+                                        aria-label="Список"
+                                    />
+                                }
+                            >
+                                <MaterialSymbolsEventList />
                             </TooltipTrigger>
                             <TooltipContent>
                                 <p>Список</p>
@@ -164,24 +168,28 @@ const CatalogNavbar: FC<Props> = ({
                     />
 
                     <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button
-                                variant={sidebarVisible ? 'default' : 'outline'}
-                                size="icon-md"
-                                onClick={toggleSidebar}
-                                className="hidden shrink-0 lg:inline-flex"
-                                aria-label={
-                                    sidebarVisible
-                                        ? 'Приховати фільтри'
-                                        : 'Показати фільтри'
-                                }
-                            >
-                                {sidebarVisible ? (
-                                    <PanelRightClose className="size-4" />
-                                ) : (
-                                    <PanelRightOpen className="size-4" />
-                                )}
-                            </Button>
+                        <TooltipTrigger
+                            render={
+                                <Button
+                                    variant={
+                                        sidebarVisible ? 'default' : 'outline'
+                                    }
+                                    size="icon-md"
+                                    onClick={toggleSidebar}
+                                    className="hidden shrink-0 lg:inline-flex"
+                                    aria-label={
+                                        sidebarVisible
+                                            ? 'Приховати фільтри'
+                                            : 'Показати фільтри'
+                                    }
+                                />
+                            }
+                        >
+                            {sidebarVisible ? (
+                                <PanelRightClose className="size-4" />
+                            ) : (
+                                <PanelRightOpen className="size-4" />
+                            )}
                         </TooltipTrigger>
                         <TooltipContent>
                             <p>

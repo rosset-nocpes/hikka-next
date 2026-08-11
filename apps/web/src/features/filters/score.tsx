@@ -49,7 +49,7 @@ const Score: FC<Props> = ({ score_type }) => {
             </div>
             <Slider
                 className="flex-1"
-                onValueCommit={(value) =>
+                onValueCommitted={(value) =>
                     handleChangeParam(
                         score_type,
                         (value as number[]).map(String),
@@ -66,7 +66,7 @@ const Score: FC<Props> = ({ score_type }) => {
                 min={DEFAULT_SCORE_MIN}
                 max={DEFAULT_SCORE_MAX}
                 step={1}
-                minStepsBetweenThumbs={0}
+                minStepsBetweenValues={0}
                 value={selectingScores}
             />
         </div>
@@ -100,7 +100,7 @@ export const FormScore: FC<Props & Partial<SliderFieldProps>> = ({
                                     <MaterialSymbolsStarRounded className="size-3" />
                                 </div>
                             )}
-                            minStepsBetweenThumbs={0}
+                            minStepsBetweenValues={0}
                             className="flex-1"
                         />
                     )}

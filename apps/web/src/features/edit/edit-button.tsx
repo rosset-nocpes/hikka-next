@@ -30,17 +30,19 @@ const EditButton: FC<Props> = ({ className, slug, content_type, ...props }) => {
 
     return (
         <>
-            <Tooltip delayDuration={0}>
-                <TooltipTrigger asChild>
-                    <Button
-                        variant="ghost"
-                        size="icon-md"
-                        onClick={() => setOpen(true)}
-                        className={cn(className)}
-                        {...props}
-                    >
-                        <MaterialSymbolsEditRounded className="size-5!" />
-                    </Button>
+            <Tooltip delay={0}>
+                <TooltipTrigger
+                    render={
+                        <Button
+                            variant="ghost"
+                            size="icon-md"
+                            onClick={() => setOpen(true)}
+                            className={cn(className)}
+                            {...props}
+                        />
+                    }
+                >
+                    <MaterialSymbolsEditRounded className="size-5!" />
                 </TooltipTrigger>
                 <TooltipContent>Правки</TooltipContent>
             </Tooltip>

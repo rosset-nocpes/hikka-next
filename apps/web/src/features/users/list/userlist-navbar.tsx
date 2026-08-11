@@ -217,26 +217,30 @@ const UserlistNavbar: FC<Props> = ({ content_type }) => {
                         onValueChange={handleChangeView}
                     >
                         <Tooltip>
-                            <TooltipTrigger asChild>
-                                <ToggleGroupItem
-                                    value="table"
-                                    aria-label="Таблиця"
-                                >
-                                    <MaterialSymbolsEventList />
-                                </ToggleGroupItem>
+                            <TooltipTrigger
+                                render={
+                                    <ToggleGroupItem
+                                        value="table"
+                                        aria-label="Таблиця"
+                                    />
+                                }
+                            >
+                                <MaterialSymbolsEventList />
                             </TooltipTrigger>
                             <TooltipContent>
                                 <p>Таблиця</p>
                             </TooltipContent>
                         </Tooltip>
                         <Tooltip>
-                            <TooltipTrigger asChild>
-                                <ToggleGroupItem
-                                    value="grid"
-                                    aria-label="Сітка"
-                                >
-                                    <MaterialSymbolsGridViewRounded />
-                                </ToggleGroupItem>
+                            <TooltipTrigger
+                                render={
+                                    <ToggleGroupItem
+                                        value="grid"
+                                        aria-label="Сітка"
+                                    />
+                                }
+                            >
+                                <MaterialSymbolsGridViewRounded />
                             </TooltipTrigger>
                             <TooltipContent>
                                 <p>Сітка</p>
@@ -255,15 +259,17 @@ const UserlistNavbar: FC<Props> = ({ content_type }) => {
                         />
 
                         <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    size="icon-md"
-                                    onClick={handleRandom}
-                                    aria-label={`Випадкове ${CONTENT_TYPES[content_type].title_ua.toLowerCase()}`}
-                                >
-                                    <FeRandom className="size-4" />
-                                </Button>
+                            <TooltipTrigger
+                                render={
+                                    <Button
+                                        variant="outline"
+                                        size="icon-md"
+                                        onClick={handleRandom}
+                                        aria-label={`Випадкове ${CONTENT_TYPES[content_type].title_ua.toLowerCase()}`}
+                                    />
+                                }
+                            >
+                                <FeRandom className="size-4" />
                             </TooltipTrigger>
                             <TooltipContent>
                                 <p>
@@ -289,24 +295,28 @@ const UserlistNavbar: FC<Props> = ({ content_type }) => {
                     />
 
                     <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button
-                                variant={sidebarVisible ? 'default' : 'outline'}
-                                size="icon-md"
-                                onClick={toggleSidebar}
-                                className="hidden shrink-0 lg:inline-flex"
-                                aria-label={
-                                    sidebarVisible
-                                        ? 'Приховати фільтри'
-                                        : 'Показати фільтри'
-                                }
-                            >
-                                {sidebarVisible ? (
-                                    <PanelRightClose className="size-4" />
-                                ) : (
-                                    <PanelRightOpen className="size-4" />
-                                )}
-                            </Button>
+                        <TooltipTrigger
+                            render={
+                                <Button
+                                    variant={
+                                        sidebarVisible ? 'default' : 'outline'
+                                    }
+                                    size="icon-md"
+                                    onClick={toggleSidebar}
+                                    className="hidden shrink-0 lg:inline-flex"
+                                    aria-label={
+                                        sidebarVisible
+                                            ? 'Приховати фільтри'
+                                            : 'Показати фільтри'
+                                    }
+                                />
+                            }
+                        >
+                            {sidebarVisible ? (
+                                <PanelRightClose className="size-4" />
+                            ) : (
+                                <PanelRightOpen className="size-4" />
+                            )}
                         </TooltipTrigger>
                         <TooltipContent>
                             <p>

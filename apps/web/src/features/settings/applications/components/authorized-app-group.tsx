@@ -171,7 +171,7 @@ const AppGroupHeaderInfo: FC<{
             <div className="flex items-center gap-2">
                 <h5 className="line-clamp-1">{appName}</h5>
                 {verified && (
-                    <Tooltip delayDuration={0}>
+                    <Tooltip delay={0}>
                         <TooltipTrigger>
                             <div className="rounded-sm border border-border surface-inset p-1">
                                 <MaterialSymbolsVerifiedRounded className="text-primary-foreground" />

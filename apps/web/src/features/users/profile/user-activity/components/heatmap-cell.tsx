@@ -25,12 +25,17 @@ const LEVEL_CLASSES: Record<number, string> = {
 
 const HeatmapCell: FC<Props> = ({ date, actions, level }) => {
     return (
-        <Tooltip delayDuration={0}>
-            <TooltipTrigger asChild>
-                <div
-                    className={cn('size-2.5 rounded-xs', LEVEL_CLASSES[level])}
-                />
-            </TooltipTrigger>
+        <Tooltip delay={0}>
+            <TooltipTrigger
+                render={
+                    <div
+                        className={cn(
+                            'size-2.5 rounded-xs',
+                            LEVEL_CLASSES[level],
+                        )}
+                    />
+                }
+            />
             <TooltipContent>
                 <span>{format(date, 'd MMM yyyy')}</span>
                 {' — '}

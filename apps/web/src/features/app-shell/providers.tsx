@@ -24,7 +24,7 @@ const Providers: FC<Props> = ({ children, serverTheme }) => {
             enableSystem
             disableTransitionOnChange
         >
-            <TooltipProvider delayDuration={0}>
+            <TooltipProvider delay={0}>
                 <UIStylesSyncer />
                 <VisualViewportSyncer />
                 <EffectsManager />

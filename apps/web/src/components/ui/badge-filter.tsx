@@ -64,17 +64,13 @@ export const BadgeFilter: FC<BadgeFilterProps> = ({
                         {isPropertiesArray ? slug : properties[slug].title_ua}
 
                         {!isPropertiesArray && properties[slug].description && (
-                            <Tooltip delayDuration={0}>
-                                <TooltipTrigger asChild>
-                                    <div>
-                                        <MaterialSymbolsInfoRounded className="text-xs opacity-30 transition duration-100 hover:opacity-100" />
-                                    </div>
+                            <Tooltip delay={0}>
+                                <TooltipTrigger render={<div />}>
+                                    <MaterialSymbolsInfoRounded className="text-xs opacity-30 transition duration-100 hover:opacity-100" />
                                 </TooltipTrigger>
-                                <TooltipPortal>
-                                    <TooltipContent>
-                                        <p>{properties[slug].description}</p>
-                                    </TooltipContent>
-                                </TooltipPortal>
+                                <TooltipContent>
+                                    <p>{properties[slug].description}</p>
+                                </TooltipContent>
                             </Tooltip>
                         )}
                     </Button>

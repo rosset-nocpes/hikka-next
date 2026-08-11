@@ -64,39 +64,39 @@ const ReviewStatsCard: FC<Props> = ({ stats, value, onChange, className }) => {
 
                     return (
                         <Tooltip key={v}>
-                            <TooltipTrigger asChild>
-                                <Chip
-                                    aria-pressed={isActive}
-                                    aria-label={`${statsLabel}: ${count}`}
-                                    onClick={() =>
-                                        onChange(isActive ? null : v)
-                                    }
-                                    onMouseEnter={() => setHovered(v)}
-                                    onMouseLeave={() => setHovered(null)}
-                                    // Keyboard users get the same bar highlight.
-                                    onFocus={() => setHovered(v)}
-                                    onBlur={() => setHovered(null)}
-                                    className={cn(
-                                        'w-full justify-center border border-transparent tabular-nums sm:w-auto',
-                                        isActive
-                                            ? ACTIVE_CLASS[v]
-                                            : 'bg-secondary/40 text-muted-foreground hover:bg-accent',
-                                    )}
-                                >
-                                    <Icon className="size-4 shrink-0" />
-                                    {count}
-                                </Chip>
+                            <TooltipTrigger
+                                render={
+                                    <Chip
+                                        aria-pressed={isActive}
+                                        aria-label={`${statsLabel}: ${count}`}
+                                        onClick={() =>
+                                            onChange(isActive ? null : v)
+                                        }
+                                        onMouseEnter={() => setHovered(v)}
+                                        onMouseLeave={() => setHovered(null)}
+                                        // Keyboard users get the same bar highlight.
+                                        onFocus={() => setHovered(v)}
+                                        onBlur={() => setHovered(null)}
+                                        className={cn(
+                                            'w-full justify-center border border-transparent tabular-nums sm:w-auto',
+                                            isActive
+                                                ? ACTIVE_CLASS[v]
+                                                : 'bg-secondary/40 text-muted-foreground hover:bg-accent',
+                                        )}
+                                    />
+                                }
+                            >
+                                <Icon className="size-4 shrink-0" />
+                                {count}
                             </TooltipTrigger>
-                            <TooltipPortal>
-                                <TooltipContent
-                                    side="bottom"
-                                    className="flex items-center gap-1.5"
-                                >
-                                    {statsLabel}
-                                    <div className="size-1 shrink-0 rounded-full bg-current opacity-50" />
-                                    {Math.round((count / total) * 100)}%
-                                </TooltipContent>
-                            </TooltipPortal>
+                            <TooltipContent
+                                side="bottom"
+                                className="flex items-center gap-1.5"
+                            >
+                                {statsLabel}
+                                <div className="size-1 shrink-0 rounded-full bg-current opacity-50" />
+                                {Math.round((count / total) * 100)}%
+                            </TooltipContent>
                         </Tooltip>
                     );
                 })}

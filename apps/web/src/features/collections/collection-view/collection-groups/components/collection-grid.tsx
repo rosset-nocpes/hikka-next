@@ -56,19 +56,17 @@ const CommentButton: FC<{ comment: string }> = ({ comment }) => {
     if (isDesktop) {
         return (
             <Tooltip>
-                <TooltipTrigger asChild>{trigger}</TooltipTrigger>
-                <TooltipPortal>
-                    <TooltipContent side="top" className="p-0">
-                        <ScrollableComment comment={comment} />
-                    </TooltipContent>
-                </TooltipPortal>
+                <TooltipTrigger render={trigger} />
+                <TooltipContent side="top" className="p-0">
+                    <ScrollableComment comment={comment} />
+                </TooltipContent>
             </Tooltip>
         );
     }
 
     return (
         <Popover>
-            <PopoverTrigger asChild>{trigger}</PopoverTrigger>
+            <PopoverTrigger render={trigger} />
             <PopoverContent side="top" className="p-0 text-sm">
                 <ScrollableComment comment={comment} />
             </PopoverContent>

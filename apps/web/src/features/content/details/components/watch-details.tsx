@@ -68,10 +68,12 @@ const NextEpisodeDetail = ({
         title="Наступний епізод"
     >
         <Tooltip>
-            <TooltipTrigger asChild>
-                <span className="line-clamp-2 cursor-text select-auto font-medium text-sm leading-tight">
-                    {formatNextEpisodeDate(schedule.airing_at)}
-                </span>
+            <TooltipTrigger
+                render={
+                    <span className="line-clamp-2 cursor-text select-auto font-medium text-sm leading-tight" />
+                }
+            >
+                {formatNextEpisodeDate(schedule.airing_at)}
             </TooltipTrigger>
             <TooltipContent>
                 <p>{getScheduleDuration(schedule.airing_at)}</p>

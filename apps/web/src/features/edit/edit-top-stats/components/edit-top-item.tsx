@@ -55,7 +55,7 @@ const EditTopItem: FC<Props> = ({ user, rank, accepted, denied, closed }) => {
                     </div>
 
                     <HorizontalCardDescription>
-                        <Tooltip delayDuration={0}>
+                        <Tooltip delay={0}>
                             <TooltipTrigger>
                                 <div className="flex items-center gap-2 text-muted-foreground">
                                     <div className="flex size-2 items-center justify-center rounded-full bg-success-foreground" />
@@ -64,7 +64,7 @@ const EditTopItem: FC<Props> = ({ user, rank, accepted, denied, closed }) => {
                             </TooltipTrigger>
                             <TooltipContent>Прийнято</TooltipContent>
                         </Tooltip>
-                        <Tooltip delayDuration={0}>
+                        <Tooltip delay={0}>
                             <TooltipTrigger>
                                 <div className="flex items-center gap-2 text-muted-foreground">
                                     <div className="flex size-2 items-center justify-center rounded-full bg-destructive-foreground" />
@@ -74,7 +74,7 @@ const EditTopItem: FC<Props> = ({ user, rank, accepted, denied, closed }) => {
                             <TooltipContent>Відхилено</TooltipContent>
                         </Tooltip>
 
-                        <Tooltip delayDuration={0}>
+                        <Tooltip delay={0}>
                             <TooltipTrigger>
                                 <div className="flex items-center gap-2 text-muted-foreground">
                                     <div className="flex size-2 items-center justify-center rounded-full bg-muted-foreground" />

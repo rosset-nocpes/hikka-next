@@ -155,41 +155,43 @@ const ListTabContent: FC<Props> = ({ type, username, className }) => {
 
                     return (
                         <Tooltip key={status}>
-                            <TooltipTrigger asChild>
-                                <Link
-                                    to={`/u/${username}/list/${type}`}
-                                    search={{ status, sort: sortParam }}
-                                    preload={false}
-                                    onMouseEnter={() =>
-                                        setHoveredStatus(status)
-                                    }
-                                    onMouseLeave={() => setHoveredStatus(null)}
-                                    className={cn(
-                                        'flex items-center justify-between gap-2 rounded-sm p-2 hover:bg-accent',
-                                        count === 0 && 'opacity-50',
-                                    )}
-                                >
-                                    <div className="flex min-w-0 items-center gap-2">
-                                        <div
-                                            className={cn(
-                                                'size-2 rounded-full',
-                                                `bg-${status}-foreground`,
-                                            )}
-                                        />
-                                        <Label className="cursor-pointer truncate text-muted-foreground">
-                                            {info.title_ua || info.title_en}
-                                        </Label>
-                                    </div>
-                                    <Label className="cursor-pointer">
-                                        {count}
+                            <TooltipTrigger
+                                render={
+                                    <Link
+                                        to={`/u/${username}/list/${type}`}
+                                        search={{ status, sort: sortParam }}
+                                        preload={false}
+                                        onMouseEnter={() =>
+                                            setHoveredStatus(status)
+                                        }
+                                        onMouseLeave={() =>
+                                            setHoveredStatus(null)
+                                        }
+                                        className={cn(
+                                            'flex items-center justify-between gap-2 rounded-sm p-2 hover:bg-accent',
+                                            count === 0 && 'opacity-50',
+                                        )}
+                                    />
+                                }
+                            >
+                                <div className="flex min-w-0 items-center gap-2">
+                                    <div
+                                        className={cn(
+                                            'size-2 rounded-full',
+                                            `bg-${status}-foreground`,
+                                        )}
+                                    />
+                                    <Label className="cursor-pointer truncate text-muted-foreground">
+                                        {info.title_ua || info.title_en}
                                     </Label>
-                                </Link>
+                                </div>
+                                <Label className="cursor-pointer">
+                                    {count}
+                                </Label>
                             </TooltipTrigger>
-                            <TooltipPortal>
-                                <TooltipContent side="bottom">
-                                    {Math.round((count / total) * 100)}%
-                                </TooltipContent>
-                            </TooltipPortal>
+                            <TooltipContent side="bottom">
+                                {Math.round((count / total) * 100)}%
+                            </TooltipContent>
                         </Tooltip>
                     );
                 })}
@@ -203,21 +205,19 @@ const ListTabContent: FC<Props> = ({ type, username, className }) => {
                             <Label>Час перегляду</Label>
                         </div>
                         <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Label className="cursor-pointer">
-                                    {watchDisplayLabel}
-                                </Label>
+                            <TooltipTrigger
+                                render={<Label className="cursor-pointer" />}
+                            >
+                                {watchDisplayLabel}
                             </TooltipTrigger>
-                            <TooltipPortal>
-                                <TooltipContent>
-                                    {watchHours}{' '}
-                                    {getDeclensionWord(watchHours, [
-                                        'година',
-                                        'години',
-                                        'годин',
-                                    ])}
-                                </TooltipContent>
-                            </TooltipPortal>
+                            <TooltipContent>
+                                {watchHours}{' '}
+                                {getDeclensionWord(watchHours, [
+                                    'година',
+                                    'години',
+                                    'годин',
+                                ])}
+                            </TooltipContent>
                         </Tooltip>
                     </div>
                 </div>

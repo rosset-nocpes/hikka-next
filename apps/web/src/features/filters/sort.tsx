@@ -333,23 +333,25 @@ const Sort: FC<Props> = ({
                 </SelectContent>
             </Select>
             <Tooltip>
-                <TooltipTrigger asChild>
-                    <Button
-                        size={sizeClasses.button}
-                        variant="outline"
-                        aria-label={`Порядок сортування: ${orderLabel}`}
-                        className={cn(
-                            'shrink-0',
-                            compact && 'rounded-l-none border-l-0',
-                        )}
-                        onClick={() =>
-                            changeOrder(order === 'asc' ? 'desc' : 'asc')
-                        }
-                    >
-                        <MaterialSymbolsSortRounded
-                            className={cn(order === 'asc' && '-scale-y-100')}
+                <TooltipTrigger
+                    render={
+                        <Button
+                            size={sizeClasses.button}
+                            variant="outline"
+                            aria-label={`Порядок сортування: ${orderLabel}`}
+                            className={cn(
+                                'shrink-0',
+                                compact && 'rounded-l-none border-l-0',
+                            )}
+                            onClick={() =>
+                                changeOrder(order === 'asc' ? 'desc' : 'asc')
+                            }
                         />
-                    </Button>
+                    }
+                >
+                    <MaterialSymbolsSortRounded
+                        className={cn(order === 'asc' && '-scale-y-100')}
+                    />
                 </TooltipTrigger>
                 <TooltipContent>
                     <p>{orderLabel}</p>

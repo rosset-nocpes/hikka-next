@@ -30,19 +30,17 @@ type Props = {
 
 const User: FC<Props> = memo(({ data }) => (
     <Tooltip>
-        <TooltipTrigger asChild>
-            <Link to={`/u/${data.user.username}`}>
-                <Avatar className="size-10 rounded-md">
-                    <AvatarImage
-                        className="size-10 rounded-md"
-                        src={data.user.avatar}
-                    />
-                    <AvatarFallback
-                        className="size-10 rounded-md"
-                        title={data.user.username?.[0]}
-                    />
-                </Avatar>
-            </Link>
+        <TooltipTrigger render={<Link to={`/u/${data.user.username}`} />}>
+            <Avatar className="size-10 rounded-md">
+                <AvatarImage
+                    className="size-10 rounded-md"
+                    src={data.user.avatar}
+                />
+                <AvatarFallback
+                    className="size-10 rounded-md"
+                    title={data.user.username?.[0]}
+                />
+            </Avatar>
         </TooltipTrigger>
         <TooltipContent>{data.user.username}</TooltipContent>
     </Tooltip>

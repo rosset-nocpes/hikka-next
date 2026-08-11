@@ -59,32 +59,36 @@ const FavoriteButton = ({
     const isFavorite = Boolean(favorite) && !favoriteError;
 
     return (
-        <Tooltip delayDuration={0}>
-            <TooltipTrigger asChild>
-                <Button
-                    variant="ghost"
-                    size="icon-md"
-                    disabled={
-                        disabled ||
-                        addToFavoriteLoading ||
-                        deleteFromFavoriteLoading
-                    }
-                    onClick={() =>
-                        isFavorite
-                            ? deleteFromFavorite({
-                                  path: { content_type, slug },
-                              })
-                            : addToFavorite({ path: { content_type, slug } })
-                    }
-                    {...props}
-                >
-                    {isFavorite ? (
-                        <MaterialSymbolsFavoriteRounded className="size-5! text-red-500" />
-                    ) : (
-                        <MaterialSymbolsFavoriteOutlineRounded className="size-5! text-foreground" />
-                    )}
-                    {children}
-                </Button>
+        <Tooltip delay={0}>
+            <TooltipTrigger
+                render={
+                    <Button
+                        variant="ghost"
+                        size="icon-md"
+                        disabled={
+                            disabled ||
+                            addToFavoriteLoading ||
+                            deleteFromFavoriteLoading
+                        }
+                        onClick={() =>
+                            isFavorite
+                                ? deleteFromFavorite({
+                                      path: { content_type, slug },
+                                  })
+                                : addToFavorite({
+                                      path: { content_type, slug },
+                                  })
+                        }
+                        {...props}
+                    />
+                }
+            >
+                {isFavorite ? (
+                    <MaterialSymbolsFavoriteRounded className="size-5! text-red-500" />
+                ) : (
+                    <MaterialSymbolsFavoriteOutlineRounded className="size-5! text-foreground" />
+                )}
+                {children}
             </TooltipTrigger>
             <TooltipContent>В улюблене</TooltipContent>
         </Tooltip>

@@ -339,14 +339,14 @@ const DroppableColumn: FC<{
                 </Label>
                 {showTabHint && (
                     <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Smartphone className="size-4 text-muted-foreground" />
-                        </TooltipTrigger>
-                        <TooltipPortal>
-                            <TooltipContent>
-                                На мобільних пристроях – вкладки
-                            </TooltipContent>
-                        </TooltipPortal>
+                        <TooltipTrigger
+                            render={
+                                <Smartphone className="size-4 text-muted-foreground" />
+                            }
+                        />
+                        <TooltipContent>
+                            На мобільних пристроях – вкладки
+                        </TooltipContent>
                     </Tooltip>
                 )}
             </div>

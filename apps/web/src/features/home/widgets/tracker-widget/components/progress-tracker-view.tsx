@@ -86,25 +86,25 @@ const ProgressTrackerView = ({
                 >
                     {items.map((item) => (
                         <Tooltip key={item.slug}>
-                            <TooltipTrigger asChild>
-                                <PosterCard
-                                    onClick={item.onSelect}
-                                    image={item.image}
-                                    containerClassName="rounded-(--base-radius)"
-                                    className={cn(
-                                        'transition-opacity',
-                                        !item.isSelected &&
-                                            'opacity-30 hover:opacity-60',
-                                    )}
-                                />
-                            </TooltipTrigger>
-                            <TooltipPortal>
-                                <TooltipContent className="max-w-48">
-                                    <span className="block truncate">
-                                        {item.title}
-                                    </span>
-                                </TooltipContent>
-                            </TooltipPortal>
+                            <TooltipTrigger
+                                render={
+                                    <PosterCard
+                                        onClick={item.onSelect}
+                                        image={item.image}
+                                        containerClassName="rounded-(--base-radius)"
+                                        className={cn(
+                                            'transition-opacity',
+                                            !item.isSelected &&
+                                                'opacity-30 hover:opacity-60',
+                                        )}
+                                    />
+                                }
+                            />
+                            <TooltipContent className="max-w-48">
+                                <span className="block truncate">
+                                    {item.title}
+                                </span>
+                            </TooltipContent>
                         </Tooltip>
                     ))}
                     {hasNextPage && (

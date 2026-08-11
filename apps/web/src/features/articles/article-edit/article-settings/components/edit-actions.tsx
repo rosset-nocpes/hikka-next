@@ -82,19 +82,21 @@ const EditActions: FC<Props> = () => {
     return (
         <FooterBar className="flex-row">
             <Tooltip>
-                <TooltipTrigger asChild>
-                    <Button
-                        variant="secondary"
-                        size="icon-md"
-                        render={
-                            <Link
-                                target="_blank"
-                                to={`${CONTENT_TYPE_LINKS.article}/${slug}`}
-                            />
-                        }
-                    >
-                        <MaterialSymbolsVisibilityOutlineRounded className="size-4" />
-                    </Button>
+                <TooltipTrigger
+                    render={
+                        <Button
+                            variant="secondary"
+                            size="icon-md"
+                            render={
+                                <Link
+                                    target="_blank"
+                                    to={`${CONTENT_TYPE_LINKS.article}/${slug}`}
+                                />
+                            }
+                        />
+                    }
+                >
+                    <MaterialSymbolsVisibilityOutlineRounded className="size-4" />
                 </TooltipTrigger>
                 <TooltipContent>Переглянути</TooltipContent>
             </Tooltip>
@@ -113,15 +115,17 @@ const EditActions: FC<Props> = () => {
 
             {draft && (
                 <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Button
-                            size="icon-md"
-                            disabled={!title || isPending}
-                            variant="secondary"
-                            onClick={() => handleUpdateArticle(true)}
-                        >
-                            <MaterialSymbolsRefreshRounded className="size-4" />
-                        </Button>
+                    <TooltipTrigger
+                        render={
+                            <Button
+                                size="icon-md"
+                                disabled={!title || isPending}
+                                variant="secondary"
+                                onClick={() => handleUpdateArticle(true)}
+                            />
+                        }
+                    >
+                        <MaterialSymbolsRefreshRounded className="size-4" />
                     </TooltipTrigger>
                     <TooltipContent>Оновити чернетку</TooltipContent>
                 </Tooltip>

@@ -68,14 +68,16 @@ const CollectionNavbar: FC<Props> = () => {
 
                 {collection?.labels_order.length !== 0 && (
                     <Popover>
-                        <PopoverTrigger asChild>
-                            <Button
-                                className="flex lg:hidden"
-                                size="md"
-                                variant="ghost"
-                            >
-                                <TableOfContents className="size-4" />
-                            </Button>
+                        <PopoverTrigger
+                            render={
+                                <Button
+                                    className="flex lg:hidden"
+                                    size="md"
+                                    variant="ghost"
+                                />
+                            }
+                        >
+                            <TableOfContents className="size-4" />
                         </PopoverTrigger>
 
                         <PopoverContent

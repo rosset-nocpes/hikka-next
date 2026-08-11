@@ -14,8 +14,9 @@ import { useFieldContext } from './form-context';
 
 export type SliderFieldProps = Omit<
     ComponentProps<typeof Slider>,
-    'value' | 'onValueChange'
+    'value' | 'onValueChange' | 'className'
 > & {
+    className?: string;
     label?: string;
     description?: string;
 };

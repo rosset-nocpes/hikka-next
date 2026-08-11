@@ -136,20 +136,20 @@ const FiltersFooter: FC<FiltersFooterProps> = ({
                     </Button>
                     {contentType && (
                         <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button
-                                    size="icon-md"
-                                    variant="secondary"
-                                    onClick={handleCreateFromCurrent}
-                                >
-                                    <CustomCopyAddRounded />
-                                </Button>
+                            <TooltipTrigger
+                                render={
+                                    <Button
+                                        size="icon-md"
+                                        variant="secondary"
+                                        onClick={handleCreateFromCurrent}
+                                    />
+                                }
+                            >
+                                <CustomCopyAddRounded />
                             </TooltipTrigger>
-                            <TooltipPortal>
-                                <TooltipContent>
-                                    <p>Створити пресет з поточних фільтрів</p>
-                                </TooltipContent>
-                            </TooltipPortal>
+                            <TooltipContent>
+                                <p>Створити пресет з поточних фільтрів</p>
+                            </TooltipContent>
                         </Tooltip>
                     )}
                 </div>

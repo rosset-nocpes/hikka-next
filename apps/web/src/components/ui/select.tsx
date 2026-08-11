@@ -452,7 +452,7 @@ const SelectValue = React.forwardRef<
 
         return (
             <Fragment>
-                <TooltipProvider delayDuration={300}>
+                <TooltipProvider delay={300}>
                     <div
                         className={cn(
                             'flex min-w-0 flex-1 flex-wrap items-center gap-1.5 overflow-x-hidden',

@@ -334,11 +334,9 @@ function withTooltip<T extends React.ElementType>(Component: T) {
                         {component}
                     </TooltipTrigger>
 
-                    <TooltipPortal>
-                        <TooltipContent {...tooltipContentProps}>
-                            {tooltip}
-                        </TooltipContent>
-                    </TooltipPortal>
+                    <TooltipContent {...tooltipContentProps}>
+                        {tooltip}
+                    </TooltipContent>
                 </Tooltip>
             );
         }

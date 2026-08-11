@@ -123,7 +123,7 @@ const DateRange = (_props: Props) => {
                     <div className="flex items-center gap-2">
                         <Slider
                             className="flex-1"
-                            onValueCommit={(value) =>
+                            onValueCommitted={(value) =>
                                 handleChangeParam(
                                     'date_range',
                                     (value as number[]).map(String),
@@ -134,7 +134,7 @@ const DateRange = (_props: Props) => {
                             }
                             min={Number(DEFAULT_DATE_RANGE[0])}
                             max={Number(DEFAULT_DATE_RANGE[1])}
-                            minStepsBetweenThumbs={0}
+                            minStepsBetweenValues={0}
                             value={selectingDateRange.map((y) => Number(y))}
                         />
                     </div>
@@ -181,7 +181,7 @@ export const FormDateRange: FC<
                                     }
                                     min={Number(DEFAULT_DATE_RANGE[0])}
                                     max={Number(DEFAULT_DATE_RANGE[1])}
-                                    minStepsBetweenThumbs={0}
+                                    minStepsBetweenValues={0}
                                     className="flex-1"
                                 />
                             )}
