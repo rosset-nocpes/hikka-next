@@ -1,8 +1,8 @@
 import type { ComponentProps } from 'react';
 
 import { cva, type VariantProps } from 'class-variance-authority';
-import { Slot as SlotPrimitive } from 'radix-ui';
 
+import { useAsChild } from '@/components/ui/use-as-child';
 import { cn } from '@/utils/cn';
 
 // Shared shell for small pill-style controls (feed badges, content refs, quick
@@ -34,17 +34,19 @@ function Chip({
     interactive,
     asChild = false,
     type = 'button',
+    children,
     ...props
 }: ChipProps) {
-    const Comp = asChild ? SlotPrimitive.Slot : 'button';
-
-    return (
-        <Comp
-            type={asChild ? undefined : type}
-            className={cn(chipVariants({ interactive }), className)}
-            {...props}
-        />
-    );
+    return useAsChild({
+        asChild,
+        children,
+        element: 'button',
+        props: {
+            type: asChild ? undefined : type,
+            className: cn(chipVariants({ interactive }), className),
+            ...props,
+        },
+    });
 }
 
 export { Chip, chipVariants };

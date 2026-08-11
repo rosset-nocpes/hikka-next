@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import { cva, type VariantProps } from 'class-variance-authority';
-import { Slot as SlotPrimitive } from 'radix-ui';
 
+import { useAsChild } from '@/components/ui/use-as-child';
 import { cn } from '@/utils/cn';
 
 const statItemVariants = cva('inline-flex items-center text-muted-foreground', {
@@ -24,16 +24,17 @@ export type StatItemProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
     };
 
 const StatItem = React.forwardRef<HTMLButtonElement, StatItemProps>(
-    ({ className, size, asChild = false, ...props }, ref) => {
-        const Comp = asChild ? SlotPrimitive.Slot : 'button';
-        return (
-            <Comp
-                className={cn(statItemVariants({ size, className }))}
-                ref={ref}
-                {...props}
-            />
-        );
-    },
+    ({ className, size, asChild = false, children, ...props }, ref) =>
+        useAsChild({
+            asChild,
+            children,
+            element: 'button',
+            ref,
+            props: {
+                className: cn(statItemVariants({ size, className })),
+                ...props,
+            },
+        }),
 );
 StatItem.displayName = 'StatItem';
 

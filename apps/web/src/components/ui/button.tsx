@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import { cva, type VariantProps } from 'class-variance-authority';
-import { Slot as SlotPrimitive } from 'radix-ui';
 
+import { useAsChild } from '@/components/ui/use-as-child';
 import { cn } from '@/utils/cn';
 
 const buttonVariants = cva(
@@ -59,20 +59,22 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             size,
             asChild = false,
             type = 'button',
+            children,
             ...props
         },
         ref,
-    ) => {
-        const Comp = asChild ? SlotPrimitive.Slot : 'button';
-        return (
-            <Comp
-                type={asChild ? undefined : type}
-                className={cn(buttonVariants({ variant, size, className }))}
-                ref={ref}
-                {...props}
-            />
-        );
-    },
+    ) =>
+        useAsChild({
+            asChild,
+            children,
+            element: 'button',
+            ref,
+            props: {
+                type: asChild ? undefined : type,
+                className: cn(buttonVariants({ variant, size, className })),
+                ...props,
+            },
+        }),
 );
 Button.displayName = 'Button';
 
