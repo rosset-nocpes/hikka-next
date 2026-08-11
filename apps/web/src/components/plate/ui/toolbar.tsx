@@ -1,6 +1,8 @@
 import * as React from 'react';
 
-import * as ToolbarPrimitive from '@radix-ui/react-toolbar';
+import { Toggle as TogglePrimitive } from '@base-ui/react/toggle';
+import { ToggleGroup as ToggleGroupPrimitive } from '@base-ui/react/toggle-group';
+import { Toolbar as ToolbarPrimitive } from '@base-ui/react/toolbar';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { ChevronDown } from 'lucide-react';
 
@@ -19,10 +21,7 @@ import {
 } from '@/components/ui/tooltip';
 import { cn } from '@/utils/cn';
 
-export function Toolbar({
-    className,
-    ...props
-}: React.ComponentProps<typeof ToolbarPrimitive.Root>) {
+export function Toolbar({ className, ...props }: ToolbarPrimitive.Root.Props) {
     return (
         <ToolbarPrimitive.Root
             className={cn('relative flex select-none items-center', className)}
@@ -34,9 +33,9 @@ export function Toolbar({
 export function ToolbarToggleGroup({
     className,
     ...props
-}: React.ComponentProps<typeof ToolbarPrimitive.ToolbarToggleGroup>) {
+}: ToggleGroupPrimitive.Props) {
     return (
-        <ToolbarPrimitive.ToolbarToggleGroup
+        <ToggleGroupPrimitive
             className={cn('flex items-center', className)}
             {...props}
         />
@@ -46,7 +45,7 @@ export function ToolbarToggleGroup({
 export function ToolbarLink({
     className,
     ...props
-}: React.ComponentProps<typeof ToolbarPrimitive.Link>) {
+}: ToolbarPrimitive.Link.Props) {
     return (
         <ToolbarPrimitive.Link
             className={cn(
@@ -61,7 +60,7 @@ export function ToolbarLink({
 export function ToolbarSeparator({
     className,
     ...props
-}: React.ComponentProps<typeof ToolbarPrimitive.Separator>) {
+}: ToolbarPrimitive.Separator.Props) {
     return (
         <ToolbarPrimitive.Separator
             className={cn('mx-2 my-1 w-px shrink-0 bg-border', className)}
@@ -120,10 +119,7 @@ const dropdownArrowVariants = cva(
 type ToolbarButtonProps = {
     isDropdown?: boolean;
     pressed?: boolean;
-} & Omit<
-    React.ComponentPropsWithoutRef<typeof ToolbarToggleItem>,
-    'asChild' | 'value'
-> &
+} & Omit<ToolbarPrimitive.Button.Props, 'value'> &
     VariantProps<typeof toolbarButtonVariants>;
 
 export const ToolbarButton = withTooltip(function ToolbarButton({
@@ -138,8 +134,7 @@ export const ToolbarButton = withTooltip(function ToolbarButton({
     return typeof pressed === 'boolean' ? (
         <ToolbarToggleGroup
             disabled={props.disabled}
-            value="single"
-            type="single"
+            value={pressed ? ['single'] : []}
         >
             <ToolbarToggleItem
                 className={cn(
@@ -150,8 +145,8 @@ export const ToolbarButton = withTooltip(function ToolbarButton({
                     isDropdown && 'justify-between gap-1 pr-1',
                     className,
                 )}
-                value={pressed ? 'single' : ''}
-                {...props}
+                value="single"
+                {...(props as TogglePrimitive.Props)}
             >
                 {isDropdown ? (
                     <>
@@ -202,10 +197,7 @@ export function ToolbarSplitButton({
     );
 }
 
-type ToolbarSplitButtonPrimaryProps = Omit<
-    React.ComponentPropsWithoutRef<typeof ToolbarToggleItem>,
-    'value'
-> &
+type ToolbarSplitButtonPrimaryProps = React.ComponentPropsWithoutRef<'span'> &
     VariantProps<typeof toolbarButtonVariants>;
 
 export function ToolbarSplitButtonPrimary({
@@ -267,10 +259,9 @@ export function ToolbarToggleItem({
     size = 'sm',
     variant,
     ...props
-}: React.ComponentProps<typeof ToolbarPrimitive.ToggleItem> &
-    VariantProps<typeof toolbarButtonVariants>) {
+}: TogglePrimitive.Props & VariantProps<typeof toolbarButtonVariants>) {
     return (
-        <ToolbarPrimitive.ToggleItem
+        <TogglePrimitive
             className={cn(toolbarButtonVariants({ size, variant }), className)}
             {...props}
         />

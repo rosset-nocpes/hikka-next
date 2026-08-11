@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
+import type { Menu as MenuPrimitive } from '@base-ui/react/menu';
 import {
     EyeOffIcon,
     Heading3Icon,
@@ -149,7 +149,7 @@ const ARTICLE_GROUPS: Group[] = [
 ];
 
 export function InsertToolbarButton(
-    props: DropdownMenuProps & {
+    props: MenuPrimitive.Root.Props & {
         type: 'comment' | 'article';
     },
 ) {
