@@ -70,7 +70,7 @@ export function ToolbarSeparator({
 }
 
 const toolbarButtonVariants = cva(
-    "inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-[color,box-shadow] outline-hidden hover:bg-muted hover:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-checked:bg-muted aria-checked:text-accent-foreground aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+    "inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-[color,box-shadow] outline-hidden hover:bg-muted hover:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-pressed:bg-muted aria-pressed:text-accent-foreground aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
     {
         defaultVariants: {
             size: 'default',
@@ -108,7 +108,7 @@ const dropdownArrowVariants = cva(
             },
             variant: {
                 default:
-                    'bg-transparent hover:bg-muted hover:text-muted-foreground aria-checked:bg-muted aria-checked:text-foreground',
+                    'bg-transparent hover:bg-muted hover:text-muted-foreground aria-pressed:bg-muted aria-pressed:text-foreground',
                 outline:
                     'border border-l-0 border-border bg-transparent hover:bg-muted hover:text-foreground',
             },
@@ -132,39 +132,34 @@ export const ToolbarButton = withTooltip(function ToolbarButton({
     ...props
 }: ToolbarButtonProps) {
     return typeof pressed === 'boolean' ? (
-        <ToolbarToggleGroup
-            disabled={props.disabled}
-            value={pressed ? ['single'] : []}
+        <ToolbarToggleItem
+            className={cn(
+                toolbarButtonVariants({
+                    size,
+                    variant,
+                }),
+                isDropdown && 'justify-between gap-1 pr-1',
+                className,
+            )}
+            pressed={pressed}
+            {...(props as TogglePrimitive.Props)}
         >
-            <ToolbarToggleItem
-                className={cn(
-                    toolbarButtonVariants({
-                        size,
-                        variant,
-                    }),
-                    isDropdown && 'justify-between gap-1 pr-1',
-                    className,
-                )}
-                value="single"
-                {...(props as TogglePrimitive.Props)}
-            >
-                {isDropdown ? (
-                    <>
-                        <div className="flex flex-1 items-center gap-2 whitespace-nowrap">
-                            {children}
-                        </div>
-                        <div>
-                            <ChevronDown
-                                className="size-4 text-muted-foreground"
-                                data-icon
-                            />
-                        </div>
-                    </>
-                ) : (
-                    children
-                )}
-            </ToolbarToggleItem>
-        </ToolbarToggleGroup>
+            {isDropdown ? (
+                <>
+                    <div className="flex flex-1 items-center gap-2 whitespace-nowrap">
+                        {children}
+                    </div>
+                    <div>
+                        <ChevronDown
+                            className="size-4 text-muted-foreground"
+                            data-icon
+                        />
+                    </div>
+                </>
+            ) : (
+                children
+            )}
+        </ToolbarToggleItem>
     ) : (
         <ToolbarPrimitive.Button
             className={cn(
@@ -215,7 +210,7 @@ export function ToolbarSplitButtonPrimary({
                     variant,
                 }),
                 'rounded-r-none',
-                'group-data-[pressed=true]:bg-muted group-data-[pressed=true]:text-foreground',
+                'group-data-pressed:bg-muted group-data-pressed:text-foreground',
                 className,
             )}
             {...props}
@@ -242,7 +237,7 @@ export function ToolbarSplitButtonSecondary({
                     size,
                     variant,
                 }),
-                'group-data-[pressed=true]:bg-muted group-data-[pressed=true]:text-foreground',
+                'group-data-pressed:bg-muted group-data-pressed:text-foreground',
                 className,
             )}
             onClick={(e) => e.stopPropagation()}
@@ -321,9 +316,10 @@ function withTooltip<T extends React.ElementType>(Component: T) {
         if (tooltip && mounted) {
             return (
                 <Tooltip {...tooltipProps}>
-                    <TooltipTrigger asChild {...tooltipTriggerProps}>
-                        {component}
-                    </TooltipTrigger>
+                    <TooltipTrigger
+                        render={component}
+                        {...tooltipTriggerProps}
+                    />
 
                     <TooltipContent {...tooltipContentProps}>
                         {tooltip}
