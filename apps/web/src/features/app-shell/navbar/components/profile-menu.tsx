@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
@@ -57,25 +58,27 @@ const ProfileMenu = () => {
                     }
                 />
 
-                <DropdownMenuLabel className="flex h-8 items-center">
-                    Профіль
-                </DropdownMenuLabel>
+                <DropdownMenuGroup>
+                    <DropdownMenuLabel className="flex h-8 items-center">
+                        Профіль
+                    </DropdownMenuLabel>
 
-                {items.map((item) => (
-                    <DropdownMenuItem
-                        key={item.slug}
-                        className="p-2"
-                        render={<Link to={item.url} search={item.search} />}
-                    >
-                        {item.icon && <item.icon className="size-4" />}
-                        {item.title_ua}
-                        {item.count !== undefined && (
-                            <span className="ml-auto text-muted-foreground text-xs tabular-nums">
-                                {item.count}
-                            </span>
-                        )}
-                    </DropdownMenuItem>
-                ))}
+                    {items.map((item) => (
+                        <DropdownMenuItem
+                            key={item.slug}
+                            className="p-2"
+                            render={<Link to={item.url} search={item.search} />}
+                        >
+                            {item.icon && <item.icon className="size-4" />}
+                            {item.title_ua}
+                            {item.count !== undefined && (
+                                <span className="ml-auto text-muted-foreground text-xs tabular-nums">
+                                    {item.count}
+                                </span>
+                            )}
+                        </DropdownMenuItem>
+                    ))}
+                </DropdownMenuGroup>
 
                 <DropdownMenuSeparator />
 
