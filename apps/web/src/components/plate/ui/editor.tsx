@@ -19,7 +19,9 @@ const editorContainerVariants = cva(
                     'flex flex-col justify-between gap-1 text-sm',
                     'rounded-lg border border-input bg-transparent shadow-xs transition-[color,box-shadow] dark:bg-input/30',
                     'has-[[data-slate-editor]:focus-within]:border-ring has-[[data-slate-editor]:focus-within]:ring-[3px] has-[[data-slate-editor]:focus-within]:ring-ring/50',
-                    'has-aria-disabled:opacity-50',
+                    // Scoped to the editor: Base UI marks a disabled toolbar
+                    // button with `aria-disabled` rather than `disabled`.
+                    'has-[[data-slate-editor][aria-disabled=true]]:opacity-50',
                 ),
                 drawer: cn('flex flex-1 flex-col overflow-hidden'),
             },
