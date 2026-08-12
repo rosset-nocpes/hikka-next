@@ -1,16 +1,13 @@
 import React, { type FC, Fragment, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
-import type {
-    Primitive,
-    PrimitivePropsWithRef,
-} from '@radix-ui/react-primitive';
-import { useControllableState } from '@radix-ui/react-use-controllable-state';
+import { Popover as PopoverPrimitive } from '@base-ui/react/popover';
 import type { VariantProps } from 'class-variance-authority';
 import { ChevronsUpDown, X } from 'lucide-react';
-import { Popover as PopoverPrimitive } from 'radix-ui';
 
+import { STAY_ON_AXIS } from '@/components/ui/popup-positioning';
 import { usePortalContainer } from '@/components/ui/portal-container-context';
+import { useControllableState } from '@/services/hooks/use-controllable-state';
 import { cn } from '@/utils/cn';
 
 import { Badge } from './badge';
@@ -84,9 +81,7 @@ const useSelect = () => {
     return context;
 };
 
-export type SelectProps = React.ComponentPropsWithoutRef<
-    typeof PopoverPrimitive.Root
-> & {
+export type SelectProps = PopoverPrimitive.Root.Props & {
     value?: string[];
     onValueChange?(value: string[], items: SelectOptionItem[]): void;
     onSelect?(value: string, item: SelectOptionItem): void;
@@ -138,7 +133,7 @@ const Select: React.FC<SelectProps> = ({
                             : value;
                         return itemCache?.[baseValue];
                     })
-                    .filter(Boolean);
+                    .filter((item): item is SelectOptionItem => !!item);
 
                 onValueChangeProp(state, items);
             }
@@ -311,10 +306,12 @@ const Select: React.FC<SelectProps> = ({
 
 Select.displayName = 'Select';
 
-type SelectTriggerElement = React.ComponentRef<typeof Primitive.div>;
+type SelectTriggerElement = HTMLDivElement;
 
-type SelectTriggerProps = PrimitivePropsWithRef<typeof Primitive.div> & {
+type SelectTriggerProps = React.ComponentPropsWithRef<'div'> & {
     size?: VariantProps<typeof buttonVariants>['size'];
+    /** Skip the field chrome; the child brings its own. */
+    asChild?: boolean;
 };
 
 const PreventClick = (e: React.MouseEvent | React.TouchEvent) => {
@@ -349,30 +346,43 @@ const SelectTrigger = React.forwardRef<
         const { disabled } = useSelect();
 
         return (
-            <PopoverPrimitive.Trigger ref={forwardedRef as any} asChild>
-                {/* biome-ignore lint/a11y/noStaticElementInteractions: Radix Popover.Trigger (asChild) provides button semantics and keyboard handling. */}
-                {/* biome-ignore lint/a11y/useKeyWithClickEvents: Radix Popover.Trigger (asChild) provides button semantics and keyboard handling. */}
-                <div
-                    aria-disabled={disabled}
-                    data-disabled={disabled}
-                    {...props}
-                    className={cn(
-                        !asChild && FIELD_BASE,
-                        !asChild &&
-                            'flex h-auto items-center justify-between gap-2 data-[placeholder]:text-muted-foreground dark:hover:bg-input/50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
-                        !asChild && selectTriggerSizeClasses[size!],
-                        // asChild children dim themselves when disabled —
-                        // dimming here too would stack the opacity.
-                        disabled
-                            ? cn('cursor-not-allowed', !asChild && 'opacity-50')
-                            : 'cursor-pointer',
-                        className,
-                    )}
-                    onClick={disabled ? PreventClick : props.onClick}
-                    onTouchStart={disabled ? PreventClick : props.onTouchStart}
-                >
-                    {children}
-                </div>
+            <PopoverPrimitive.Trigger
+                ref={forwardedRef as PopoverPrimitive.Trigger.Props['ref']}
+                nativeButton={false}
+                render={
+                    // biome-ignore lint/a11y/noStaticElementInteractions: Popover.Trigger provides button semantics and keyboard handling.
+                    // biome-ignore lint/a11y/useKeyWithClickEvents: Popover.Trigger provides button semantics and keyboard handling.
+                    <div />
+                }
+                aria-disabled={disabled}
+                data-disabled={disabled}
+                // The trigger renders a div, but Base UI types its props against
+                // the native button it would render otherwise.
+                {...(props as PopoverPrimitive.Trigger.Props)}
+                className={cn(
+                    !asChild && FIELD_BASE,
+                    !asChild &&
+                        'flex h-auto items-center justify-between gap-2 data-[placeholder]:text-muted-foreground dark:hover:bg-input/50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+                    !asChild && selectTriggerSizeClasses[size!],
+                    // asChild children dim themselves when disabled —
+                    // dimming here too would stack the opacity.
+                    disabled
+                        ? cn('cursor-not-allowed', !asChild && 'opacity-50')
+                        : 'cursor-pointer',
+                    className,
+                )}
+                onClick={
+                    (disabled
+                        ? PreventClick
+                        : props.onClick) as PopoverPrimitive.Trigger.Props['onClick']
+                }
+                onTouchStart={
+                    (disabled
+                        ? PreventClick
+                        : props.onTouchStart) as PopoverPrimitive.Trigger.Props['onTouchStart']
+                }
+            >
+                {children}
             </PopoverPrimitive.Trigger>
         );
     },
@@ -380,7 +390,7 @@ const SelectTrigger = React.forwardRef<
 
 SelectTrigger.displayName = 'SelectTrigger';
 
-const SelectIcon: FC<PrimitivePropsWithRef<'svg'>> = ({
+const SelectIcon: FC<React.ComponentPropsWithRef<'svg'>> = ({
     className,
     ...props
 }) => (
@@ -393,16 +403,13 @@ const SelectIcon: FC<PrimitivePropsWithRef<'svg'>> = ({
 
 SelectIcon.displayName = 'SelectIcon';
 
-type SelectValueProps = PrimitivePropsWithRef<typeof Primitive.div> & {
+type SelectValueProps = React.ComponentPropsWithRef<'div'> & {
     placeholder?: string;
     maxDisplay?: number;
     maxItemLength?: number;
 };
 
-const SelectValue = React.forwardRef<
-    React.ComponentRef<typeof Primitive.div>,
-    SelectValueProps
->(
+const SelectValue = React.forwardRef<HTMLDivElement, SelectValueProps>(
     (
         { className, placeholder, maxDisplay, maxItemLength, ...props },
         forwardRef,
@@ -540,7 +547,7 @@ const SelectValue = React.forwardRef<
 
 const SelectSearch = React.forwardRef<
     React.ComponentRef<typeof CommandInput>,
-    PrimitivePropsWithRef<typeof CommandInput>
+    React.ComponentPropsWithRef<typeof CommandInput>
 >((props, ref) => {
     const { onSearch } = useSelect();
 
@@ -551,7 +558,7 @@ SelectSearch.displayName = 'SelectSearch';
 
 const SelectList = React.forwardRef<
     React.ComponentRef<typeof CommandList>,
-    PrimitivePropsWithRef<typeof CommandList>
+    React.ComponentPropsWithRef<typeof CommandList>
 >(({ className, ...props }, ref) => {
     return (
         <CommandList
@@ -564,76 +571,67 @@ const SelectList = React.forwardRef<
 
 SelectList.displayName = 'SelectList';
 
-type SelectContentProps = PrimitivePropsWithRef<
-    typeof PopoverPrimitive.Content
->;
+type SelectContentProps = PopoverPrimitive.Popup.Props;
 
-const SelectContent = React.forwardRef<
-    React.ComponentRef<typeof PopoverPrimitive.Content>,
-    SelectContentProps
->(({ className, children, ...props }, ref) => {
-    const context = useSelect();
-    const portalContainer = usePortalContainer();
+const SelectContent = React.forwardRef<HTMLDivElement, SelectContentProps>(
+    ({ className, children, ...props }, ref) => {
+        const context = useSelect();
+        const portalContainer = usePortalContainer();
 
-    const fragmentRef = React.useRef<DocumentFragment | null>(null);
+        const fragmentRef = React.useRef<DocumentFragment | null>(null);
 
-    const [firstRendered, setFirstRendered] = React.useState(false);
+        const [firstRendered, setFirstRendered] = React.useState(false);
 
-    React.useLayoutEffect(() => {
-        setFirstRendered(true);
-    }, []);
+        React.useLayoutEffect(() => {
+            setFirstRendered(true);
+        }, []);
 
-    if (!fragmentRef.current && firstRendered) {
-        fragmentRef.current = document.createDocumentFragment();
-    }
+        if (!fragmentRef.current && firstRendered) {
+            fragmentRef.current = document.createDocumentFragment();
+        }
 
-    if (!context.open) {
-        return fragmentRef.current
-            ? createPortal(<Command>{children}</Command>, fragmentRef.current)
-            : null;
-    }
+        if (!context.open) {
+            return fragmentRef.current
+                ? createPortal(
+                      <Command>{children}</Command>,
+                      fragmentRef.current,
+                  )
+                : null;
+        }
 
-    return (
-        <PopoverPrimitive.Portal container={portalContainer}>
-            <PopoverPrimitive.Content
-                ref={ref}
-                align="start"
-                sideOffset={4}
-                collisionPadding={10}
-                className={cn(
-                    'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-full rounded-(--base-radius) border bg-popover text-popover-foreground shadow-md outline-hidden data-[state=closed]:animate-out data-[state=open]:animate-in',
-                )}
-                style={
-                    {
-                        '--radix-select-content-transform-origin':
-                            'var(--radix-popper-transform-origin)',
-                        '--radix-select-content-available-width':
-                            'var(--radix-popper-available-width)',
-                        '--radix-select-content-available-height':
-                            'var(--radix-popper-available-height)',
-                        '--radix-select-trigger-width':
-                            'var(--radix-popper-anchor-width)',
-                        '--radix-select-trigger-height':
-                            'var(--radix-popper-anchor-height)',
-                    } as any
-                }
-                {...props}
-            >
-                <Command
-                    className={cn(
-                        'max-h-96 w-full min-w-(--radix-select-trigger-width)',
-                        className,
-                    )}
-                    shouldFilter={!context.onSearch}
+        return (
+            <PopoverPrimitive.Portal container={portalContainer ?? undefined}>
+                <PopoverPrimitive.Positioner
+                    align="start"
+                    sideOffset={4}
+                    collisionPadding={10}
+                    collisionAvoidance={STAY_ON_AXIS}
+                    className="isolate z-50"
                 >
-                    {children}
-                </Command>
-            </PopoverPrimitive.Content>
-        </PopoverPrimitive.Portal>
-    );
-});
+                    <PopoverPrimitive.Popup
+                        ref={ref}
+                        className={cn(
+                            'z-50 w-full origin-(--transform-origin) rounded-(--base-radius) border bg-popover text-popover-foreground shadow-md outline-hidden transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0',
+                        )}
+                        {...props}
+                    >
+                        <Command
+                            className={cn(
+                                'max-h-(--available-height) w-full min-w-(--anchor-width)',
+                                className,
+                            )}
+                            shouldFilter={!context.onSearch}
+                        >
+                            {children}
+                        </Command>
+                    </PopoverPrimitive.Popup>
+                </PopoverPrimitive.Positioner>
+            </PopoverPrimitive.Portal>
+        );
+    },
+);
 
-type SelectItemProps = PrimitivePropsWithRef<typeof CommandItem> &
+type SelectItemProps = React.ComponentPropsWithRef<typeof CommandItem> &
     Partial<SelectOptionItem> & {
         onSelect?: (value: string, item: SelectOptionItem) => void;
         onDeselect?: (value: string, item: SelectOptionItem) => void;
@@ -774,7 +772,7 @@ const SelectItem = React.forwardRef<
 
 const SelectGroup = React.forwardRef<
     React.ComponentRef<typeof CommandGroup>,
-    PrimitivePropsWithRef<typeof CommandGroup>
+    React.ComponentPropsWithRef<typeof CommandGroup>
 >((props, forwardRef) => {
     return <CommandGroup {...props} ref={forwardRef} />;
 });
@@ -783,7 +781,7 @@ SelectGroup.displayName = 'SelectGroup';
 
 const SelectSeparator = React.forwardRef<
     React.ComponentRef<typeof CommandSeparator>,
-    PrimitivePropsWithRef<typeof CommandSeparator>
+    React.ComponentPropsWithRef<typeof CommandSeparator>
 >((props, forwardRef) => {
     return <CommandSeparator {...props} ref={forwardRef} />;
 });
@@ -792,7 +790,7 @@ SelectSeparator.displayName = 'SelectSeparator';
 
 const SelectEmpty = React.forwardRef<
     React.ComponentRef<typeof CommandEmpty>,
-    PrimitivePropsWithRef<typeof CommandEmpty>
+    React.ComponentPropsWithRef<typeof CommandEmpty>
 >(({ children = 'No Content', className, ...props }, forwardRef) => {
     return (
         <CommandEmpty

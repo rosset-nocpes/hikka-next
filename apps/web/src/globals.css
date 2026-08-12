@@ -633,39 +633,19 @@
     }
 }
 
-@keyframes accordion-down {
-    from {
-        height: 0;
-    }
-
-    to {
-        height: var(--radix-accordion-content-height);
-    }
-}
-
-@keyframes accordion-up {
-    from {
-        height: var(--radix-accordion-content-height);
-    }
-
-    to {
-        height: 0;
-    }
-}
-
 @keyframes collapsible-down {
     from {
         height: 0;
     }
 
     to {
-        height: var(--radix-collapsible-content-height);
+        height: var(--collapsible-panel-height);
     }
 }
 
 @keyframes collapsible-up {
     from {
-        height: var(--radix-collapsible-content-height);
+        height: var(--collapsible-panel-height);
     }
 
     to {
@@ -790,11 +770,6 @@ main {
 [data-slot="drawer-content"] *,
 [data-slot="sheet-content"] * {
     overscroll-behavior-y: contain;
-}
-
-[data-select] [data-radix-popper-content-wrapper] {
-    position: absolute !important;
-    width: 100%;
 }
 
 table th:first-child,
