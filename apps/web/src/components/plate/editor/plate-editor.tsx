@@ -208,14 +208,16 @@ export function PlateMarkdownEditor({
                     defaultOpen={modalDefaultOpen}
                     onOpenChange={setIsModalOpen}
                 >
-                    <PageSheetTrigger asChild>
-                        <EditorPreview
-                            buttonTitle={modalButtonTitle}
-                            editButtonTitle={modalEditButtonTitle}
-                            editor={editor}
-                            isOpen={isModalOpen}
-                        />
-                    </PageSheetTrigger>
+                    <PageSheetTrigger
+                        render={
+                            <EditorPreview
+                                buttonTitle={modalButtonTitle}
+                                editButtonTitle={modalEditButtonTitle}
+                                editor={editor}
+                                isOpen={isModalOpen}
+                            />
+                        }
+                    />
                     <PageSheetContent className="top-(--visual-viewport-offset-top,0px)! bottom-auto! h-(--visual-viewport-height,100dvh)!">
                         <PageSheetHeader
                             title={modalTitle}
@@ -313,19 +315,21 @@ export function ArticlePlateEditor({
         >
             {isMobile && (
                 <PageSheet open={isModalOpen} onOpenChange={setIsModalOpen}>
-                    <PageSheetTrigger asChild>
-                        <ArticleEditorPreview
-                            buttonTitle={modalButtonTitle}
-                            editButtonTitle={modalEditButtonTitle}
-                            editor={editor}
-                            isOpen={isModalOpen}
-                        />
-                    </PageSheetTrigger>
+                    <PageSheetTrigger
+                        render={
+                            <ArticleEditorPreview
+                                buttonTitle={modalButtonTitle}
+                                editButtonTitle={modalEditButtonTitle}
+                                editor={editor}
+                                isOpen={isModalOpen}
+                            />
+                        }
+                    />
                     <PageSheetContent
                         className="top-(--visual-viewport-offset-top,0px)! bottom-auto! h-(--visual-viewport-height,100dvh)!"
-                        onOpenAutoFocus={(e) => {
-                            e.preventDefault();
+                        initialFocus={() => {
                             editor.tf.focus();
+                            return false;
                         }}
                     >
                         <PageSheetHeader

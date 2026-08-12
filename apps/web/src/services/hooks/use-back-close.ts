@@ -15,7 +15,7 @@ const openModals: string[] = [];
  */
 export function useBackClose(
     open: boolean | undefined,
-    onOpenChange: ((open: boolean) => void) | undefined,
+    onOpenChange: ((open: boolean, ...rest: never[]) => void) | undefined,
 ) {
     const isDesktop = useMediaQuery('(min-width: 768px)');
     const id = useId();

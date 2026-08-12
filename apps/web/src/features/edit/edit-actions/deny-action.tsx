@@ -40,15 +40,17 @@ const DenyAction: FC<Props> = () => {
 
     return (
         <AlertDialog>
-            <AlertDialogTrigger asChild>
-                <Button
-                    variant="destructive"
-                    size="md"
-                    disabled={denyEdit.isPending}
-                >
-                    Відхилити
-                </Button>
-            </AlertDialogTrigger>
+            <AlertDialogTrigger
+                render={
+                    <Button
+                        variant="destructive"
+                        size="md"
+                        disabled={denyEdit.isPending}
+                    >
+                        Відхилити
+                    </Button>
+                }
+            />
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>

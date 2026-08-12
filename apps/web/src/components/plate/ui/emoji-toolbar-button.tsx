@@ -31,8 +31,8 @@ import {
 
 import { ToolbarButton } from '@/components/plate/ui/toolbar';
 import { Button } from '@/components/ui/button';
-import { usePortalContainer } from '@/components/ui/portal-container-context';
 import { STAY_ON_AXIS } from '@/components/ui/popup-positioning';
+import { usePortalContainer } from '@/components/ui/portal-container-context';
 import {
     Tooltip,
     TooltipContent,

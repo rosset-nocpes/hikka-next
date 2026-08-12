@@ -137,27 +137,29 @@ const CommentInput: FC<Props> = ({
                     defaultOpen={comment !== undefined}
                     onOpenChange={handleSheetOpenChange}
                 >
-                    <PageSheetTrigger asChild>
-                        <EditorPreview
-                            buttonTitle={
-                                isReview
-                                    ? 'Написати відгук'
-                                    : 'Написати коментар'
-                            }
-                            editButtonTitle={
-                                isReview
-                                    ? 'Редагувати відгук'
-                                    : 'Редагувати коментар'
-                            }
-                            editor={editor}
-                            isOpen={isModalOpen}
-                        />
-                    </PageSheetTrigger>
+                    <PageSheetTrigger
+                        render={
+                            <EditorPreview
+                                buttonTitle={
+                                    isReview
+                                        ? 'Написати відгук'
+                                        : 'Написати коментар'
+                                }
+                                editButtonTitle={
+                                    isReview
+                                        ? 'Редагувати відгук'
+                                        : 'Редагувати коментар'
+                                }
+                                editor={editor}
+                                isOpen={isModalOpen}
+                            />
+                        }
+                    />
                     <PageSheetContent
                         className="top-(--visual-viewport-offset-top,0px)! bottom-auto! h-(--visual-viewport-height,100dvh)!"
-                        onOpenAutoFocus={(e) => {
-                            e.preventDefault();
+                        initialFocus={() => {
                             editor.tf.focus();
+                            return false;
                         }}
                     >
                         <PageSheetHeader

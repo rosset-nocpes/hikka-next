@@ -83,20 +83,22 @@ const AuthorizedAppItem: FC<{ token: AuthTokenInfoResponse }> = ({ token }) => {
                 </p>
             </div>
             <AlertDialog>
-                <AlertDialogTrigger asChild>
-                    <Button
-                        className="shrink-0"
-                        variant="outline"
-                        size="icon-sm"
-                        disabled={isRevoking}
-                    >
-                        {isRevoking ? (
-                            <Spinner />
-                        ) : (
-                            <MaterialSymbolsDeleteForeverRounded className="size-4" />
-                        )}
-                    </Button>
-                </AlertDialogTrigger>
+                <AlertDialogTrigger
+                    render={
+                        <Button
+                            className="shrink-0"
+                            variant="outline"
+                            size="icon-sm"
+                            disabled={isRevoking}
+                        >
+                            {isRevoking ? (
+                                <Spinner />
+                            ) : (
+                                <MaterialSymbolsDeleteForeverRounded className="size-4" />
+                            )}
+                        </Button>
+                    }
+                />
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle>
@@ -126,18 +128,20 @@ const RevokeAllDialog: FC<{
 }> = ({ appName, isRevokingAll, onRevokeAll }) => {
     return (
         <AlertDialog>
-            <AlertDialogTrigger asChild>
-                <Button
-                    className="shrink-0"
-                    variant="destructive"
-                    size="md"
-                    disabled={isRevokingAll}
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    {isRevokingAll && <Spinner />}
-                    Відкликати всі
-                </Button>
-            </AlertDialogTrigger>
+            <AlertDialogTrigger
+                render={
+                    <Button
+                        className="shrink-0"
+                        variant="destructive"
+                        size="md"
+                        disabled={isRevokingAll}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {isRevokingAll && <Spinner />}
+                        Відкликати всі
+                    </Button>
+                }
+            />
             <AlertDialogContent onClick={(e) => e.stopPropagation()}>
                 <AlertDialogHeader>
                     <AlertDialogTitle>

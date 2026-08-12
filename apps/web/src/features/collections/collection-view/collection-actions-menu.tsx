@@ -73,15 +73,17 @@ const CollectionActionsMenu: FC<Props> = ({ className }) => {
                         Редагувати
                     </DropdownMenuItem>
                     <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                            <DropdownMenuItem
-                                onClick={(e) => e.preventDefault()}
-                                className="text-destructive-foreground"
-                            >
-                                <MaterialSymbolsDeleteForeverRounded />
-                                Видалити
-                            </DropdownMenuItem>
-                        </AlertDialogTrigger>
+                        <AlertDialogTrigger
+                            render={
+                                <DropdownMenuItem
+                                    onClick={(e) => e.preventDefault()}
+                                    className="text-destructive-foreground"
+                                >
+                                    <MaterialSymbolsDeleteForeverRounded />
+                                    Видалити
+                                </DropdownMenuItem>
+                            }
+                        />
                         <AlertDialogContent>
                             <AlertDialogHeader>
                                 <AlertDialogTitle>

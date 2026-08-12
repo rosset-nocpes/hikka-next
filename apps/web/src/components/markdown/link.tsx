@@ -155,35 +155,39 @@ const Link: FC<PropsWithChildren<Props>> = ({ children, href, className }) => {
 
     return (
         <AlertDialog>
-            <AlertDialogTrigger asChild>
-                <span
-                    className={cn(
-                        LINK_CLASSNAME,
-                        LINK_EXTRA_CLASSNAME,
-                        className,
-                    )}
-                >
-                    {children}
-                </span>
-            </AlertDialogTrigger>
+            <AlertDialogTrigger
+                render={
+                    <span
+                        className={cn(
+                            LINK_CLASSNAME,
+                            LINK_EXTRA_CLASSNAME,
+                            className,
+                        )}
+                    >
+                        {children}
+                    </span>
+                }
+            />
             <AlertDialogContent className="w-full overflow-hidden lg:min-w-lg">
                 <AlertDialogHeader>
                     <AlertDialogTitle>
                         Ви впевнені, що хочете відкрити посилання?
                     </AlertDialogTitle>
-                    <AlertDialogDescription asChild>
-                        <div className="flex w-full items-center gap-2 overflow-hidden">
-                            <MaterialSymbolsLinkRounded />
-                            <p
-                                className={cn(
-                                    'flex-1 truncate',
-                                    LINK_EXTRA_CLASSNAME,
-                                )}
-                            >
-                                {href}
-                            </p>
-                        </div>
-                    </AlertDialogDescription>
+                    <AlertDialogDescription
+                        render={
+                            <div className="flex w-full items-center gap-2 overflow-hidden">
+                                <MaterialSymbolsLinkRounded />
+                                <p
+                                    className={cn(
+                                        'flex-1 truncate',
+                                        LINK_EXTRA_CLASSNAME,
+                                    )}
+                                >
+                                    {href}
+                                </p>
+                            </div>
+                        }
+                    />
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Відмінити</AlertDialogCancel>

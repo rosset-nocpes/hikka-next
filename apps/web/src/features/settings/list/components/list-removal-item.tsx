@@ -28,11 +28,13 @@ const ListRemovalItem = ({ title, onConfirm }: Props) => {
                 </small>
             </div>
             <AlertDialog>
-                <AlertDialogTrigger asChild>
-                    <Button variant="destructive" size="md">
-                        Видалити
-                    </Button>
-                </AlertDialogTrigger>
+                <AlertDialogTrigger
+                    render={
+                        <Button variant="destructive" size="md">
+                            Видалити
+                        </Button>
+                    }
+                />
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle>

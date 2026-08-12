@@ -2,8 +2,8 @@ import type * as React from 'react';
 
 import { Popover as PopoverPrimitive } from '@base-ui/react/popover';
 
-import { usePortalContainer } from '@/components/ui/portal-container-context';
 import { STAY_ON_AXIS } from '@/components/ui/popup-positioning';
+import { usePortalContainer } from '@/components/ui/portal-container-context';
 import { cn } from '@/utils/cn';
 
 function Popover({ ...props }: PopoverPrimitive.Root.Props) {

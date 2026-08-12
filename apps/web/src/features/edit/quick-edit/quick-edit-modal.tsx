@@ -190,11 +190,15 @@ const QuickEditModal: FC<Props> = ({
     onOpenChange,
 }) => {
     return (
-        <ResponsiveModal open={open} onOpenChange={onOpenChange} mobile="page">
+        <ResponsiveModal
+            open={open}
+            onOpenChange={onOpenChange}
+            mobile="page"
+            disablePointerDismissal
+        >
             <ResponsiveModalContent
                 className="md:max-w-2xl"
                 title="Швидка правка"
-                onInteractOutside={(e) => e.preventDefault()}
             >
                 <QuickEditModalBody
                     slug={slug}

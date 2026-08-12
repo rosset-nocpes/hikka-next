@@ -57,6 +57,7 @@ type ResponsiveModalProps = {
     onOpenChange?: (open: boolean) => void;
     type?: ModalType;
     mobile?: MobileVariant;
+    disablePointerDismissal?: boolean;
     // Drawer-specific
     shouldScaleBackground?: boolean;
     preventScrollRestoration?: boolean;
@@ -68,6 +69,7 @@ function ResponsiveModal({
     onOpenChange,
     type = 'dialog',
     mobile = 'drawer',
+    disablePointerDismissal,
     shouldScaleBackground,
     preventScrollRestoration,
 }: ResponsiveModalProps) {
@@ -79,6 +81,7 @@ function ResponsiveModal({
             <Drawer
                 open={open}
                 onOpenChange={onOpenChange}
+                dismissible={!disablePointerDismissal}
                 shouldScaleBackground={shouldScaleBackground}
                 preventScrollRestoration={preventScrollRestoration}
             >
@@ -89,11 +92,19 @@ function ResponsiveModal({
                 {children}
             </PageSheet>
         ) : surface === 'sheet' ? (
-            <Sheet open={open} onOpenChange={onOpenChange}>
+            <Sheet
+                open={open}
+                onOpenChange={onOpenChange}
+                disablePointerDismissal={disablePointerDismissal}
+            >
                 {children}
             </Sheet>
         ) : (
-            <Dialog open={open} onOpenChange={onOpenChange}>
+            <Dialog
+                open={open}
+                onOpenChange={onOpenChange}
+                disablePointerDismissal={disablePointerDismissal}
+            >
                 {children}
             </Dialog>
         );
@@ -106,17 +117,40 @@ function ResponsiveModal({
 }
 
 function ResponsiveModalTrigger({
+    render,
+    children,
     ...props
 }: React.ComponentProps<typeof DialogTrigger>) {
     const surface = useSurface();
 
-    if (surface === 'drawer') return <DrawerTrigger {...props} />;
-    if (surface === 'page') return <PageSheetTrigger {...props} />;
-    if (surface === 'sheet') return <SheetTrigger {...props} />;
-    return <DialogTrigger {...props} />;
+    // The drawer is still on Radix, which composes through `asChild`.
+    if (surface === 'drawer')
+        return (
+            <DrawerTrigger
+                asChild={render !== undefined}
+                {...(props as React.ComponentProps<'button'>)}
+            >
+                {(render as React.ReactNode) ?? children}
+            </DrawerTrigger>
+        );
+    if (surface === 'page')
+        return (
+            <PageSheetTrigger render={render} {...props}>
+                {children}
+            </PageSheetTrigger>
+        );
+    if (surface === 'sheet')
+        return (
+            <SheetTrigger render={render} {...props}>
+                {children}
+            </SheetTrigger>
+        );
+    return (
+        <DialogTrigger render={render} {...props}>
+            {children}
+        </DialogTrigger>
+    );
 }
-
-type DialogContentProps = React.ComponentProps<typeof DialogContent>;
 
 type ResponsiveModalContentProps = {
     children: React.ReactNode;
@@ -125,9 +159,6 @@ type ResponsiveModalContentProps = {
     showCloseButton?: boolean;
     title?: React.ReactNode;
     description?: React.ReactNode;
-    onPointerDownOutside?: DialogContentProps['onPointerDownOutside'];
-    onEscapeKeyDown?: DialogContentProps['onEscapeKeyDown'];
-    onInteractOutside?: DialogContentProps['onInteractOutside'];
 };
 
 function ResponsiveModalContent({
@@ -137,21 +168,12 @@ function ResponsiveModalContent({
     showCloseButton,
     title,
     description,
-    onPointerDownOutside,
-    onEscapeKeyDown,
-    onInteractOutside,
 }: ResponsiveModalContentProps) {
     const surface = useSurface();
 
-    const dismissProps = {
-        onPointerDownOutside,
-        onEscapeKeyDown,
-        onInteractOutside,
-    };
-
     if (surface === 'page') {
         return (
-            <PageSheetContent className={className} {...dismissProps}>
+            <PageSheetContent className={className}>
                 <PageSheetHeader title={title} subtitle={description} />
                 {children}
             </PageSheetContent>
@@ -171,10 +193,7 @@ function ResponsiveModalContent({
 
     if (surface === 'drawer') {
         return (
-            <DrawerContent
-                className={cn('max-h-[90dvh]', className)}
-                {...dismissProps}
-            >
+            <DrawerContent className={cn('max-h-[90dvh]', className)}>
                 {header}
                 {children}
             </DrawerContent>
@@ -187,7 +206,6 @@ function ResponsiveModalContent({
                 side={side}
                 showCloseButton={showCloseButton}
                 className={cn('max-w-lg!', className)}
-                {...dismissProps}
             >
                 {header}
                 {children}
@@ -196,11 +214,7 @@ function ResponsiveModalContent({
     }
 
     return (
-        <DialogContent
-            showCloseButton={showCloseButton}
-            className={className}
-            {...dismissProps}
-        >
+        <DialogContent showCloseButton={showCloseButton} className={className}>
             {header}
             {children}
         </DialogContent>
@@ -229,9 +243,7 @@ function ResponsiveModalFooter({ ...props }: React.ComponentProps<'div'>) {
     return <DialogFooter {...props} />;
 }
 
-function ResponsiveModalTitle({
-    ...props
-}: React.ComponentProps<typeof DialogTitle>) {
+function ResponsiveModalTitle({ ...props }: React.ComponentProps<'h2'>) {
     const surface = useSurface();
 
     if (surface === 'drawer') return <DrawerTitle {...props} />;
@@ -239,9 +251,7 @@ function ResponsiveModalTitle({
     return <DialogTitle {...props} />;
 }
 
-function ResponsiveModalDescription({
-    ...props
-}: React.ComponentProps<typeof DialogDescription>) {
+function ResponsiveModalDescription({ ...props }: React.ComponentProps<'p'>) {
     const surface = useSurface();
 
     if (surface === 'drawer') return <DrawerDescription {...props} />;
@@ -254,7 +264,8 @@ function ResponsiveModalClose({
 }: React.ComponentProps<typeof DialogClose>) {
     const surface = useSurface();
 
-    if (surface === 'drawer') return <DrawerClose {...props} />;
+    if (surface === 'drawer')
+        return <DrawerClose {...(props as React.ComponentProps<'button'>)} />;
     if (surface === 'page') return <PageSheetClose {...props} />;
     if (surface === 'sheet') return <SheetClose {...props} />;
     return <DialogClose {...props} />;
