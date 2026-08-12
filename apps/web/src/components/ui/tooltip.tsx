@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { Tooltip as TooltipPrimitive } from '@base-ui/react/tooltip';
 
+import { STAY_ON_AXIS } from '@/components/ui/popup-positioning';
 import { cn } from '@/utils/cn';
 
 function TooltipProvider({
@@ -57,6 +58,7 @@ function TooltipContent({
                 alignOffset={alignOffset}
                 side={side}
                 sideOffset={sideOffset}
+                collisionAvoidance={STAY_ON_AXIS}
                 className="isolate z-50"
             >
                 <TooltipPrimitive.Popup
@@ -70,7 +72,7 @@ function TooltipContent({
                     {children}
                     {/* Base UI positions the arrow along the edge inline; the offset only centres
                         the rotated square on that edge, so half of it stays under the popup. */}
-                    <TooltipPrimitive.Arrow className="size-2.5 rotate-45 rounded-[2px] bg-tooltip fill-tooltip data-[side=bottom]:-top-[3px] data-[side=left]:-right-[3px] data-[side=right]:-left-[3px] data-[side=top]:-bottom-[3px]" />
+                    <TooltipPrimitive.Arrow className="size-2.5 rotate-45 rounded-[2px] bg-tooltip fill-tooltip data-[side=bottom]:-top-[3px] data-[side=left]:-right-[4px] data-[side=top]:-bottom-[4px] data-[side=right]:-left-[4px]" />
                 </TooltipPrimitive.Popup>
             </TooltipPrimitive.Positioner>
         </TooltipPrimitive.Portal>

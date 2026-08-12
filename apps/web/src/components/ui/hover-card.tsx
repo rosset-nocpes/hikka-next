@@ -1,5 +1,6 @@
 import { PreviewCard as PreviewCardPrimitive } from '@base-ui/react/preview-card';
 
+import { STAY_ON_AXIS } from '@/components/ui/popup-positioning';
 import { cn } from '@/utils/cn';
 
 const HoverCardPortal = PreviewCardPrimitive.Portal;
@@ -38,6 +39,7 @@ function HoverCardContent({
                 alignOffset={alignOffset}
                 side={side}
                 sideOffset={sideOffset}
+                collisionAvoidance={STAY_ON_AXIS}
                 className="isolate z-50"
             >
                 <PreviewCardPrimitive.Popup

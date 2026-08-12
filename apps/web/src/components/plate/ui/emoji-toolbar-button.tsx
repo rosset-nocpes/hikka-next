@@ -32,6 +32,7 @@ import {
 import { ToolbarButton } from '@/components/plate/ui/toolbar';
 import { Button } from '@/components/ui/button';
 import { usePortalContainer } from '@/components/ui/portal-container-context';
+import { STAY_ON_AXIS } from '@/components/ui/popup-positioning';
 import {
     Tooltip,
     TooltipContent,
@@ -123,7 +124,11 @@ export function EmojiPopover({
             <Popover.Trigger render={control as React.ReactElement} />
 
             <Popover.Portal container={portalContainer ?? undefined}>
-                <Popover.Positioner className="z-100">
+                <Popover.Positioner
+                    sideOffset={4}
+                    collisionAvoidance={STAY_ON_AXIS}
+                    className="z-100"
+                >
                     <Popover.Popup>{children}</Popover.Popup>
                 </Popover.Positioner>
             </Popover.Portal>
