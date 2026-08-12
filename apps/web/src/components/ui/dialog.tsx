@@ -35,7 +35,7 @@ function DialogOverlay({
         <DialogPrimitive.Backdrop
             data-slot="dialog-overlay"
             className={cn(
-                'data-closed:fade-out-0 data-open:fade-in-0 fixed inset-0 isolate z-50 bg-black/10 duration-100 data-closed:animate-out data-open:animate-in supports-backdrop-filter:backdrop-blur-xs',
+                'fixed inset-0 isolate z-50 bg-black/10 transition-opacity duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 supports-backdrop-filter:backdrop-blur-xs',
                 className,
             )}
             {...props}
@@ -60,7 +60,7 @@ function DialogContent({
                 ref={setContainer}
                 data-slot="dialog-content"
                 className={cn(
-                    'data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 fixed top-24 left-1/2 z-50 flex max-h-[calc(var(--visual-viewport-height,100dvh)-6rem)] w-full max-w-full -translate-x-1/2 flex-col gap-4 bg-background p-4 text-sm outline-none ring-1 ring-border duration-200 data-closed:animate-out data-open:animate-in md:top-1/2 md:max-h-[calc(var(--visual-viewport-height,100dvh)-2rem)] md:max-w-sm md:-translate-y-1/2 md:rounded-xl',
+                    'fixed top-24 left-1/2 z-50 flex max-h-[calc(var(--visual-viewport-height,100dvh)-6rem)] w-full max-w-full -translate-x-1/2 flex-col gap-4 bg-background p-4 text-sm outline-none ring-1 ring-border transition-[opacity,scale] duration-150 data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0 md:top-1/2 md:max-h-[calc(var(--visual-viewport-height,100dvh)-2rem)] md:max-w-sm md:-translate-y-1/2 md:rounded-xl',
                     className,
                 )}
                 {...props}

@@ -41,7 +41,7 @@ function PageSheetContent({
                 ref={setContainer}
                 data-slot="page-sheet-content"
                 className={cn(
-                    'data-closed:fade-out-0 data-open:fade-in-0 data-closed:slide-out-to-right data-open:slide-in-from-right fixed inset-0 z-50 flex h-full w-full flex-col gap-4 bg-background bg-clip-padding p-4 pt-[calc(1rem+env(safe-area-inset-top,0px))] pb-[calc(1rem+var(--safe-area-bottom))] text-sm duration-200 data-closed:animate-out data-open:animate-in',
+                    'fixed inset-0 z-50 flex h-full w-full flex-col gap-4 bg-background bg-clip-padding p-4 pt-[calc(1rem+env(safe-area-inset-top,0px))] pb-[calc(1rem+var(--safe-area-bottom))] text-sm transition-[opacity,translate] duration-200 ease-in-out data-ending-style:translate-x-full data-ending-style:opacity-0 data-starting-style:translate-x-full data-starting-style:opacity-0',
                     className,
                 )}
                 {...props}

@@ -135,7 +135,7 @@ const SearchModal: FC<Props> = ({
                 <SearchButton setOpen={setOpen}>{children}</SearchButton>
             )}
             <CommandDialog
-                className="max-h-[calc(var(--visual-viewport-height,100dvh)-6rem)] transition-[max-height] duration-100 md:top-24 md:max-h-[calc(var(--visual-viewport-height,100dvh)-6rem-1rem)] md:max-w-2xl md:translate-y-0"
+                className="max-h-[calc(var(--visual-viewport-height,100dvh)-6rem)] transition-[max-height,opacity,scale] md:top-24 md:max-h-[calc(var(--visual-viewport-height,100dvh)-6rem-1rem)] md:max-w-2xl md:translate-y-0"
                 open={open}
                 onOpenChange={handleOpenChange}
                 shouldFilter={false}

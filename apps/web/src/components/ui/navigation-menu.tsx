@@ -91,7 +91,7 @@ function NavigationMenuContent({
         <NavigationMenuPrimitive.Content
             data-slot="navigation-menu-content"
             className={cn(
-                'data-ending-style:fade-out data-starting-style:fade-in w-full p-2 pr-2.5 data-ending-style:animate-out data-starting-style:animate-in md:w-auto',
+                'w-full p-2 pr-2.5 transition-opacity duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 md:w-auto',
                 '**:data-[slot=navigation-menu-link]:focus:outline-none **:data-[slot=navigation-menu-link]:focus:ring-0',
                 className,
             )}
@@ -115,7 +115,7 @@ function NavigationMenuViewport({
                     data-slot="navigation-menu-popup"
                     // Base UI drives the size through these vars; transitioning them is what
                     // makes moving between triggers resize instead of jump.
-                    className="data-closed:fade-out-0 data-open:fade-in-0 relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-md border bg-popover text-popover-foreground shadow transition-[width,height] duration-200 data-closed:animate-out data-open:animate-in"
+                    className="relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-md border bg-popover text-popover-foreground shadow transition-[width,height,opacity] duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0"
                 >
                     <NavigationMenuPrimitive.Viewport
                         data-slot="navigation-menu-viewport"
