@@ -142,14 +142,12 @@ function RootLayout() {
                 )}
             </head>
             <body>
-                <div data-vaul-drawer-wrapper>
-                    <UiPreferencesProvider initial={uiPrefs}>
-                        <Providers serverTheme={theme}>
-                            <RouterProgressBar />
-                            <Outlet />
-                        </Providers>
-                    </UiPreferencesProvider>
-                </div>
+                <UiPreferencesProvider initial={uiPrefs}>
+                    <Providers serverTheme={theme}>
+                        <RouterProgressBar />
+                        <Outlet />
+                    </Providers>
+                </UiPreferencesProvider>
                 <TanStackDevtools
                     plugins={[
                         {

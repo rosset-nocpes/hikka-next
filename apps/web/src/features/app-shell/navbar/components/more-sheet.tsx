@@ -31,8 +31,8 @@ const MoreSheet: FC<Props> = ({ children }) => {
 
     return (
         <Drawer open={open} onOpenChange={setOpen}>
-            <DrawerTrigger asChild>{children}</DrawerTrigger>
-            <DrawerContent className="gap-0 p-0 data-[vaul-drawer-direction=bottom]:pb-[var(--safe-area-bottom)]">
+            <DrawerTrigger render={children as React.ReactElement} />
+            <DrawerContent className="gap-0 p-0 data-[swipe-direction=down]:pb-[var(--safe-area-bottom)]">
                 <DrawerTitle className="sr-only">Навігація</DrawerTitle>
 
                 <div className="shrink-0 border-border border-b p-3 pt-6">

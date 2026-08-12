@@ -136,7 +136,7 @@ const NotificationsMenu: FC<Props> = ({ trigger }) => {
 
     return (
         <Drawer open={isOpen} onOpenChange={setIsOpen}>
-            <DrawerTrigger asChild>{triggerButton}</DrawerTrigger>
+            <DrawerTrigger render={triggerButton as React.ReactElement} />
             <DrawerContent className="max-h-[85dvh]">
                 <DrawerHeader className="border-border border-b p-0">
                     <DrawerTitle className="sr-only">Сповіщення</DrawerTitle>

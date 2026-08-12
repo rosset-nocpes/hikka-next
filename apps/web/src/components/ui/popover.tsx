@@ -29,7 +29,7 @@ function PopoverContent({
     const portalContainer = usePortalContainer();
 
     return (
-        <PopoverPrimitive.Portal container={portalContainer}>
+        <PopoverPrimitive.Portal container={portalContainer ?? undefined}>
             <PopoverPrimitive.Positioner
                 align={align}
                 alignOffset={alignOffset}

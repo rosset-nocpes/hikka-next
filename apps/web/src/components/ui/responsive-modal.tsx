@@ -58,9 +58,6 @@ type ResponsiveModalProps = {
     type?: ModalType;
     mobile?: MobileVariant;
     disablePointerDismissal?: boolean;
-    // Drawer-specific
-    shouldScaleBackground?: boolean;
-    preventScrollRestoration?: boolean;
 };
 
 function ResponsiveModal({
@@ -70,8 +67,6 @@ function ResponsiveModal({
     type = 'dialog',
     mobile = 'drawer',
     disablePointerDismissal,
-    shouldScaleBackground,
-    preventScrollRestoration,
 }: ResponsiveModalProps) {
     const isDesktop = useMediaQuery('(min-width: 768px)');
     const surface: Surface = isDesktop ? type : mobile;
@@ -81,9 +76,7 @@ function ResponsiveModal({
             <Drawer
                 open={open}
                 onOpenChange={onOpenChange}
-                dismissible={!disablePointerDismissal}
-                shouldScaleBackground={shouldScaleBackground}
-                preventScrollRestoration={preventScrollRestoration}
+                disablePointerDismissal={disablePointerDismissal}
             >
                 {children}
             </Drawer>
@@ -120,17 +113,13 @@ function ResponsiveModalTrigger({
     render,
     children,
     ...props
-}: React.ComponentProps<typeof DialogTrigger>) {
+}: Omit<React.ComponentProps<typeof DialogTrigger>, 'handle' | 'payload'>) {
     const surface = useSurface();
 
-    // The drawer is still on Radix, which composes through `asChild`.
     if (surface === 'drawer')
         return (
-            <DrawerTrigger
-                asChild={render !== undefined}
-                {...(props as React.ComponentProps<'button'>)}
-            >
-                {(render as React.ReactNode) ?? children}
+            <DrawerTrigger render={render} {...props}>
+                {children}
             </DrawerTrigger>
         );
     if (surface === 'page')
@@ -243,7 +232,9 @@ function ResponsiveModalFooter({ ...props }: React.ComponentProps<'div'>) {
     return <DialogFooter {...props} />;
 }
 
-function ResponsiveModalTitle({ ...props }: React.ComponentProps<'h2'>) {
+function ResponsiveModalTitle({
+    ...props
+}: React.ComponentProps<typeof DialogTitle>) {
     const surface = useSurface();
 
     if (surface === 'drawer') return <DrawerTitle {...props} />;
@@ -251,7 +242,9 @@ function ResponsiveModalTitle({ ...props }: React.ComponentProps<'h2'>) {
     return <DialogTitle {...props} />;
 }
 
-function ResponsiveModalDescription({ ...props }: React.ComponentProps<'p'>) {
+function ResponsiveModalDescription({
+    ...props
+}: React.ComponentProps<typeof DialogDescription>) {
     const surface = useSurface();
 
     if (surface === 'drawer') return <DrawerDescription {...props} />;
@@ -264,8 +257,7 @@ function ResponsiveModalClose({
 }: React.ComponentProps<typeof DialogClose>) {
     const surface = useSurface();
 
-    if (surface === 'drawer')
-        return <DrawerClose {...(props as React.ComponentProps<'button'>)} />;
+    if (surface === 'drawer') return <DrawerClose {...props} />;
     if (surface === 'page') return <PageSheetClose {...props} />;
     if (surface === 'sheet') return <SheetClose {...props} />;
     return <DialogClose {...props} />;
