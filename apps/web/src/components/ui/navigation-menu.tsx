@@ -108,18 +108,21 @@ function NavigationMenuViewport({
         <NavigationMenuPrimitive.Portal>
             <NavigationMenuPrimitive.Positioner
                 data-slot="navigation-menu-positioner"
+                side="bottom"
                 sideOffset={6}
-                className="isolate z-50"
+                align="start"
+                className="isolate z-50 h-(--positioner-height) w-(--positioner-width) max-w-(--available-width) transition-[top,left,right,bottom] duration-200 data-instant:transition-none"
             >
                 <NavigationMenuPrimitive.Popup
                     data-slot="navigation-menu-popup"
-                    // Base UI drives the size through these vars; transitioning them is what
-                    // makes moving between triggers resize instead of jump.
-                    className="relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-md border bg-popover text-popover-foreground shadow transition-[width,height,opacity] duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0"
+                    className="relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-md border bg-popover text-popover-foreground shadow transition-[opacity,width,height] duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0"
                 >
                     <NavigationMenuPrimitive.Viewport
                         data-slot="navigation-menu-viewport"
-                        className={cn('relative', className)}
+                        className={cn(
+                            'relative size-full overflow-hidden',
+                            className,
+                        )}
                         {...props}
                     />
                 </NavigationMenuPrimitive.Popup>

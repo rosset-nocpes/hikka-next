@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/utils/cn';
 
 function AlertDialog({ ...props }: AlertDialogPrimitive.Root.Props) {
-    return <AlertDialogPrimitive.Root {...props} />;
+    return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />;
 }
 
 function AlertDialogTrigger({ ...props }: AlertDialogPrimitive.Trigger.Props) {
@@ -19,7 +19,12 @@ function AlertDialogTrigger({ ...props }: AlertDialogPrimitive.Trigger.Props) {
 }
 
 function AlertDialogPortal({ ...props }: AlertDialogPrimitive.Portal.Props) {
-    return <AlertDialogPrimitive.Portal {...props} />;
+    return (
+        <AlertDialogPrimitive.Portal
+            data-slot="alert-dialog-portal"
+            {...props}
+        />
+    );
 }
 
 function AlertDialogOverlay({

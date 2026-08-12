@@ -100,34 +100,33 @@ function Slider({
                 className,
             )}
             value={value}
+            thumbAlignment="edge"
             {...props}
         >
-            {/* Base UI centres each thumb on its value, so the track has to be
-                inset by half a thumb to keep the travel inside the root. */}
             <SliderPrimitive.Control
                 data-slot="slider-control"
-                className="flex w-full items-center px-2.5"
+                className="flex w-full items-center"
             >
                 <SliderPrimitive.Track
                     data-slot="slider-track"
-                    className="relative my-2 h-2 w-full grow rounded-full bg-primary-foreground/20"
+                    className="relative my-2 h-2 w-full grow overflow-hidden rounded-full bg-primary-foreground/20"
                 >
                     <SliderPrimitive.Indicator
                         data-slot="slider-indicator"
-                        className="absolute h-full rounded-full bg-primary-foreground"
+                        className="absolute h-full bg-primary-foreground"
                     />
-                    {values.map((thumbValue, index) => (
-                        <ThumbWithValue
-                            key={index}
-                            value={thumbValue}
-                            showValue={showValue}
-                            formatValue={formatValue}
-                            isInteracting={isInteracting}
-                            onInteractionStart={() => setIsInteracting(true)}
-                            onInteractionEnd={() => setIsInteracting(false)}
-                        />
-                    ))}
                 </SliderPrimitive.Track>
+                {values.map((thumbValue, index) => (
+                    <ThumbWithValue
+                        key={index}
+                        value={thumbValue}
+                        showValue={showValue}
+                        formatValue={formatValue}
+                        isInteracting={isInteracting}
+                        onInteractionStart={() => setIsInteracting(true)}
+                        onInteractionEnd={() => setIsInteracting(false)}
+                    />
+                ))}
             </SliderPrimitive.Control>
         </SliderPrimitive.Root>
     );

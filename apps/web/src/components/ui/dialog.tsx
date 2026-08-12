@@ -12,7 +12,7 @@ import { cn } from '@/utils/cn';
 function Dialog({ ...props }: DialogPrimitive.Root.Props) {
     useBackClose(props.open, props.onOpenChange);
 
-    return <DialogPrimitive.Root {...props} />;
+    return <DialogPrimitive.Root data-slot="dialog" {...props} />;
 }
 
 function DialogTrigger({ ...props }: DialogPrimitive.Trigger.Props) {
@@ -20,7 +20,7 @@ function DialogTrigger({ ...props }: DialogPrimitive.Trigger.Props) {
 }
 
 function DialogPortal({ ...props }: DialogPrimitive.Portal.Props) {
-    return <DialogPrimitive.Portal {...props} />;
+    return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />;
 }
 
 function DialogClose({ ...props }: DialogPrimitive.Close.Props) {

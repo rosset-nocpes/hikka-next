@@ -12,7 +12,7 @@ import { cn } from '@/utils/cn';
 function Sheet({ ...props }: SheetPrimitive.Root.Props) {
     useBackClose(props.open, props.onOpenChange);
 
-    return <SheetPrimitive.Root {...props} />;
+    return <SheetPrimitive.Root data-slot="sheet" {...props} />;
 }
 
 function SheetTrigger({ ...props }: SheetPrimitive.Trigger.Props) {
@@ -24,7 +24,7 @@ function SheetClose({ ...props }: SheetPrimitive.Close.Props) {
 }
 
 function SheetPortal({ ...props }: SheetPrimitive.Portal.Props) {
-    return <SheetPrimitive.Portal {...props} />;
+    return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />;
 }
 
 function SheetOverlay({ className, ...props }: SheetPrimitive.Backdrop.Props) {

@@ -46,7 +46,7 @@ function ContextMenuSubContent({
 }: MenuPrimitive.Popup.Props) {
     return (
         <ContextMenuPrimitive.Portal>
-            <ContextMenuPrimitive.Positioner className="isolate z-50">
+            <ContextMenuPrimitive.Positioner className="isolate z-50 outline-none">
                 <ContextMenuPrimitive.Popup
                     data-slot="context-menu-sub-content"
                     className={cn(
@@ -66,7 +66,7 @@ function ContextMenuContent({
 }: ContextMenuPrimitive.Popup.Props) {
     return (
         <ContextMenuPrimitive.Portal>
-            <ContextMenuPrimitive.Positioner className="isolate z-50">
+            <ContextMenuPrimitive.Positioner className="isolate z-50 outline-none">
                 <ContextMenuPrimitive.Popup
                     data-slot="context-menu-content"
                     className={cn(
