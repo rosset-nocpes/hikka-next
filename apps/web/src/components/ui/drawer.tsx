@@ -95,12 +95,17 @@ function DrawerSwipeHandle({
     className,
     ...props
 }: React.ComponentProps<'div'>) {
+    const { swipeDirection } = useDrawer();
+
     return (
         <div
             data-slot="drawer-swipe-handle"
             aria-hidden="true"
             className={cn(
-                'relative z-10 flex shrink-0 cursor-grab justify-center pt-2 pb-1 transition-opacity duration-200 group-data-nested-drawer-open/drawer-popup:opacity-0 group-data-nested-drawer-swiping/drawer-popup:opacity-100 active:cursor-grabbing',
+                'absolute inset-x-0 z-10 flex cursor-grab justify-center transition-opacity duration-200 group-data-nested-drawer-open/drawer-popup:opacity-0 group-data-nested-drawer-swiping/drawer-popup:opacity-100 active:cursor-grabbing',
+                swipeDirection === 'up'
+                    ? 'bottom-0 pt-1 pb-2'
+                    : 'top-0 pt-2 pb-1',
                 className,
             )}
             {...props}
@@ -176,7 +181,7 @@ function DrawerHeader({ className, ...props }: React.ComponentProps<'div'>) {
         <div
             data-slot="drawer-header"
             className={cn(
-                '-mx-4 -mt-4 flex shrink-0 flex-col gap-0.5 border-b px-4 pt-4 pb-4 text-left',
+                '-mx-4 -mt-4 flex shrink-0 flex-col gap-0.5 border-b px-4 pt-6 pb-4 text-left',
                 className,
             )}
             {...props}
