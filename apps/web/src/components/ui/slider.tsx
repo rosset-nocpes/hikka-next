@@ -96,7 +96,7 @@ function Slider({
             data-slot="slider"
             className={cn(
                 'relative w-full touch-none select-none',
-                showValue === 'always' && 'pt-6',
+                showValue === 'always' && 'pt-7',
                 className,
             )}
             value={value}
@@ -105,7 +105,7 @@ function Slider({
         >
             <SliderPrimitive.Control
                 data-slot="slider-control"
-                className="flex w-full items-center"
+                className="relative flex w-full items-center"
             >
                 <SliderPrimitive.Track
                     data-slot="slider-track"
