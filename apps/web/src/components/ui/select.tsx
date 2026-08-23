@@ -617,7 +617,7 @@ const SelectContent = React.forwardRef<HTMLDivElement, SelectContentProps>(
                     >
                         <Command
                             className={cn(
-                                'max-h-(--available-height) w-full min-w-(--anchor-width)',
+                                'max-h-[min(24rem,var(--available-height,100vh))] w-full min-w-(--anchor-width)',
                                 className,
                             )}
                             shouldFilter={!context.onSearch}
