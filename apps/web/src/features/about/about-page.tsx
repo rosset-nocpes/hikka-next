@@ -5,13 +5,13 @@ import { AtSign } from 'lucide-react';
 import type { UserReferenceResponse } from '@hikka/api';
 
 import Block from '@/components/ui/block';
+import { Button } from '@/components/ui/button';
 import Card from '@/components/ui/card';
 import { Header, HeaderContainer, HeaderTitle } from '@/components/ui/header';
+import { ABOUT_CONTENT } from '@/utils/constants/about-data';
+import { ABOUT_LINKS, EXTERNAL_LINKS } from '@/utils/constants/external-links';
 import { Link } from '@/utils/navigation';
 
-import { ABOUT_CONTENT } from '@/utils/constants/about-data';
-import { Button } from '@/components/ui/button';
-import { EXTERNAL_LINKS } from '@/utils/constants/external-links';
 import TeamMemberCard from './team-member-card';
 
 type AboutPageProps = {
@@ -38,29 +38,21 @@ export function AboutPage({ profiles, titleAnchor }: AboutPageProps) {
                         ))}
                     </div>
 
-                    <Card className="grid grid-cols-1 gap-1 p-2 sm:grid-cols-2 lg:grid-cols-2">
-                        {Object.entries(EXTERNAL_LINKS).map(
-                            ([slug, { href, title, icon: Icon }]) => (
-                                <Button
-                                    key={slug}
-                                    variant="ghost"
-                                    size="md"
-                                    className="justify-start gap-3"
-                                    render={
-                                        <Link
-                                            to={href}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        />
-                                    }
-                                >
-                                    <span className="flex size-6 shrink-0 items-center justify-center rounded-sm text-primary-foreground">
-                                        <Icon aria-hidden="true" />
-                                    </span>
-                                    {title}
-                                </Button>
-                            ),
-                        )}
+                    <Card className="grid gap-1 p-2 sm:grid-cols-2">
+                        {ABOUT_LINKS.map(({ href, title, icon: Icon }) => (
+                            <Button
+                                key={href}
+                                variant="ghost"
+                                size="md"
+                                className="justify-start gap-3"
+                                render={<Link to={href} />}
+                            >
+                                <span className="grid size-6 shrink-0 place-items-center text-primary-foreground">
+                                    <Icon aria-hidden="true" />
+                                </span>
+                                {title}
+                            </Button>
+                        ))}
                     </Card>
                 </div>
             </Block>
@@ -72,17 +64,12 @@ export function AboutPage({ profiles, titleAnchor }: AboutPageProps) {
                     </HeaderContainer>
                 </Header>
 
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                     {ABOUT_CONTENT.team.map((member) => (
                         <TeamMemberCard
                             key={member.reference}
                             member={member}
                             profile={profiles[member.reference]}
-                            className={
-                                'memorial' in member
-                                    ? 'md:col-span-2 xl:col-span-3'
-                                    : undefined
-                            }
                         />
                     ))}
                 </div>
@@ -105,7 +92,7 @@ export function AboutPage({ profiles, titleAnchor }: AboutPageProps) {
                                 key={reference}
                                 variant="secondary"
                                 size="sm"
-                                className="text-muted-foreground rounded-sm px-3"
+                                className="rounded-sm px-3 text-muted-foreground"
                                 render={<Link to={`/u/${username}`} />}
                             >
                                 <AtSign aria-hidden="true" />

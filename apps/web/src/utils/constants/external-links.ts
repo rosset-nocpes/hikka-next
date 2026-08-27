@@ -59,3 +59,12 @@ export const COMMUNITY_LINKS = [
     EXTERNAL_LINKS.telegramChannel,
     EXTERNAL_LINKS.telegramChat,
 ] as const;
+
+export const ABOUT_LINKS = [
+    EXTERNAL_LINKS.telegramChannel,
+    EXTERNAL_LINKS.telegramChat,
+    EXTERNAL_LINKS.donatello,
+    EXTERNAL_LINKS.monobank,
+    EXTERNAL_LINKS.github,
+    EXTERNAL_LINKS.mastodon,
+] as const;
